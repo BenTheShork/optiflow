@@ -91,8 +91,21 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "optiflow:build:production",
+            "firebaseProject": "optiflow-6460c",
+            "firebaseHostingSite": "optiflow-6460c"
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

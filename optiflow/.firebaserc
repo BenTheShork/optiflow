@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "optiflow-6460c": {
+      "hosting": {
+        "optiflow": [
+          "optiflow-6460c"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "optiflow-6460c"
+  }
+}
