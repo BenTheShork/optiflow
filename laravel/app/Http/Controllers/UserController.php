@@ -25,7 +25,8 @@ class UserController extends Controller
         if($user) 
             return response()->json([
                 'status' => 200,
-                'message' => "User created successfully!"
+                'message' => "User created successfully!",
+                'user' => $user
             ], 200);
         else 
             return response()->json([

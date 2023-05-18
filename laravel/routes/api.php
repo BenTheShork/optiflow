@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,9 @@ Route::get('user', [UserController::class, 'index']);
 Route::get('user/{id}', [UserController::class, 'show']);
 Route::post('user', [UserController::class, 'store']);
 Route::put('user/{id}', [UserController::class, 'update']);
+
+Route::get('project', [ProjectController::class, 'index']);
+Route::get('project/{id}', [ProjectController::class, 'show']);
+Route::post('project', [ProjectController::class, 'store']);
+Route::put('project/{id}', [ProjectController::class, 'update']);
+Route::delete('project/{id}', [ProjectController::class, 'destroy']);
