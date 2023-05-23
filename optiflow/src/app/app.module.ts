@@ -13,7 +13,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { DefaultPhotoDirective } from './directives/default-photo.directive';
 import { ProjectsOverviewComponent } from './components/projects-overview/projects-overview.component';
 import { FooterComponent } from './components/footer/footer.component';
-
+import { DxDataGridModule } from 'devextreme-angular';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: 'signin', component: SignIn },
@@ -31,6 +32,8 @@ const routes: Routes = [
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    DxDataGridModule,
+    HttpClientModule,
      RouterModule.forRoot(routes)
   ],
   providers: [AuthService],
