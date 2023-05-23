@@ -1,0 +1,55 @@
+@import 'src/styles/variables';
+
+.cal-month-view {
+	user-select: none;
+
+	.cal-open-day-events {
+		// border-bottom: solid;
+		border-bottom: 1px solid #e1e1e1;
+		background-color: #ededed;
+		box-shadow: none;
+		.cal-event-title {
+			color: black;
+		}
+		.ng-star-inserted {
+			display: inline-block;
+      margin-right: 1em
+		}
+	}
+
+	.cal-day-number {
+		font-weight: bold;
+		opacity: 0.9;
+	}
+
+	.cal-day-cell {
+		&.cal-today .cal-day-number {
+			font-size: 1.5em;
+		}
+
+		&.cal-weekend .cal-day-number {
+			color: $warning-color;
+		}
+	}
+
+	.cal-day-badge {
+		background-color: $primary-color;
+	}
+
+	.cal-header .cal-cell {
+		text-transform: uppercase;
+		border-top: 1px solid;
+		border-left: 1px solid;
+		border-color: #e1e1e1;
+
+		&:last-of-type {
+			border-right: 1px solid;
+			border-color: #e1e1e1;
+		}
+	}
+
+	.cal-event {
+		width: 15px;
+		height: 15px;
+	}
+}

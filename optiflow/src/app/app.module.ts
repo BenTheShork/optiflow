@@ -9,15 +9,23 @@ import { SignIn } from './components/signin/signin.component';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './components/signup/signup.component';
 import { RouterModule, Routes } from '@angular/router';
+import { HeaderComponent } from './components/header/header.component';
+import { DefaultPhotoDirective } from './directives/default-photo.directive';
+import { ProjectsOverviewComponent } from './components/projects-overview/projects-overview.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 const routes: Routes = [
   { path: 'signin', component: SignIn },
-  { path: 'signup', component: SignupComponent }
-  ];
+  { path: 'signup', component: SignupComponent },
+  {
+    path: 'projects',
+    component: ProjectsOverviewComponent
+  }
+];
 
 @NgModule({
-  declarations: [AppComponent, SignIn, SignupComponent],
+  declarations: [AppComponent, SignIn, SignupComponent, HeaderComponent, DefaultPhotoDirective, ProjectsOverviewComponent, FooterComponent],
   imports: [
     BrowserModule,
     FormsModule,

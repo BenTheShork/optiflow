@@ -1,0 +1,75 @@
+{
+    "items": [
+        {
+            "key": "$base-accent",
+            "value": "rgba(124, 166, 182, 1)"
+        },
+        {
+            "key": "$base-danger",
+            "value": "rgba(234, 158, 141, 1)"
+        },
+        {
+            "key": "$base-success",
+            "value": "rgba(190, 220, 135, 1)"
+        },
+        {
+            "key": "$base-border-radius",
+            "value": "20px"
+        }
+    ],
+    "baseTheme": "generic.light",
+    "outputColorScheme": "light",
+    "makeSwatch": false,
+    "version": "22.2.4",
+    "widgets": [
+        "DataGrid",
+        "Accordion",
+        "Box",
+        "ContextMenu",
+        "Drawer",
+        "Menu",
+        "MultiView",
+        "ResponsiveBox",
+        "TabPanel",
+        "Tabs",
+        "TileView",
+        "Toolbar",
+        "TreeView",
+        "Autocomplete",
+        "Calendar",
+        "CheckBox",
+        "ColorBox",
+        "DateBox",
+        "DropDownBox",
+        "Form",
+        "HtmlEditor",
+        "Lookup",
+        "NumberBox",
+        "RadioGroup",
+        "RangeSlider",
+        "SelectBox",
+        "Slider",
+        "Switch",
+        "TagBox",
+        "TextBox",
+        "Validation",
+        "ActionSheet",
+        "Button",
+        "ButtonGroup",
+        "DropDownButton",
+        "SpeedDialAction",
+        "FilterBuilder",
+        "LoadIndicator",
+        "LoadPanel",
+        "Popover",
+        "Popup",
+        "ProgressBar",
+        "ScrollView",
+        "Sortable",
+        "Toast",
+        "Tooltip",
+        "Gallery",
+        "List"
+    ],
+    "removeExternalResources": false
+}

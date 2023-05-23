@@ -1,0 +1,14 @@
+@import "src/styles/variables";
+
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    min-height: 100vh;
+
+    .wrap-main {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}

@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+@import "variables";
+
+.toast-container {
+    .alert {
+        color: #fff;
+        border-radius: 80px;
+        font-size: 12px;
+        background-color: #474747;
+        margin-top: .25rem;
+        padding-bottom: .5rem;
+
+        img {
+            margin: auto 10px auto 0;
+        }
+        
+        .toast-progress {
+          position: relative;
+          top: .2rem;
+          border-radius: 10px;
+        }
+    }
+}
+
+@media (max-width: $breakpoint-medium) {
+    .toast-container {
+        width: calc(100% - 20px) !important;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+}

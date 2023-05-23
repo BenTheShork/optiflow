@@ -14,7 +14,7 @@ import { AuthService } from '../../services/authorization/auth.service';
     '../../../assets/vendor/animsition/css/animsition.min.css',
     '../../../assets/vendor/select2/select2.min.css',
     '../../../assets/vendor/daterangepicker/daterangepicker.css',
-    './signup.component.css'],
+    './signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
   email: string = '';

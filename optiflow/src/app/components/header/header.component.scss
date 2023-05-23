@@ -1,0 +1,171 @@
+@import 'src/styles/variables';
+$secondary: $secondary-color;
+
+.text-primary {
+	color: $primary-color !important;
+}
+
+.profile-image-container {
+	width: 100px;
+	height: 100%;
+	img {
+		height: 100%;
+		width: 100%;
+	}
+}
+
+.menu-icon {
+	position: absolute;
+	margin-top: 10px;
+	margin-left: 10px;
+	font-size: 2em;
+}
+.mobile-sidebar-open {
+	width: 100% !important;
+}
+
+.button-hidden {
+	display: none;
+}
+
+#sidebar {
+	height: 100% !important;
+	top: 0;
+	width: 0;
+    position: fixed !important;
+	// display: absolute !important;
+	z-index: 10;
+	left: 0;
+	top: 0;
+	overflow-x: hidden;
+	transition: 0.2s; // duration of transition effect to slide in or slide down the overlay
+	background-color: $dark-background;
+	font-size: 0.9em;
+
+	.sidebar-content {
+		height: 100%;
+		min-height: 720px; // it is where header breaks
+		width: 100%;
+		padding: 2em 2em 2em 2em;
+	}
+	.bottom-area {
+		margin-top: auto;
+	}
+	.logo-image {
+		height: 100px;
+		max-width: 250px;
+		margin-bottom: 2em;
+		margin-top: 2em;
+		background-image: url('/assets/images/logo.png');
+		background-repeat: no-repeat;
+		background-size: contain;
+		background-position: center;
+
+		img {
+			margin: auto;
+			height: 100%;
+		}
+	}
+
+	.logo span {
+		display: block;
+	}
+
+	ul.components {
+		padding: 0;
+	}
+
+	ul {
+		height: 100%;
+
+		li {
+			margin-top: 0.1em;
+		}
+
+		li > ul {
+			margin-left: 10px;
+		}
+
+		li i {
+			display: inline-block;
+			border-radius: 10px;
+			margin-left: 1em;
+			margin-right: 0.5em;
+		}
+
+		.language-icon {
+			width: 1em;
+			height: 1em;
+			display: inline-block;
+			border-radius: 10px;
+			margin-left: 1em;
+			margin-right: 0.5em;
+		}
+
+		li a {
+			padding: 10px 0;
+			display: block;
+			color: $gray-font;
+		}
+
+		li a:hover {
+			padding: 10px 0;
+			display: block;
+		}
+
+		li:hover {
+			color: $primary-color;
+			background-color: $light-dark-background;
+			border-radius: 30px;
+
+			a {
+				color: white;
+			}
+		}
+
+		li.active {
+			background: $primary-color;
+			border-radius: 30px;
+			background-color: $primary-color;
+
+			a {
+				color: white;
+			}
+
+			i {
+				color: white;
+			}
+		}
+	}
+}
+@media (max-height: 870px) {
+	.logo-image {
+		height: 20px !important;
+		margin-top: 0 !important;
+		background-image: url('/assets/images/logo.png') !important;
+	}
+}
+
+@media (min-width: $breakpoint-x-large) {
+	#sidebar-toggle-button {
+		display: none;
+	}
+
+	#close-mobile-menu-button {
+		display: none;
+	}
+
+	#sidebar {
+		width: $menu-width !important;
+		height: 100vh!important;
+		display: block !important;
+		position: sticky !important;
+	}
+}
+
+@media (max-width: $breakpoint-small) {
+    .menu-icon {
+        margin-top: 0;
+        margin-left: 0;
+    }
+}

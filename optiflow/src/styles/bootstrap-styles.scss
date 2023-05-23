@@ -1,0 +1,116 @@
+/* You can change bootstrap global css classes to this file */
+@import 'variables';
+
+$primary: $primary-color;
+$danger: $danger-color;
+$success: $success-color;
+$bs-btn-active-color: white !important;
+$form-select-border-radius: $border-radius !important;
+
+.rounded {
+	border-radius: $border-radius !important;
+}
+.btn-primary {
+	border-color: $primary-color !important;
+	background-color: $primary-color !important;
+	border-radius: $border-radius !important;
+	color: white !important;
+	&:hover {
+		opacity: 0.9;
+	}
+}
+
+.btn-outline-primary {
+	border-radius: $border-radius !important;
+	--bs-btn-active-color: white !important;
+	--bs-btn-border-color: black !important;
+	--bs-btn-color: black !important;
+	&:hover {
+		opacity: 0.9 !important;
+	}
+}
+
+.btn-outline-secondary {
+	border-radius: $border-radius !important;
+	border-color: black !important;
+	color: black !important;
+	&:hover {
+		opacity: 0.9 !important;
+		background-color: transparent !important;
+		border-color: black !important;
+		color: black !important;
+	}
+}
+
+.btn-default.active {
+	color: red !important;
+}
+.text-primary {
+	color: $primary-color !important;
+}
+.form-control {
+	border-radius: $border-radius !important;
+}
+.form-control-sm {
+	height: 15px !important;
+}
+
+.ngb-dp-week-number {
+	color: $primary-color !important;
+}
+.ngb-dp-weekday {
+	color: $primary-color !important;
+}
+.nav-tabs {
+	border: none !important;
+	.nav-link {
+		border: none !important;
+		&.active {
+			text-decoration: underline !important;
+			text-decoration-thickness: 3px !important;
+		}
+		&:hover {
+			text-decoration: underline !important;
+			text-decoration-thickness: 3px !important;
+		}
+	}
+}
+
+.fs-small {
+	font-size: small;
+}
+
+.fs-xs {
+	font-size: x-small;
+}
+
+.ngb-dp-day.disabled {
+	opacity: 0.5 !important;
+}
+
+.modal-content {
+	border-radius: $border-radius !important;
+}
+
+.dropdown-item {
+	padding-right: 30px !important;
+}
+
+.btn-danger {
+	color: white !important;
+}
+
+.modal-header {
+	border-bottom: none !important;
+	padding: 30px 30px 10px 30px !important;
+}
+
+.modal-body {
+	border-bottom: none !important;
+	padding: 0px 30px 10px 30px !important;
+}
+
+.modal-footer {
+	border-top: none !important;
+	padding: 10px 30px 20px 30px !important;
+}

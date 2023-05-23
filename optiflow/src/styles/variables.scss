@@ -1,0 +1,45 @@
+// Colors
+$primary-color: #7CA6B6;
+$secondary-color: #2D2D2D;
+
+$dark-background: #1C1D22;
+$light-dark-background: rgba(124, 166, 182, 0.25);
+
+$light-background:   rgba(248, 249, 250);
+
+//fonts
+$gray-font: #8E8E91;
+
+
+$transparent-white: rgba(255,255,255,.25);
+$transparent-dark: rgba(70,70,70,.10);
+
+// Alert Colors
+$alert-font-color: #4B6172;
+$danger-color: #EA9E8D;
+$success-color: #BEDC87;
+$info-color: rgb(227, 238, 255);
+$warning-color: #f18a8a;
+
+// Measurements
+$border-radius: 20px;
+
+
+// Break Points
+$breakpoint-x-small: 340px;
+$breakpoint-small: 576px;
+$breakpoint-medium: 768px;
+$breakpoint-large: 992px;
+$breakpoint-x-large: 1200px;
+$breakpoint-xx-large: 1400px;
+
+
+// Menu width
+$menu-width: 280px;
+
+
+.exported-variables {
+    --breakpoint-x-large: #{$breakpoint-x-large};
+    --breakpoint-small: #{$breakpoint-small};
+    --menu-width: #{$menu-width};
+}

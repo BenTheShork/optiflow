@@ -1,0 +1,310 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'variables';
+@import 'dx.custom';
+@import 'bootstrap-styles.scss';
+@import '~bootstrap-icons/font/bootstrap-icons.css';
+@import 'node_modules/bootstrap/scss/bootstrap'; // importing bootstrap after changing bootstrap variables
+@import 'node_modules/angular-calendar/css/angular-calendar.css';
+@import 'angular-calendar-styles.scss';
+
+@font-face {
+	font-family: 'poppins';
+	src: url('/assets/fonts/poppins/Poppins-Regular.ttf');
+}
+@font-face {
+	font-family: 'poppins';
+	src: url('/assets/fonts/poppins/Poppins-Semibold.ttf');
+	font-weight: bold;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'poppins';
+}
+
+h1 {
+	font-size: 2em !important;
+	font-weight: 600 !important;
+}
+
+h2 {
+	font-size: 1.5em !important;
+	font-weight: 600 !important;
+}
+
+h3 {
+	font-size: 0.9em !important;
+	font-weight: 600 !important;
+}
+
+h4 {
+	font-size: 0.9em !important;
+}
+
+h5 {
+	font-size: 0.8em !important;
+	font-weight: 600 !important;
+}
+
+h6 {
+	font-size: 0.8em !important;
+}
+
+.normal-text {
+	font-size: 0.9em;
+}
+
+.dark-rounded-input {
+	border-radius: 20px !important;
+	background: $light-dark-background !important;
+}
+
+.btn-circle {
+	min-width: 2em !important;
+	min-height: 2em !important;
+	max-width: 2em !important;
+	max-height: 2em !important;
+	padding: 0 !important;
+	border-radius: 50% !important;
+	font-size: 1em !important;
+	text-align: center !important;
+}
+
+.btn-circle-small {
+	min-width: 1.8em !important;
+	min-height: 1.8em !important;
+	max-width: 1.8em !important;
+	max-height: 1.8em !important;
+	padding: 0 !important;
+	border-radius: 50% !important;
+	font-size: 0.9em !important;
+	text-align: center !important;
+}
+
+.bg-outline {
+	border: solid !important;
+	border-color: black !important;
+	border-width: 2px !important;
+	color: black !important;
+}
+
+.bg-primary-outline {
+	border: solid !important;
+	border-color: $primary-color !important;
+	border-width: 2px !important;
+	color: black;
+}
+
+.bg-danger-outline {
+	border: solid !important;
+	border-color: $danger-color !important;
+	border-width: 2px !important;
+	color: black;
+	background: white;
+}
+
+.bg-danger {
+	color: white !important;
+	&hover {
+		color: white !important;
+	}
+}
+
+.bg-success {
+	color: white !important;
+	&hover {
+		color: white !important;
+	}
+}
+
+/* Validation */
+.ng-submitted .ng-invalid,
+.ng-submitted .ng-invalid input {
+	border-color: $danger-color;
+	accent-color: $danger-color;
+}
+
+.ng-submitted input[type='radio'].ng-invalid + label {
+	color: $danger-color;
+}
+
+.bg-success-outline {
+	border: solid !important;
+	border-color: $success-color !important;
+	border-width: 2px !important;
+	color: black;
+}
+label {
+	font-weight: 600;
+	font-size: 0.8em !important;
+}
+
+// autocomplete global styles
+.autocomplete-container {
+	position: relative;
+	// input {
+	// 	position: absolute;
+	// }
+
+    .input-button {
+        position: absolute;
+        font-size: 1.35rem;
+        bottom: 0;
+        cursor: pointer;
+
+        &:nth-last-child(2) {
+            right: 2.4rem;
+        }
+
+        &:nth-last-child(1) {
+            right: 0.8rem;
+        }
+
+        &.small {
+            font-size: 1.35rem;
+            bottom: -0.25rem;
+        }
+
+    }
+
+    .clear-button {
+        transition: color ease-in-out 250ms;
+
+        &:hover {
+            color: $danger-color;
+        }
+    }
+
+    .date-button {
+        &::before {
+            font-size: 1rem;
+            vertical-align: -0.01em;
+        }
+    }
+
+	.autocomplete-popup {
+		position: absolute;
+		width: 100%;
+		top: 40px !important;
+		overflow: hidden;
+		img {
+			width: 2rem;
+			height: 2rem;
+			object-fit: cover;
+		}
+
+        &.scrollable {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+	}
+
+	&.small {
+		.autocomplete-popup {
+			top: unset !important;
+			bottom: 0px !important;
+			transform: translate(0, 100%);
+			font-size: 1em;
+		}
+	}
+
+	.selected {
+		background-color: $primary-color;
+        color: var(--bs-badge-color);
+		&.form-control {
+			font-weight: bold;
+			color: white;
+		}
+		&.form-control::placeholder {
+			/* Chrome, Firefox, Opera, Safari 10.1+ */
+			color: white !important;
+			opacity: 1; /* Firefox */
+		}
+		&.form-control:-ms-input-placeholder {
+			/* Internet Explorer 10-11 */
+			color: white !important;
+		}
+		&.form-control::-ms-input-placeholder {
+			/* Microsoft Edge */
+			color: white !important;
+		}
+	}
+}
+
+.no-border {
+	border: none;
+}
+label {
+	font-size: 0.8em !important;
+}
+
+.height-25 {
+	height: 25px !important;
+}
+.width-35 {
+	width: 35px !important;
+}
+.width-25 {
+	width: 50px !important;
+}
+.width-50 {
+	width: 50px !important;
+}
+.width-65 {
+	width: 65px !important;
+}
+.width-75 {
+	width: 75px !important;
+}
+.width-85 {
+	width: 65px !important;
+}
+.width-100 {
+	width: 100px !important;
+}
+
+.width-150 {
+	width: 150px !important;
+}
+
+.btn-submit {
+	width: 120px !important;
+	font-weight: 1em;
+}
+
+.cursor-pointer {
+	cursor: pointer !important;
+}
+
+.font-size-1 {
+	font-size: 1rem !important;
+}
+
+.font-size-2 {
+	font-size: 2rem !important;
+}
+
+.danger-color {
+    color: $danger-color !important;
+}
+
+.success-color {
+    color: $success-color !important;
+}
+
+@media (max-width: $breakpoint-small) {
+    h1 {
+        font-size: 1.5em !important;
+    }
+    h2 {
+        font-size: 1.2em !important;
+        &.overview {
+            text-align: center;
+        }
+    }
+    .title-mobile {
+        margin: 2em auto;
+        font-size: 1.2em !important;
+    }
+}

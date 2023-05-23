@@ -15,7 +15,7 @@ import { NgForm } from '@angular/forms';
     '../../../assets/vendor/animsition/css/animsition.min.css',
     '../../../assets/vendor/select2/select2.min.css',
     '../../../assets/vendor/daterangepicker/daterangepicker.css',
-    './signin.component.css',
+    './signin.component.scss',
 
   ]
 })
