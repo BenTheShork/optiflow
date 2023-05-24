@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -30,3 +31,9 @@ Route::get('project/{id}', [ProjectController::class, 'show']);
 Route::post('project', [ProjectController::class, 'store']);
 Route::put('project/{id}', [ProjectController::class, 'update']);
 Route::delete('project/{id}', [ProjectController::class, 'destroy']);
+
+Route::get('process', [ProcessController::class, 'index']);
+Route::get('process/{id}', [ProcessController::class, 'show']);
+Route::post('process', [ProcessController::class, 'store']);
+Route::put('process/{id}', [ProcessController::class, 'update']);
+Route::delete('process/{id}', [ProcessController::class, 'destroy']);

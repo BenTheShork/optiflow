@@ -8,17 +8,13 @@ use Illuminate\Http\Request;
 class ProjectController extends Controller
 {
     public function index(Request $request) {
-        $projects = Project::where('user_id', $request->user_id)->paginate(10);
-
-        return response()->json([
-            'status' => 200,
-            'projects' => $projects
-        ], 200);
+        $projects = Project::where('user_id', $request->user_id)->get();
+        return response()->json($projects, 200);
     }
 
     public function store(Request $request) {
         $duplicate = Project::where('user_id', $request->user_id)->where('name', $request->name);
-        if($duplicate->count()>0) {
+        if(count($duplicate)) {
             return response()->json([
                 'status' => 200,
                 'message' => "Project already exists!"
@@ -28,8 +24,7 @@ class ProjectController extends Controller
             $project = Project::create([
                 'user_id' => $request->user_id,
                 'name' => $request->name,
-                'description' => $request->description,
-                'num_processes' => $request->num_processes
+                'description' => $request->description
             ]);
     
             if($project) 
@@ -49,10 +44,7 @@ class ProjectController extends Controller
     public function show($id) {
         $project = Project::find($id);
         if($project) 
-            return response()->json([
-                'status' => 200,
-                'project' => $project
-            ]);        
+            return response()->json($project, 200);        
         else 
             return response()->json([
                 'status' => 404,
@@ -64,7 +56,7 @@ class ProjectController extends Controller
         $project = Project::find($id);
         if($project) {
             $duplicate = Project::where('user_id', $request->user_id)->where('name', $request->name)->where('id', '!=', $id);
-            if($duplicate->count()>0) {
+            if(count($duplicate)>0) {
                 return response()->json([
                     'status' => 200,
                     'message' => "Duplicate name for a project!"
@@ -73,8 +65,7 @@ class ProjectController extends Controller
             else {
                 $project->update([
                     'name' => $request->name,
-                    'description' => $request->description,
-                    'num_processes' => $request->num_processes
+                    'description' => $request->description
                 ]);
                 return response()->json([
                     'status' => 200,
