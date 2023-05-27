@@ -3,27 +3,11 @@
     <a class="title" routerLink="/dashboard">Dashboard</a><span> / Projects</span>
 </span>
 <div class="card mt-4 py-3 px-3 exported-variables w-100">
-    <!-- Table -->
-    <dx-data-grid #projectsGrid class="data-grid-search projects"
-        [dataSource]="project$ | async"
-        keyExpr="id"
-        [allowColumnResizing]="true" 
-        [allowColumnReordering]="true"
-        [showBorders]="false" 
-        [showRowLines]="false"
-        [columnMinWidth]="150"
-        [hoverStateEnabled]="true" 
-        [remoteOperations]="true" 
-        [wordWrapEnabled]="true" 
-        [columnAutoWidth]="false" 
-        columnResizingMode="widget"  
-        [noDataText]="'no data'"
-        (onCellPrepared)="onCellPrepared($event)">
+    <dx-data-grid #projectsGrid class="data-grid-search projects" [dataSource]="project$ | async" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
+        [remoteOperations]="true" [wordWrapEnabled]="true" [columnAutoWidth]="false" columnResizingMode="widget" [noDataText]="'no data'" (onCellPrepared)="onCellPrepared($event)">
 
-        <!-- Pagination settings -->
         <dxo-paging [pageSize]="10"></dxo-paging>
-        <dxo-pager [visible]="true" [showPageSizeSelector]="true" [allowedPageSizes]="[6, 12, 24]"
-            [showNavigationButtons]="true">
+        <dxo-pager [visible]="true" [showPageSizeSelector]="true" [allowedPageSizes]="[6, 12, 24]" [showNavigationButtons]="true">
         </dxo-pager>
 
         <!-- Filtering & Sorting settings -->
@@ -33,8 +17,7 @@
         <dxo-sorting mode="single"></dxo-sorting>
 
         <!-- Editing settings -->
-        <dxo-editing [allowAdding]="false" [allowUpdating]="false" [allowDeleting]="false" mode="row"
-            refreshMode="reshape" [useIcons]="true">
+        <dxo-editing [allowAdding]="false" [allowUpdating]="false" [allowDeleting]="false" mode="row" refreshMode="reshape" [useIcons]="true">
         </dxo-editing>
         <dxo-filter-panel [visible]="true"></dxo-filter-panel>
 
@@ -53,8 +36,7 @@
             <!-- Create Button -->
             <dxi-item location="after" locateInMenu="auto">
                 <div *dxTemplate>
-                    <button routerLink="/create-project"
-                        class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
+                    <button routerLink="/create-project" class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
                         Create Project <i
                             class="bi bi-plus-circle-fill text-success font-size-2 lh-1"></i>
                     </button>
@@ -62,35 +44,15 @@
             </dxi-item>
         </dxo-toolbar>
         <!-- Columns definition -->
-        <dxi-column 
-            dataField="name"
-            dataType="string"
-            [allowEditing]="true"
-            [caption]="'Name'">
+        <dxi-column dataField="name" dataType="string" [allowEditing]="true" [caption]="'Name'">
         </dxi-column>
-        <dxi-column
-            dataField="description"
-            dataType="string"
-            [allowEditing]="true"
-            [caption]="'Description'">
+        <dxi-column dataField="description" dataType="string" [allowEditing]="true" [caption]="'Description'">
         </dxi-column>
-        <dxi-column 
-            dataField="num_processes"
-            dataType="number"
-            [allowEditing]="true"
-            [caption]="'Number of processes'">
+        <dxi-column dataField="num_processes" dataType="number" [allowEditing]="true" [caption]="'Number of processes'">
         </dxi-column>
-        <dxi-column 
-            dataField="created_at"
-            dataType="date"
-            [allowEditing]="true"
-            [caption]="'Created'">
+        <dxi-column dataField="created_at" dataType="date" [allowEditing]="true" [caption]="'Created'">
         </dxi-column>
-        <dxi-column 
-            dataField="updated_at"
-            dataType="date"
-            [allowEditing]="true"
-            [caption]="'Updated'">
+        <dxi-column dataField="updated_at" dataType="date" [allowEditing]="true" [caption]="'Updated'">
         </dxi-column>
     </dx-data-grid>
 </div>
