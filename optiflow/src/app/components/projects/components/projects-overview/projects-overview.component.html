@@ -1,0 +1,63 @@
+<h2 class="fw-bold title-mobile overview">Projects</h2>
+<span>
+    <a class="title" routerLink="/dashboard">Dashboard</a><span> / Projects</span>
+</span>
+<div class="card mt-4 py-3 px-3 exported-variables w-100">
+    <dx-data-grid #projectsGrid class="data-grid-search projects" [dataSource]="project$ | async" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
+        [remoteOperations]="true" [wordWrapEnabled]="true" [columnAutoWidth]="false" columnResizingMode="widget" [noDataText]="'no data'" (onCellPrepared)="onCellPrepared($event)" (onRowInserting)="onRowInserting($event)" (onRowUpdating)="onRowUpdating($event)"
+        (onRowRemoving)="onRowRemoving($event)" (onCellClick)="redirectToDetails($event)">
+
+        <dxo-paging [pageSize]="10"></dxo-paging>
+        <dxo-pager [visible]="true" [showPageSizeSelector]="true" [allowedPageSizes]="[6, 12, 24]" [showNavigationButtons]="true">
+        </dxo-pager>
+
+        <!-- Filtering & Sorting settings -->
+        <dxo-header-filter [visible]="true"></dxo-header-filter>
+        <dxo-filter-row [visible]="true"></dxo-filter-row>
+        <dxo-search-panel [visible]="true" [width]="320"></dxo-search-panel>
+        <dxo-sorting mode="single"></dxo-sorting>
+
+        <!-- Editing settings -->
+        <dxo-editing [allowAdding]="true" [allowUpdating]="true" [allowDeleting]="true" mode="row" refreshMode="reshape" [useIcons]="true">
+        </dxo-editing>
+        <dxo-filter-panel [visible]="true"></dxo-filter-panel>
+
+        <dxo-export [enabled]="true"></dxo-export>
+
+        <!-- Column chooser settings -->
+        <dxo-column-chooser [enabled]="true" mode="dragAndDrop"></dxo-column-chooser>
+
+        <!-- Toolbar setup -->
+        <dxo-toolbar>
+            <!-- Search Panel -->
+            <dxi-item location="before" name="searchPanel"></dxi-item>
+            <dxi-item location="before" name="addRowButton"></dxi-item>
+            <dxi-item location="before" name="exportButton"></dxi-item>
+            <dxi-item location="before" name="columnChooserButton"></dxi-item>
+            <!-- Create Button -->
+            <dxi-item location="after" locateInMenu="auto">
+                <div *dxTemplate>
+                    <button routerLink="/create-project" class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
+                        Create Project <i
+                            class="bi bi-plus-circle-fill text-success font-size-2 lh-1"></i>
+                    </button>
+                </div>
+            </dxi-item>
+        </dxo-toolbar>
+        <!-- Columns definition -->
+        <dxi-column dataField="name" dataType="string" [caption]="'Name'">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="description" dataType="string" [caption]="'Description'">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
+        </dxi-column>
+        <dxi-column dataField="num_processes" dataType="number" [caption]="'Number of processes'" [allowEditing]="false">
+        </dxi-column>
+        <dxi-column dataField="created_at" dataType="date" [caption]="'Created'" [allowEditing]="false">
+        </dxi-column>
+        <dxi-column dataField="updated_at" dataType="date" [caption]="'Updated'" [allowEditing]="false">
+        </dxi-column>
+    </dx-data-grid>
+</div>
+<app-confirmation-popup [title]="'delete property'" [description]="'confirm delete property'" [(popupVisible)]="confirmationVisible" (changeConfirmed)="confirmProjectRemoval()">
+</app-confirmation-popup>

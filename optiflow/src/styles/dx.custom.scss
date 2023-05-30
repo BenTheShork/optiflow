@@ -1,5 +1,4 @@
 @import 'src/styles/variables';
-
 .data-grid-search {
     .dx-datagrid-search-panel {
         margin: 0 !important;
@@ -8,19 +7,20 @@
 
 @font-face {
     font-family: DXIcons;
-    src: local("DevExtreme Generic Icons"),local("devextreme_generic_icons"),url(../assets/icons/dxicons.woff2) format("woff2"),url(../assets/icons/dxicons.woff) format("woff"),url(../assets/icons/dxicons.ttf) format("truetype");
+    src: local("DevExtreme Generic Icons"), local("devextreme_generic_icons"), url(../assets/icons/dxicons.woff2) format("woff2"), url(../assets/icons/dxicons.woff) format("woff"), url(../assets/icons/dxicons.ttf) format("truetype");
     font-weight: 400;
     font-style: normal;
 }
 
-.dx-icon-confluence { // in Angular apps, add ::ng-deep before
+.dx-icon-confluence {
+    // in Angular apps, add ::ng-deep before
     background-image: url(/assets/icons/chapter_icon.svg);
     background-repeat: no-repeat;
     background-position: 0px 0px;
 }
 
 .dx-popup-content {
-    padding: 0 !important;
+    padding: 20px !important;
 }
 
 .dx-popup-wrapper .dx-popup-content .dx-formdialog-form.dx-form {
@@ -47,22 +47,18 @@ dx-data-grid {
             background-color: #fafafa;
         }
     }
-
     .datagrid-total-header {
         border-bottom: 1px solid #ddd;
         border-top: none;
-
         .dx-datagrid-content {
             padding-top: 0 !important;
             padding-bottom: 0 !important;
-
             td {
                 border-right: 1px solid #ddd;
             }
         }
     }
 }
-
 
 .master-detail {
     .dx-master-detail-cell {
