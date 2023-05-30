@@ -1,0 +1,23 @@
+<dx-popup [width]="700" [height]="'auto'" [showTitle]="false" [dragEnabled]="false" [hideOnOutsideClick]="false" [showCloseButton]="false" [(visible)]="popupVisible">
+
+    <div class="popup-content">
+        <h2>{{ title }}</h2>
+        <div>{{ description }}</div>
+        <div class="extra-content" *ngIf="previousValue && newValue">
+            <div class="value-content">
+                previous value:
+                <div class="bold">{{ previousValue }}</div>
+            </div>
+            <div class="value-content">
+                new value
+                <div class="bold">{{ newValue }}</div>
+            </div>
+        </div>
+        <div class="buttons">
+            <dx-button [text]="'close'" class="popup-button popup-button-gray" (onClick)="closePopup()">
+            </dx-button>
+            <dx-button class="popup-button popup-button-red" [text]="'confirm'" (onClick)="confirmationClick()">
+            </dx-button>
+        </div>
+    </div>
+</dx-popup>

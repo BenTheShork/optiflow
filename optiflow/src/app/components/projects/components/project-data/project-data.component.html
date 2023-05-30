@@ -1,0 +1,33 @@
+<dx-validation-group #validationGroup>
+    <form (submit)="postProject($event)">
+        <div class="dx-field-label w-50"> name*:
+            <dx-text-box [(value)]="project.name" (onValueChanged)="onValueChanged($event, 'name')" width=100% [disabled]="!canEdit" class="dx-field-value">
+                <dx-validator>
+                    <dxi-validation-rule type="required" message="Name is empty"></dxi-validation-rule>
+                </dx-validator>
+            </dx-text-box>
+        </div>
+        <div class="dx-field-label w-50"> description:
+            <dx-text-area [(value)]="project.description" height="100px" [maxLength]="2000" width="100%" class="dx-field-value" (onValueChanged)="onValueChanged($event, 'content')" [disabled]="!canEdit">
+            </dx-text-area>
+        </div>
+        <div class="dx-field-label w-50">number of processes:
+            <dx-number-box [(value)]="project.num_processes" width="100%" class="dx-field-value" [disabled]="true">
+            </dx-number-box>
+        </div>
+        <!--<div class="dx-field-label w-50">
+            aaa
+            <dx-text-box
+                [value]="CHAPTER_CATEGORIES[chapter.category].name"
+                width="100%"
+                class="dx-field-value"
+                [disabled]="true">
+            </dx-text-box>
+        </div>-->
+
+        <div class="w-100 m-10" *ngIf="!project.id && canEdit">
+            <dx-button [text]="'save'" icon="save" stylingMode="text" [useSubmitBehavior]="true">
+            </dx-button>
+        </div>
+    </form>
+</dx-validation-group>
