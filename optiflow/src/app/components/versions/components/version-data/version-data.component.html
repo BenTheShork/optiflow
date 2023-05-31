@@ -1,0 +1,47 @@
+<dx-validation-group #validationGroup>
+    <form (submit)="postVersion($event)">
+        <div class="dx-field-label w-50"> version*:
+            <dx-text-box [(value)]="version.version" (onValueChanged)="onValueChanged($event, 'version')" width=100% [disabled]="!canEdit" class="dx-field-value">
+                <dx-validator>
+                    <dxi-validation-rule type="required" message="Version is empty"></dxi-validation-rule>
+                </dx-validator>
+            </dx-text-box>
+        </div>
+        <div class="dx-field-label w-50"> name*:
+            <dx-text-box [(value)]="version.name" (onValueChanged)="onValueChanged($event, 'name')" width=100% [disabled]="!canEdit" class="dx-field-value">
+                <dx-validator>
+                    <dxi-validation-rule type="required" message="Name is empty"></dxi-validation-rule>
+                </dx-validator>
+            </dx-text-box>
+        </div>
+        <div class="dx-field-label w-50"> description:
+            <dx-text-area [(value)]="version.description" height="100px" [maxLength]="2000" width="100%" class="dx-field-value" (onValueChanged)="onValueChanged($event, 'description')" [disabled]="!canEdit">
+            </dx-text-area>
+        </div>
+        <div class="dx-field-label w-50">total duration:
+            <dx-number-box [(value)]="version.totla_duration" width="100%" class="dx-field-value" [disabled]="true">
+            </dx-number-box>
+        </div>
+        <div class="dx-field-label w-50">number of people:
+            <dx-number-box [(value)]="version.num_people" width="100%" class="dx-field-value" [disabled]="true">
+            </dx-number-box>
+        </div>
+        <div class="dx-field-label w-50">grade*:
+            <dx-number-box [(value)]="version.grade" width="100%" class="dx-field-value">
+                <dx-validator>
+                    <dxi-validation-rule type="required" message="Grade is empty"></dxi-validation-rule>
+                </dx-validator>
+            </dx-number-box>
+        </div>
+        <div class="dx-field-label w-50" *ngIf="processes">
+            Process*:
+            <dx-select-box displayExpr="name" valueExpr="id" searchMode="contains" searchExpr="name" [searchEnabled]="true" [acceptCustomValue]="false" [(value)]="version.process_id" [items]="processes" (onValueChanged)="onValueChanged($event,'process_id')">
+            </dx-select-box>
+        </div>
+
+        <div class="w-100 m-10" *ngIf="!version.id && canEdit">
+            <dx-button [text]="'save'" icon="save" stylingMode="text" [useSubmitBehavior]="true">
+            </dx-button>
+        </div>
+    </form>
+</dx-validation-group>

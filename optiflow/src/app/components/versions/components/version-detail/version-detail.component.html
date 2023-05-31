@@ -1,0 +1,20 @@
+<ng-container *ngIf="version$ | async as version">
+    <div class="d-flex flex-column">
+        <h2 class="fw-bold title-mobile overview">Versions</h2>
+        <span>
+            <a class="title" routerLink="/dashboard">Dashboard</a> / 
+            <a class="title" routerLink="/project"> Projects</a> / 
+            <a class="title" routerLink="/project/projectId"> PROJECT NAME</a> / 
+            <a class="title" routerLink="../"> {{ processName }}</a> / 
+            <a class="title" [routerLink]="'/project/projectId/' + processId + '/' + versionId"> {{ version.name }}</a>
+        </span>
+        <app-version-data [version]="version" [processes]="process$ | async" [canEdit]="true">
+        </app-version-data>
+    </div>
+
+    <!--<div class="d-flex flex-column" *ngIf="version.id">
+        <h2 class="fw-bold title-mobile overview">Activities</h2>
+        <app-activities-table [activity]="activities$ | async" (refreshActivities)="refreshActivities()" [versionId]="versionId">
+        </app-activities-table>
+    </div>-->
+</ng-container>

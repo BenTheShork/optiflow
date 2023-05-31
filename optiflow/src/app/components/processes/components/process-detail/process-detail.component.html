@@ -11,9 +11,9 @@
         </app-process-data>
     </div>
 
-    <!--<div class="d-flex flex-column" *ngIf="process.id">
+    <div class="d-flex flex-column" *ngIf="process.id">
         <h2 class="fw-bold title-mobile overview">Versions</h2>
-        <app-versions-table [versions]="versions$ | async" (refreshVersions)="refreshVersions()" [processId]="processId">
+        <app-versions-table [version]="versions$ | async" (refreshVersions)="refreshVersions()" [processId]="processId">
         </app-versions-table>
-    </div>-->
+    </div>
 </ng-container>

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Process } from '@src/app/share/classes/process.class';
 import { Project } from '@src/app/share/classes/project.class';
+import { Version } from '@src/app/share/classes/version.class';
 import { ProcessApiService } from '@src/app/share/services/api/process-api.service';
 import { ProjectApiService } from '@src/app/share/services/api/project-api.service';
+import { VersionApiService } from '@src/app/share/services/api/version-api.service';
 import { LoadingScreenService } from '@src/app/share/services/loading-screen.service';
 import { Observable } from 'rxjs';
 
@@ -16,7 +18,7 @@ export class ProcessDetailComponent implements OnInit{
 
   public process$ = new Observable<Process>();
   public projects$ = new Observable<Project[]>();
-  //public versions$ = new Observable<Version[]>();
+  public versions$ = new Observable<Version[]>();
   public canEdit = true;
   public processId: string;
   public projectId: string;
@@ -25,6 +27,7 @@ export class ProcessDetailComponent implements OnInit{
   constructor(
     private processApiService: ProcessApiService,
     private projectApiService: ProjectApiService,
+    private versionApiService: VersionApiService,
     private route: ActivatedRoute,
     private readonly loadingService: LoadingScreenService,
   ) {
@@ -53,13 +56,13 @@ export class ProcessDetailComponent implements OnInit{
     this.process$ = this.processApiService.getProcess(this.processId);
   }
 
-  /*refreshVersions() {
+  refreshVersions() {
     this.versions$ = this.versionApiService.getVersions(this.processId);
-  }*/
+  }
 
   private refreshData() {
     this.refreshProcess();
-    //this.refreshVersions();
+    this.refreshVersions();
   }
 
 }
