@@ -15,9 +15,8 @@ class ProcessController extends Controller
 
     public function store(Request $request) {
         $duplicate = Project::find($request->project_id)->process->where('name', $request->name);
-        if(count($duplicate)) {
+        if(count($duplicate)>0) {
             return response()->json([
-                'status' => 200,
                 'message' => "Process already exists!"
             ], 200);
         }
@@ -31,13 +30,11 @@ class ProcessController extends Controller
     
             if($process) 
                 return response()->json([
-                    'status' => 200,
                     'message' => "Process created successfully!",
                     'process' => $process
                 ], 200);
             else 
                 return response()->json([
-                    'status' => 500,
                     'message' => "Error creating process!"
                 ], 500);
         }
@@ -49,9 +46,8 @@ class ProcessController extends Controller
             return response()->json($process, 200);        
         else 
             return response()->json([
-                'status' => 404,
-                'message' => "Project not found!"
-            ]);
+                'message' => "Process not found!"
+            ], 404);
     }
 
     public function update(Request $request, $id) {
@@ -60,28 +56,26 @@ class ProcessController extends Controller
             $duplicate = Project::find($request->project_id)->process->where('name', $request->name)->where('id', '!=', $id);
             if(count($duplicate)>0) {
                 return response()->json([
-                    'status' => 200,
                     'message' => "Duplicate name for a process!"
-                ]);
+                ], 409);
             }
             else {
                 $process->update([
+                    'project_id' => $request->project_id,
                     'name' => $request->name,
                     'description' => $request->description,
                     'status' => $request->status
                 ]);
                 return response()->json([
-                    'status' => 200,
                     'message' => "Process updated successfully!",
                     'process' => $process
-                ]); 
+                ], 200); 
             }
         }
         else 
             return response()->json([
-                'status' => 404,
-                'message' => "process not found!"
-            ]);
+                'message' => "Process not found!"
+            ], 404);
     }
 
     public function destroy(Request $request, $id) {
@@ -89,15 +83,13 @@ class ProcessController extends Controller
         if($process) {
             $process->delete();
             return response()->json([
-                'status' => 200,
                 'message' => "Process deleted successfully!",
                 'process' => $process
-            ]); 
+            ], 200); 
         }
         else
             return response()->json([
-                'status' => 404,
                 'message' => "Process not found!"
-            ]);
+            ], 404);
     }
 }
