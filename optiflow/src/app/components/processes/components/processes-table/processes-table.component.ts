@@ -78,7 +78,6 @@ export class ProcessesTableComponent implements OnInit {
       status: e.data.status,
       best_version: e.data.best_version
     });
-    console.log(newProcess);
     e.cancel = this.processApiService
         .postProcess(newProcess)
         .pipe(

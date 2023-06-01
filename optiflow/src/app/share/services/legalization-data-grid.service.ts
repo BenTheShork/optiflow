@@ -4,6 +4,7 @@ import { dxDataGridColumn } from 'devextreme/ui/data_grid';
 import { Project } from '../classes/project.class';
 import { Process } from '../classes/process.class';
 import { Version } from '../classes/version.class';
+import { Activity } from '../classes/activity.class';
 
 @Injectable({
     providedIn: 'root'
@@ -45,7 +46,7 @@ export class LegalizationDatagridService {
     public onCellPrepared(e: {
         rowType: string;
         column: dxDataGridColumn;
-        data: Project | Process | Version;
+        data: Project | Process | Version | Activity;
         cellElement: { classList: { add: (arg0: string) => void } };
     }): void {
         if (e.rowType !== 'data' || !e.column.name) {

@@ -1,14 +1,14 @@
 <dx-validation-group #validationGroup>
     <form (submit)="postProcess($event)">
         <div class="dx-field-label w-50"> name*:
-            <dx-text-box [(value)]="process.name" (onValueChanged)="onValueChanged($event, 'name')" width=100% [disabled]="!canEdit" class="dx-field-value">
+            <dx-text-box [(value)]="process.name" (onValueChanged)="onValueChanged($event, 'name')" width=100% class="dx-field-value">
                 <dx-validator>
                     <dxi-validation-rule type="required" message="Name is empty"></dxi-validation-rule>
                 </dx-validator>
             </dx-text-box>
         </div>
         <div class="dx-field-label w-50"> description:
-            <dx-text-area [(value)]="process.description" height="100px" [maxLength]="2000" width="100%" class="dx-field-value" (onValueChanged)="onValueChanged($event, 'description')" [disabled]="!canEdit">
+            <dx-text-area [(value)]="process.description" height="100px" [maxLength]="2000" width="100%" class="dx-field-value" (onValueChanged)="onValueChanged($event, 'description')">
             </dx-text-area>
         </div>
         <div class="dx-field-label w-50">number of versions:
@@ -18,16 +18,22 @@
         <div class="dx-field-label w-50" *ngIf="PROCESS_STATUSES">
             status*:
             <dx-select-box valueExpr="id" displayExpr="name" [showClearButton]="true" [(value)]="process.status" [acceptCustomValue]="false" width="100%" [items]="PROCESS_STATUSES" class="dx-field-value" (onValueChanged)="onValueChanged($event,'status')">
+                <dx-validator>
+                    <dxi-validation-rule type="required" message="Status is empty"></dxi-validation-rule>
+                </dx-validator>
             </dx-select-box>
         </div>
 
-        <div class="dx-field-label w-50" *ngIf="projects">
+        <div class="dx-field-label w-50" *ngIf="projects$ | async as projects">
             Project*:
             <dx-select-box displayExpr="name" valueExpr="id" searchMode="contains" searchExpr="name" [searchEnabled]="true" [acceptCustomValue]="false" [(value)]="process.project_id" [items]="projects" (onValueChanged)="onValueChanged($event,'project_id')">
+                <dx-validator>
+                    <dxi-validation-rule type="required" message="Project is empty"></dxi-validation-rule>
+                </dx-validator>
             </dx-select-box>
         </div>
 
-        <div class="w-100 m-10" *ngIf="!process.id && canEdit">
+        <div class="w-100 m-10" *ngIf="!process.id && !canEdit">
             <dx-button [text]="'save'" icon="save" stylingMode="text" [useSubmitBehavior]="true">
             </dx-button>
         </div>

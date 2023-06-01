@@ -6,7 +6,7 @@ import { AlertService, AlertType } from '@src/app/share/services/alert.service';
 import { ProjectApiService } from '@src/app/share/services/api/project-api.service';
 import { ErrorHandleService } from '@src/app/share/services/error-handle.service';
 import { DxValidationGroupComponent } from 'devextreme-angular';
-import { catchError, map, takeUntil, tap, throwError } from 'rxjs';
+import { catchError, finalize, map, takeUntil, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-project-data',
@@ -57,7 +57,10 @@ export class ProjectDataComponent  extends UnsubscribeDirective {
     this.projectApiService.postProject(this.project)
     .pipe(
         takeUntil(this.unsubscribe$),
-        map(data => this.project = data),
+        finalize(() => {
+          this.alertService.notify('successfully saved', AlertType.Success, 5000);
+          this.router.navigate(['/project']);
+        }),
         catchError((error) => {
             this.errorHandleService.handleError(error,'cannot save');
             return throwError(error);

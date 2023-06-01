@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Activity } from '@src/app/share/classes/activity.class';
 import { Process } from '@src/app/share/classes/process.class';
+import { Project } from '@src/app/share/classes/project.class';
 import { Version } from '@src/app/share/classes/version.class';
+import { ActivityApiService } from '@src/app/share/services/api/activity-api.service';
 import { ProcessApiService } from '@src/app/share/services/api/process-api.service';
+import { ProjectApiService } from '@src/app/share/services/api/project-api.service';
 import { VersionApiService } from '@src/app/share/services/api/version-api.service';
 import { LoadingScreenService } from '@src/app/share/services/loading-screen.service';
 import { Observable } from 'rxjs';
@@ -15,7 +19,8 @@ import { Observable } from 'rxjs';
 export class VersionDetailComponent implements OnInit {
   public version$ = new Observable<Version>();
   public process$ = new Observable<Process[]>();
-  //public activities$ = new Observable<Activity[]>();
+  public activities$ = new Observable<Activity[]>();
+  public project$ = new Observable<Project>();
   public canEdit = true;
   public projectId: string;
   public versionId: string;
@@ -25,7 +30,8 @@ export class VersionDetailComponent implements OnInit {
   constructor(
     private versionApiService: VersionApiService,
     private processApiService: ProcessApiService,
-    //private activityApiService: ActivityApiService,
+    private activityApiService: ActivityApiService,
+    private projectApiService: ProjectApiService,
     private route: ActivatedRoute,
     private readonly loadingService: LoadingScreenService,
   ) {
@@ -55,12 +61,17 @@ export class VersionDetailComponent implements OnInit {
     this.version$ = this.versionApiService.getVersion(this.versionId);
   }
 
-  /*refreshProcesses() {
-    this.process$ = this.processApiService.getProcesses(this.projectId, 4);
-  }*/
+  refreshActivities() {
+    this.activities$ = this.activityApiService.getActivities(this.versionId);
+  }
+
+  getProject() {
+    this.project$ = this.projectApiService.getProject(this.projectId);
+  }
 
   private refreshData() {
     this.refreshVersion();
-    //this.refreshProcesses();
+    this.refreshActivities();
+    this.getProject();
   }
 }

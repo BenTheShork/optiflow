@@ -30,7 +30,7 @@ export class VersionDataComponent extends UnsubscribeDirective {
 
   onValueChanged(e: { value: any; event: any; previousValue?: any }, field: string): void {
     if (this.version.id && e.event && this.validationGroup.instance.validate().isValid) {
-        if (field === 'total_duration' || field === 'num_people') {
+        if (field === 'total_duration' || field === 'total_num_people') {
             return;
         } else {
           this.patchVersion(this.version);

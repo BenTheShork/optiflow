@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Version } from '@src/app/share/classes/version.class';
+import { Activity } from '@src/app/share/classes/activity.class';
 import { AlertService, AlertType } from '@src/app/share/services/alert.service';
-import { VersionApiService } from '@src/app/share/services/api/version-api.service';
+import { ActivityApiService } from '@src/app/share/services/api/activity-api.service';
 import { ErrorHandleService } from '@src/app/share/services/error-handle.service';
 import { LegalizationDatagridService } from '@src/app/share/services/legalization-data-grid.service';
 import { DxDataGridComponent } from 'devextreme-angular';
@@ -10,42 +10,41 @@ import { dxDataGridColumn } from 'devextreme/ui/data_grid';
 import { catchError, map, of, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-versions-table',
-  templateUrl: './versions-table.component.html',
-  styleUrls: ['./versions-table.component.scss']
+  selector: 'app-activity-table',
+  templateUrl: './activity-table.component.html',
+  styleUrls: ['./activity-table.component.scss']
 })
-export class VersionsTableComponent implements OnInit {
-
+export class ActivityTableComponent implements OnInit {
   @ViewChild(DxDataGridComponent) grid$: DxDataGridComponent;
 
-  @Input() version: Version[];
-  @Input() processId: string;
+  @Input() activity: Activity[];
+  @Input() versionId: string;
 
-  @Output() refreshVersions = new EventEmitter();
+  @Output() refreshActivities = new EventEmitter();
 
   public confirmationVisible = false;
   
-  private versionIdToDelete: string;
+  private activityIdToDelete: string;
 
   constructor(
     private legalizationDatagridService: LegalizationDatagridService,
     private route: ActivatedRoute,
-    private versionApiService: VersionApiService,
+    private activityApiService: ActivityApiService,
     private errorHandleService: ErrorHandleService,
     private alertService: AlertService,
     private readonly router: Router,
   ) {}
 
   ngOnInit() {
-    if (!this.processId) {
-        this.processId = this.route.snapshot.queryParamMap.get('processId');
+    if (!this.versionId) {
+        this.versionId = this.route.snapshot.queryParamMap.get('versionId');
     }
   }
 
   onCellPrepared(e: {
     rowType: string;
     column: dxDataGridColumn;
-    data: Version;
+    data: Activity;
     cellElement: { classList: { add: (arg0: string) => void } };
   }) {
     if(e.data) {
@@ -53,33 +52,23 @@ export class VersionsTableComponent implements OnInit {
     }
   }
 
-  redirectToDetails(event: any): void {
-    this.router.navigate(['./', event.data.id], {
-      relativeTo: this.route
-    });
-  }
-
   onRowInserting(e: any) {
-    let newVersion = new Version ({
-      major: e.data.major,
-      minor: e.data.minor,
-      patch: e.data.patch,
+    let newActivity = new Activity ({
+      name: e.data.name,
       description: e.data.description,
-      process_id: parseInt(this.processId),
-      grade: e.data.grade,
-      total_num_people: 0,
-      total_duration: 0
+      process_version_id: parseInt(this.versionId),
+      duration: e.data.duration,
+      num_people: e.data.num_people
     });
-    console.log(newVersion);
-    e.cancel = this.versionApiService
-        .postVersion(newVersion)
+    e.cancel = this.activityApiService
+        .postActivity(newActivity)
         .pipe(
             map((item) => {
                 return false;
             }),
             tap(() => {
               this.alertService.notify('successfully saved', AlertType.Success, 5000);
-              this.refreshVersions.emit();
+              this.refreshActivities.emit();
             }),
             catchError((err: any) => {
                 this.errorHandleService.handleError(
@@ -94,15 +83,15 @@ export class VersionsTableComponent implements OnInit {
 
   onRowUpdating(e: any) {
     const mergedData = Object.assign({}, e.oldData, e.newData);
-    e.cancel = this.versionApiService
-        .patchVersion(e.key, mergedData)
+    e.cancel = this.activityApiService
+        .patchActivity(e.key, mergedData)
         .pipe(
             map((item) => {
                 return false;
             }),
             tap(() => {
               this.alertService.notify('successfully updated', AlertType.Success, 5000);
-              this.refreshVersions.emit();
+              this.refreshActivities.emit();
             }),
             catchError((err: any) => {
                 this.errorHandleService.handleError(
@@ -117,7 +106,7 @@ export class VersionsTableComponent implements OnInit {
   onRowRemoving(e: any) {
     e.cancel = true;
     this.confirmationVisible = true;
-    this.versionIdToDelete = e.key;
+    this.activityIdToDelete = e.key;
   }
 
   onEditorPreparing(e: any) {
@@ -127,12 +116,12 @@ export class VersionsTableComponent implements OnInit {
     }
   }
 
-  confirmProcessRemoval() {
-    this.versionApiService
-        .deleteVersion(this.versionIdToDelete)
+  confirmActivityRemoval() {
+    this.activityApiService
+        .deleteActivity(this.activityIdToDelete)
         .pipe(
             map(() => {
-                this.refreshVersions.emit();
+                this.refreshActivities.emit();
                 return false;
             }),
             catchError((err: any) => {
@@ -145,5 +134,4 @@ export class VersionsTableComponent implements OnInit {
         )
         .toPromise();
   }
-
 }

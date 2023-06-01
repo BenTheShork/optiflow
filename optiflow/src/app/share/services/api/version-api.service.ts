@@ -12,7 +12,7 @@ import { Version } from '../../classes/version.class';
 export class VersionApiService extends DataApiService<Version> {
 
     constructor(protected http: HttpClient) {
-        super(environment.api + '/version', http, Version);
+        super(environment.api + '/processversion', http, Version);
     }
 
     // api/authenticates

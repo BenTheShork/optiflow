@@ -33,6 +33,7 @@ export class ProjectApiService extends DataApiService<Project> {
     }
 
     postProject(project: Project): Observable<Project> {
+        project.user_id=4;
         return this.create(project);
     }
 

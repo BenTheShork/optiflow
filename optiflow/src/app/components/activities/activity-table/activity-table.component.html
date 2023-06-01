@@ -1,7 +1,7 @@
 <div class="card mt-4 py-3 px-3 exported-variables w-100">
-    <dx-data-grid #versionsGrid class="data-grid-search processes status-grid" [dataSource]="version" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
-        [remoteOperations]="true" [wordWrapEnabled]="true" [columnAutoWidth]="false" columnResizingMode="widget" [noDataText]="version?.length === 0 ? 'no data' : ''" (onCellPrepared)="onCellPrepared($event)" (onRowInserting)="onRowInserting($event)" (onRowUpdating)="onRowUpdating($event)"
-        (onRowRemoving)="onRowRemoving($event)" (onCellClick)="redirectToDetails($event)" (onEditorPreparing)="onEditorPreparing($event)">
+    <dx-data-grid #activitiesGrid class="data-grid-search processes status-grid" [dataSource]="activity" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
+        [remoteOperations]="true" [wordWrapEnabled]="true" [columnAutoWidth]="false" columnResizingMode="widget" [noDataText]="activity?.length === 0 ? 'no data' : ''" (onCellPrepared)="onCellPrepared($event)" (onRowInserting)="onRowInserting($event)" (onRowUpdating)="onRowUpdating($event)"
+        (onRowRemoving)="onRowRemoving($event)" (onEditorPreparing)="onEditorPreparing($event)">
 
         <dxo-paging [pageSize]="10"></dxo-paging>
         <dxo-pager [visible]="true" [showPageSizeSelector]="true" [allowedPageSizes]="[6, 12, 24]" [showNavigationButtons]="true">
@@ -30,34 +30,20 @@
             <dxi-item location="before" name="addRowButton"></dxi-item>
             <dxi-item location="before" name="exportButton"></dxi-item>
             <dxi-item location="before" name="columnChooserButton"></dxi-item>
-            <!-- Create Button -->
-            <dxi-item location="after" locateInMenu="auto">
-                <div *dxTemplate>
-                    <button routerLink="/create-version" class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
-                        Create Version <i
-                            class="bi bi-plus-circle-fill text-success font-size-2 lh-1"></i>
-                    </button>
-                </div>
-            </dxi-item>
         </dxo-toolbar>
         <!-- Columns definition -->
-        <dxi-column dataField="major" dataType="number" [caption]="'Major'">
-            <dxi-validation-rule type="required"></dxi-validation-rule>
+        <dxi-column dataField="sequence_number" dataType="number" [caption]="'Sequence number'" [allowEditing]="false">
         </dxi-column>
-        <dxi-column dataField="minor" dataType="number" [caption]="'Minor'">
-            <dxi-validation-rule type="required"></dxi-validation-rule>
-        </dxi-column>
-        <dxi-column dataField="patch" dataType="number" [caption]="'Patch'">
+        <dxi-column dataField="name" dataType="string" [caption]="'Name'">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
         <dxi-column dataField="description" dataType="string" [caption]="'Description'">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="total_duration" dataType="number" [caption]="'Total duration'" [allowEditing]="false">
+        <dxi-column dataField="duration" dataType="number" [caption]="'Duration'">
+            <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="total_num_people" dataType="number" [caption]="'Number of people'" [allowEditing]="false">
-        </dxi-column>
-        <dxi-column dataField="grade" dataType="number" [caption]="'Grade'">
+        <dxi-column dataField="num_people" dataType="number" [caption]="'Number of people'">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
         <dxi-column dataField="created_at" dataType="date" [caption]="'Created'" [allowEditing]="false">
@@ -66,5 +52,5 @@
         </dxi-column>
     </dx-data-grid>
 </div>
-<app-confirmation-popup [title]="'delete property'" [description]="'confirm delete property'" [(popupVisible)]="confirmationVisible" (changeConfirmed)="confirmProcessRemoval()">
+<app-confirmation-popup [title]="'delete property'" [description]="'confirm delete property'" [(popupVisible)]="confirmationVisible" (changeConfirmed)="confirmActivityRemoval()">
 </app-confirmation-popup>
