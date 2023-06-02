@@ -7,6 +7,7 @@ import { DxButtonModule, DxDataGridModule, DxDateBoxModule, DxNumberBoxModule, D
 import { ShareModule } from '@src/app/share/share.module';
 import { DxoHeaderFilterModule } from 'devextreme-angular/ui/nested';
 import { RouterModule } from '@angular/router';
+import { VersionsModule } from '../versions/versions.module';
 
 
 
@@ -32,6 +33,7 @@ import { RouterModule } from '@angular/router';
     ShareModule,
     DxoHeaderFilterModule,
     RouterModule,
+    VersionsModule
   ],
   exports: [
     ProcessesTableComponent,

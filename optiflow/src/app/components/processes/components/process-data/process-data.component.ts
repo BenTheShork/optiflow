@@ -1,13 +1,15 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Process } from '@src/app/share/classes/process.class';
 import { Project } from '@src/app/share/classes/project.class';
 import { PROCESS_STATUSES } from '@src/app/share/consts/process-status.conts';
 import { UnsubscribeDirective } from '@src/app/share/directives/unsubsrcibe.directive';
 import { AlertService, AlertType } from '@src/app/share/services/alert.service';
 import { ProcessApiService } from '@src/app/share/services/api/process-api.service';
+import { ProjectApiService } from '@src/app/share/services/api/project-api.service';
 import { ErrorHandleService } from '@src/app/share/services/error-handle.service';
 import { DxValidationGroupComponent } from 'devextreme-angular';
-import { Observable, catchError, map, takeUntil, tap, throwError } from 'rxjs';
+import { Observable, catchError, finalize, map, takeUntil, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-process-data',
@@ -16,18 +18,22 @@ import { Observable, catchError, map, takeUntil, tap, throwError } from 'rxjs';
 })
 export class ProcessDataComponent extends UnsubscribeDirective {
   @Input() process: Process = new Process();
-  @Input() projects: Project[] = [];
   @Input() canEdit = false;
 
   @ViewChild('validationGroup', {static: false}) validationGroup: DxValidationGroupComponent;
+
+  public projects$ = new Observable<Project[]>();
   readonly PROCESS_STATUSES = PROCESS_STATUSES;
 
   constructor(
     private processApiService: ProcessApiService,
+    private projectApiService: ProjectApiService,
     private errorHandleService: ErrorHandleService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private readonly router: Router
   ) { 
     super();
+    this.projects$ = this.projectApiService.getProjects(4);
   }
 
   onValueChanged(e: { value: any; event: any; previousValue?: any }, field: string): void {
@@ -57,7 +63,10 @@ export class ProcessDataComponent extends UnsubscribeDirective {
     this.processApiService.postProcess(this.process)
     .pipe(
         takeUntil(this.unsubscribe$),
-        map(data => this.process = data),
+        tap(() => {
+          this.alertService.notify('successfully saved', AlertType.Success, 5000);
+          this.router.navigate(['/project/' + this.process.project_id]);
+        }),
         catchError((error) => {
             this.errorHandleService.handleError(error,'cannot save');
             return throwError(error);

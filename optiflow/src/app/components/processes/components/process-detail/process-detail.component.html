@@ -4,16 +4,16 @@
         <span>
             <a class="title" routerLink="/dashboard">Dashboard</a> / 
             <a class="title" routerLink="/project"> Projects</a> / 
-            <a class="title" routerLink="../"> {{ projectName }}</a> / 
+            <a class="title" routerLink="../"> PROJECT NAME </a> / 
             <a class="title" [routerLink]="'/project/' + projectId + '/' + processId"> {{ process.name }}</a>
         </span>
-        <app-process-data [process]="process" [projects]="projects$ | async" [canEdit]="true">
+        <app-process-data [process]="process" [canEdit]="true">
         </app-process-data>
     </div>
 
-    <!--<div class="d-flex flex-column" *ngIf="process.id">
+    <div class="d-flex flex-column" *ngIf="process.id">
         <h2 class="fw-bold title-mobile overview">Versions</h2>
-        <app-versions-table [versions]="versions$ | async" (refreshVersions)="refreshVersions()" [processId]="processId">
+        <app-versions-table [version]="versions$ | async" (refreshVersions)="refreshVersions()" [processId]="processId">
         </app-versions-table>
-    </div>-->
+    </div>
 </ng-container>
