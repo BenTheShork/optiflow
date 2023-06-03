@@ -5,7 +5,13 @@
 <div class="card mt-4 py-3 px-3 exported-variables w-100">
     <dx-data-grid #projectsGrid class="data-grid-search projects" [dataSource]="project$ | async" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
         [remoteOperations]="true" [wordWrapEnabled]="true" [columnAutoWidth]="false" columnResizingMode="widget" [noDataText]="'no data'" (onCellPrepared)="onCellPrepared($event)" (onRowInserting)="onRowInserting($event)" (onRowUpdating)="onRowUpdating($event)"
-        (onRowRemoving)="onRowRemoving($event)" (onCellClick)="redirectToDetails($event)">
+        (onRowRemoving)="onRowRemoving($event)" (onCellClick)="redirectToDetails($event)" [(selectedRowKeys)]="selectedRows" (onSelectionChanged)="selectionChangedHandler()">
+
+        <dxo-selection
+            [selectAllMode]="'allMode'"
+            [showCheckBoxesMode]="'always'"
+            mode="multiple"
+        ></dxo-selection>
 
         <dxo-paging [pageSize]="10"></dxo-paging>
         <dxo-pager [visible]="true" [showPageSizeSelector]="true" [allowedPageSizes]="[6, 12, 24]" [showNavigationButtons]="true">
@@ -34,15 +40,32 @@
             <dxi-item location="before" name="addRowButton"></dxi-item>
             <dxi-item location="before" name="exportButton"></dxi-item>
             <dxi-item location="before" name="columnChooserButton"></dxi-item>
+            <dxi-item location="before" name="columnChooserButton">
+                <div *dxTemplate>
+                    <button [disabled]="!hasSelectedRows()"
+                        (click)="deleteSelectedRows()" 
+                        class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
+                        Delete selected
+                    </button>
+                </div>
+            </dxi-item>
             <!-- Create Button -->
             <dxi-item location="after" locateInMenu="auto">
                 <div *dxTemplate>
-                    <button routerLink="/create-project" class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
+                    <button (click)="onAddClick()" class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
                         Create Project <i
                             class="bi bi-plus-circle-fill text-success font-size-2 lh-1"></i>
                     </button>
                 </div>
             </dxi-item>
+            <dxi-item location="before">
+                <dx-button
+                  text="Clear Selection"
+                  [disabled]="!selectedRows?.length"
+                  (onClick)="grid$.instance.clearSelection()"
+                >
+                </dx-button>
+              </dxi-item>
         </dxo-toolbar>
         <!-- Columns definition -->
         <dxi-column dataField="name" dataType="string" [caption]="'Name'">

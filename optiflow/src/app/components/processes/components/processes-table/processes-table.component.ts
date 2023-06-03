@@ -36,7 +36,8 @@ export class ProcessesTableComponent implements OnInit {
   readonly PROCESS_STATUSES = PROCESS_STATUSES;
 
   private processIdToDelete: string;
-  private urlDetail = '/project/';
+  selectedRows: number[] = [];
+  selectionChangedBySelectbox: boolean;
 
   constructor(
     private legalizationDatagridService: LegalizationDatagridService,
@@ -53,6 +54,27 @@ export class ProcessesTableComponent implements OnInit {
     }
   }
 
+  hasSelectedRows(): boolean {
+    return this.selectedRows.length > 0;
+  }
+
+  selectionChangedHandler() {
+    if (!this.selectionChangedBySelectbox) {
+    }
+
+    this.selectionChangedBySelectbox = false;
+  }
+
+  deleteSelectedRows(): void {
+    this.confirmationVisible = true;
+  }
+
+  onAddClick(): void {
+    if (this.grid$) {
+        this.grid$.instance.addRow();
+    }
+  }
+
   onCellPrepared(e: {
     rowType: string;
     column: dxDataGridColumn;
@@ -65,6 +87,9 @@ export class ProcessesTableComponent implements OnInit {
   }
 
   redirectToDetails(event: any): void {
+    if (!event.column.name) {
+      return;
+    }
     this.router.navigate(['./', event.data.id], {
       relativeTo: this.route
   });
@@ -135,22 +160,39 @@ export class ProcessesTableComponent implements OnInit {
   }
 
   confirmProcessRemoval() {
-    this.processApiService
-        .deleteProcess(this.processIdToDelete)
-        .pipe(
-            map(() => {
-                this.refreshProcesses.emit();
-                return false;
-            }),
-            catchError((err: any) => {
-                this.errorHandleService.handleError(
-                    err,
-                    'cannot delete'
-                );
-                return of(true);
-            })
-        )
-        .toPromise();
+    if (this.selectedRows.length > 0) {
+      this.processApiService
+      .deleteProcesses(this.selectedRows)
+      .pipe(
+          map(() => {
+              this.refreshProcesses.emit();
+              return false;
+          }),
+          catchError((err: any) => {
+              this.errorHandleService.handleError(
+                  err,
+                  'cannot delete'
+              );
+              return of(true);
+          })
+      ).toPromise();
+    } else {
+      this.processApiService
+      .deleteProcess(this.processIdToDelete)
+      .pipe(
+          map(() => {
+              this.refreshProcesses.emit();
+              return false;
+          }),
+          catchError((err: any) => {
+              this.errorHandleService.handleError(
+                  err,
+                  'cannot delete'
+              );
+              return of(true);
+          })
+      ).toPromise();
+    }
   }
 
 }

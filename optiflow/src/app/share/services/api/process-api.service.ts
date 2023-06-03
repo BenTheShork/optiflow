@@ -40,4 +40,8 @@ export class ProcessApiService extends DataApiService<Process> {
     deleteProcess(id: string): Observable<void> {
         return this.deleteOne(id) as Observable<void>;
     }
+
+    deleteProcesses(ids: number[]): Observable<void> {
+        return this.deleteAll('', ids) as Observable<void>;
+    }
 }

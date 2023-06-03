@@ -140,4 +140,15 @@ export abstract class DataApiService<T, G = T> {
     protected deleteOne(resourceId: string, urlExtension: string = ''): Observable<void | T> {
         return this.http.delete<null | T>(this.url + urlExtension + '/'  + resourceId);
     }
+
+    /**
+     * This method calls the backend to delete all resources.
+     *
+     * @param urlExtension
+     * @param params
+     */
+    protected deleteAll(urlExtension: string = '', params?: any): Observable<void> {
+        const options = new Options(params);
+        return this.http.delete<null>(this.url + urlExtension, options);
+    }
 }

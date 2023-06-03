@@ -39,13 +39,13 @@ export class ProcessDetailComponent implements OnInit{
     if (this.processId) {
         this.refreshData();
     }
-    /*if (this.projectId) {
+    if (this.projectId) {
       this.projects$ = this.projectApiService.getProjects(4);
       this.projects$.subscribe(projects => {
         const project = projects.find(project => project.id == this.projectId);
         this.projectName = project ? project.name : '';
       });
-    }*/
+    }
   }
 
   onCanEditChange(canEdit: boolean) {

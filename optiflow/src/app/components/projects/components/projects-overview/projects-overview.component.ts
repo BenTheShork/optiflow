@@ -24,7 +24,8 @@ export class ProjectsOverviewComponent {
   public confirmationVisible = false;
   private projectIdToDelete: string;
 
-  private urlDetail = '/project';
+  selectedRows: number[] = [];
+  selectionChangedBySelectbox: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,10 +45,34 @@ export class ProjectsOverviewComponent {
     this.canEdit = canEdit;
   }
 
+  hasSelectedRows(): boolean {
+    return this.selectedRows.length > 0;
+  }
+
+  selectionChangedHandler() {
+    if (!this.selectionChangedBySelectbox) {
+    }
+
+    this.selectionChangedBySelectbox = false;
+  }
+
+  deleteSelectedRows(): void {
+    this.confirmationVisible = true;
+  }
+
   redirectToDetails(e: any) {
+    if (!e.column.name) {
+      return;
+    }
     this.router.navigate(['./', e.data.id], {
       relativeTo: this.route
     });
+  }
+
+  onAddClick(): void {
+    if (this.grid$) {
+        this.grid$.instance.addRow();
+    }
   }
 
   onCellPrepared(e: {
@@ -108,14 +133,25 @@ export class ProjectsOverviewComponent {
   }
 
   confirmProjectRemoval() {
-    this.projectApiService.deleteProject(this.projectIdToDelete)
-    .pipe(
-        catchError((err: any) => {
-            this.errorHandleService.handleError(err, 'cannot delete');
-            return of(true);
-        }),
-        finalize(() => this.refreshData())
-    ).toPromise();
+    if (this.selectedRows.length > 0) {
+      this.projectApiService.deleteProjects(this.selectedRows)
+      .pipe(
+          catchError((err: any) => {
+              this.errorHandleService.handleError(err, 'cannot delete');
+              return of(true);
+          }),
+          finalize(() => this.refreshData())
+      ).toPromise();
+    } else {
+      this.projectApiService.deleteProject(this.projectIdToDelete)
+      .pipe(
+          catchError((err: any) => {
+              this.errorHandleService.handleError(err, 'cannot delete');
+              return of(true);
+          }),
+          finalize(() => this.refreshData())
+      ).toPromise();
+    }
   }
 
   private refreshData() {

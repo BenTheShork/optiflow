@@ -4,7 +4,7 @@
         <span>
             <a class="title" routerLink="/dashboard">Dashboard</a> / 
             <a class="title" routerLink="/project"> Projects</a> / 
-            <a class="title" routerLink="../"> PROJECT NAME </a> / 
+            <a class="title" routerLink="../"> {{ projectName }} </a> / 
             <a class="title" [routerLink]="'/project/' + projectId + '/' + processId"> {{ process.name }}</a>
         </span>
         <app-process-data [process]="process" [canEdit]="true">

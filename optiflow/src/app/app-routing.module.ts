@@ -21,14 +21,6 @@ const routes: Routes = [
           path: 'create-project',
           component: ProjectDataComponent,
         },
-        {
-          path: 'create-process',
-          component: ProcessDataComponent,
-        },
-        {
-          path: 'create-version',
-          component: VersionDataComponent,
-        },
     ]
   },
   { path: '**', component: PageNotFoundComponent }
