@@ -1,7 +1,13 @@
 <div class="card mt-4 py-3 px-3 exported-variables w-100">
     <dx-data-grid #activitiesGrid class="data-grid-search processes status-grid" [dataSource]="activity" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
         [remoteOperations]="true" [wordWrapEnabled]="true" [columnAutoWidth]="false" columnResizingMode="widget" [noDataText]="activity?.length === 0 ? 'no data' : ''" (onCellPrepared)="onCellPrepared($event)" (onRowInserting)="onRowInserting($event)" (onRowUpdating)="onRowUpdating($event)"
-        (onRowRemoving)="onRowRemoving($event)" (onEditorPreparing)="onEditorPreparing($event)">
+        (onRowRemoving)="onRowRemoving($event)" (onEditorPreparing)="onEditorPreparing($event)" [(selectedRowKeys)]="selectedRows" (onSelectionChanged)="selectionChangedHandler()">
+
+        <dxo-selection
+            [selectAllMode]="'allMode'"
+            [showCheckBoxesMode]="'always'"
+            mode="multiple"
+        ></dxo-selection>
 
         <dxo-paging [pageSize]="10"></dxo-paging>
         <dxo-pager [visible]="true" [showPageSizeSelector]="true" [allowedPageSizes]="[6, 12, 24]" [showNavigationButtons]="true">
@@ -30,6 +36,23 @@
             <dxi-item location="before" name="addRowButton"></dxi-item>
             <dxi-item location="before" name="exportButton"></dxi-item>
             <dxi-item location="before" name="columnChooserButton"></dxi-item>
+            <dxi-item location="before" name="columnChooserButton">
+                <div *dxTemplate>
+                    <button [disabled]="!hasSelectedRows()"
+                        (click)="deleteSelectedRows()" 
+                        class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
+                        Delete selected
+                    </button>
+                </div>
+            </dxi-item>
+            <dxi-item location="before">
+                <dx-button
+                  text="Clear Selection"
+                  [disabled]="!selectedRows?.length"
+                  (onClick)="grid$.instance.clearSelection()"
+                >
+                </dx-button>
+            </dxi-item>
         </dxo-toolbar>
         <!-- Columns definition -->
         <dxi-column dataField="sequence_number" dataType="number" [caption]="'Sequence number'" [allowEditing]="false">
@@ -40,7 +63,10 @@
         <dxi-column dataField="description" dataType="string" [caption]="'Description'">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="duration" dataType="number" [caption]="'Duration'">
+        <dxi-column dataField="duration" dataType="number" cellTemplate="durationCellTemplate" [caption]="'Duration'">
+            <div *dxTemplate="let cellData of 'durationCellTemplate'">
+                {{ formatDuration(cellData.value) }}
+            </div>
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
         <dxi-column dataField="num_people" dataType="number" [caption]="'Number of people'">

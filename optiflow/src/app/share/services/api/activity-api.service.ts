@@ -39,4 +39,8 @@ export class ActivityApiService extends DataApiService<Activity> {
     deleteActivity(id: string): Observable<void> {
         return this.deleteOne(id) as Observable<void>;
     }
+
+    deleteActivities(ids: number[]): Observable<void> {
+        return this.deleteAll('', ids) as Observable<void>;
+    }
 }

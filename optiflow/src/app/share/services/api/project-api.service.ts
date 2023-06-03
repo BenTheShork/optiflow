@@ -40,4 +40,8 @@ export class ProjectApiService extends DataApiService<Project> {
     deleteProject(id: string): Observable<void> {
         return this.deleteOne(id) as Observable<void>;
     }
+
+    deleteProjects(ids: number[]): Observable<void> {
+        return this.deleteAll('',ids) as Observable<void>;
+    }
 }

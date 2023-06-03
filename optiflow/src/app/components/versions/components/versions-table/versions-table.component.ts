@@ -24,6 +24,8 @@ export class VersionsTableComponent implements OnInit {
   @Output() refreshVersions = new EventEmitter();
 
   public confirmationVisible = false;
+  selectedRows: number[] = [];
+  selectionChangedBySelectbox: boolean;
   
   private versionIdToDelete: string;
 
@@ -42,6 +44,38 @@ export class VersionsTableComponent implements OnInit {
     }
   }
 
+  formatDuration(duration: number): string {
+    const hours = Math.floor(duration / 60);
+    const minutes = duration % 60;
+    
+    if (hours === 0) {
+        return `${minutes} min`;
+    } else {
+        return `${hours} h ${minutes} min`;
+    }
+  }
+
+  hasSelectedRows(): boolean {
+    return this.selectedRows.length > 0;
+  }
+
+  selectionChangedHandler() {
+    if (!this.selectionChangedBySelectbox) {
+    }
+
+    this.selectionChangedBySelectbox = false;
+  }
+
+  deleteSelectedRows(): void {
+    this.confirmationVisible = true;
+  }
+
+  onAddClick(): void {
+    if (this.grid$) {
+        this.grid$.instance.addRow();
+    }
+  }
+
   onCellPrepared(e: {
     rowType: string;
     column: dxDataGridColumn;
@@ -54,6 +88,9 @@ export class VersionsTableComponent implements OnInit {
   }
 
   redirectToDetails(event: any): void {
+    if (!event.column.name) {
+      return;
+    }
     this.router.navigate(['./', event.data.id], {
       relativeTo: this.route
     });
@@ -128,7 +165,25 @@ export class VersionsTableComponent implements OnInit {
   }
 
   confirmProcessRemoval() {
-    this.versionApiService
+    if (this.selectedRows.length > 0) {
+      this.versionApiService
+        .deleteVersions(this.selectedRows)
+        .pipe(
+            map(() => {
+                this.refreshVersions.emit();
+                return false;
+            }),
+            catchError((err: any) => {
+                this.errorHandleService.handleError(
+                    err,
+                    'cannot delete'
+                );
+                return of(true);
+            })
+        )
+        .toPromise();
+    } else {
+      this.versionApiService
         .deleteVersion(this.versionIdToDelete)
         .pipe(
             map(() => {
@@ -144,6 +199,7 @@ export class VersionsTableComponent implements OnInit {
             })
         )
         .toPromise();
+    }
   }
 
 }

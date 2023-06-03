@@ -23,6 +23,8 @@ export class ActivityTableComponent implements OnInit {
   @Output() refreshActivities = new EventEmitter();
 
   public confirmationVisible = false;
+  selectedRows: number[] = [];
+  selectionChangedBySelectbox: boolean;
   
   private activityIdToDelete: string;
 
@@ -39,6 +41,32 @@ export class ActivityTableComponent implements OnInit {
     if (!this.versionId) {
         this.versionId = this.route.snapshot.queryParamMap.get('versionId');
     }
+  }
+
+  formatDuration(duration: number): string {
+    const hours = Math.floor(duration / 60);
+    const minutes = duration % 60;
+    
+    if (hours === 0) {
+        return `${minutes} min`;
+    } else {
+        return `${hours} h ${minutes} min`;
+    }
+  }
+
+  hasSelectedRows(): boolean {
+    return this.selectedRows.length > 0;
+  }
+
+  selectionChangedHandler() {
+    if (!this.selectionChangedBySelectbox) {
+    }
+
+    this.selectionChangedBySelectbox = false;
+  }
+
+  deleteSelectedRows(): void {
+    this.confirmationVisible = true;
   }
 
   onCellPrepared(e: {
@@ -117,7 +145,25 @@ export class ActivityTableComponent implements OnInit {
   }
 
   confirmActivityRemoval() {
-    this.activityApiService
+    if (this.selectedRows.length > 0) {
+      this.activityApiService
+        .deleteActivities(this.selectedRows)
+        .pipe(
+            map(() => {
+                this.refreshActivities.emit();
+                return false;
+            }),
+            catchError((err: any) => {
+                this.errorHandleService.handleError(
+                    err,
+                    'cannot delete'
+                );
+                return of(true);
+            })
+        )
+        .toPromise();
+    } else {
+      this.activityApiService
         .deleteActivity(this.activityIdToDelete)
         .pipe(
             map(() => {
@@ -133,5 +179,6 @@ export class ActivityTableComponent implements OnInit {
             })
         )
         .toPromise();
+    }
   }
 }

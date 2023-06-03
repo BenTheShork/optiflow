@@ -39,4 +39,8 @@ export class VersionApiService extends DataApiService<Version> {
     deleteVersion(id: string): Observable<void> {
         return this.deleteOne(id) as Observable<void>;
     }
+
+    deleteVersions(ids: number[]): Observable<void> {
+        return this.deleteAll('', ids) as Observable<void>;
+    }
 }
