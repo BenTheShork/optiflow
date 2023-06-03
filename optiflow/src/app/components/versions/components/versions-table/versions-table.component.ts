@@ -44,6 +44,17 @@ export class VersionsTableComponent implements OnInit {
     }
   }
 
+  formatDuration(duration: number): string {
+    const hours = Math.floor(duration / 60);
+    const minutes = duration % 60;
+    
+    if (hours === 0) {
+        return `${minutes} min`;
+    } else {
+        return `${hours} h ${minutes} min`;
+    }
+  }
+
   hasSelectedRows(): boolean {
     return this.selectedRows.length > 0;
   }

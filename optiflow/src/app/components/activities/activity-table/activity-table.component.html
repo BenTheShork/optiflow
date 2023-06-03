@@ -63,7 +63,10 @@
         <dxi-column dataField="description" dataType="string" [caption]="'Description'">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="duration" dataType="number" [caption]="'Duration'">
+        <dxi-column dataField="duration" dataType="number" cellTemplate="durationCellTemplate" [caption]="'Duration'">
+            <div *dxTemplate="let cellData of 'durationCellTemplate'">
+                {{ formatDuration(cellData.value) }}
+            </div>
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
         <dxi-column dataField="num_people" dataType="number" [caption]="'Number of people'">
