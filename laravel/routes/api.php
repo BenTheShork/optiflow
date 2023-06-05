@@ -5,6 +5,7 @@ use App\Http\Controllers\ProcessVersionController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ActivityLogController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -55,3 +56,5 @@ Route::post('activity', [ActivityController::class, 'store']);
 Route::patch('activity/{id}', [ActivityController::class, 'update']);
 Route::delete('activity/{id}', [ActivityController::class, 'destroy']);
 Route::delete('activity', [ActivityController::class, 'destroy_selected']);
+
+Route::get('activitylog', [ActivityLogController::class, 'index']);
