@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Process;
 use App\Models\ProcessVersion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProcessVersionController extends Controller
 {
@@ -27,16 +28,22 @@ class ProcessVersionController extends Controller
                 'major' => $request->major,
                 'minor' => $request->minor,
                 'patch' => $request->patch,
-                'total_duration' => $request->total_duration,
-                'total_num_people' => $request->total_num_people,
                 'grade' => $request->grade
             ]);
     
-            if($process_version) 
+            if($process_version) {
+                DB::table('activity_log')->insert([
+                    'user_id' => $request->user_id,
+                    'table_name' => 'process_version',
+                    'record' => $request->major.'.'.$request->minor.'.'.$request->patch,
+                    'action' => 'created'
+                ]);
+
                 return response()->json([
                     'message' => "Process version created successfully!",
                     'process_version' => $process_version
                 ], 200);
+            }
             else 
                 return response()->json([
                     'message' => "Error creating process version!"
@@ -70,10 +77,16 @@ class ProcessVersionController extends Controller
                     'major' => $request->major,
                     'minor' => $request->minor,
                     'patch' => $request->patch,
-                    'total_duration' => $request->total_duration,
-                    'total_num_people' => $request->total_num_people,
                     'grade' => $request->grade
                 ]);
+
+                DB::table('activity_log')->insert([
+                    'user_id' => $request->user_id,
+                    'table_name' => 'process_version',
+                    'record' => $request->major.'.'.$request->minor.'.'.$request->patch,
+                    'action' => 'updated'
+                ]);
+
                 return response()->json([
                     'message' => "Process version updated successfully!",
                     'process_version' => $process_version
@@ -89,7 +102,15 @@ class ProcessVersionController extends Controller
     public function destroy(Request $request, $id) {
         $process_version = ProcessVersion::find($id);
         if($process_version) {
+            DB::table('activity_log')->insert([
+                'user_id' => $request->user_id,
+                'table_name' => 'process_version',
+                'record' => $process_version->major.'.'.$process_version->minor.'.'.$process_version->patch,
+                'action' => 'deleted'
+            ]);
+
             $process_version->delete();
+
             return response()->json([
                 'message' => "Process version deleted successfully!",
                 'process_version' => $process_version
@@ -98,6 +119,36 @@ class ProcessVersionController extends Controller
         else
             return response()->json([
                 'message' => "Process not found!"
+            ], 404);
+    }
+
+    public function destroy_selected(Request $request) {
+        $flag = true;
+        foreach ($request->ids as $id) {
+            $process_version = ProcessVersion::find($id);
+            if($process_version) {
+                DB::table('activity_log')->insert([
+                    'user_id' => $request->user_id,
+                    'table_name' => 'process_version',
+                    'record' => $process_version->major.'.'.$process_version->minor.'.'.$process_version->patch,
+                    'action' => 'deleted'
+                ]);
+
+                $process_version->delete(); 
+            }
+            else {
+                $flag = false;
+            }
+        }
+        if($flag) {
+            return response()->json([
+                'message' => "Versions deleted successfully!",
+                'process_version' => $process_version
+            ], 200);
+        }
+        else
+            return response()->json([
+                'message' => "Versions not found!"
             ], 404);
     }
 }

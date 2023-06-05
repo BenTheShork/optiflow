@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ProcessVersion extends Model
 {
@@ -18,12 +19,18 @@ class ProcessVersion extends Model
         'major',
         'minor',
         'patch',
+        'num_activities',
         'total_duration',
         'total_num_people',
-        'grade'
+        'grade',
+        'file'
     ];
 
     public function process(): BelongsTo {
         return $this->belongsTo(Process::class);
+    }
+
+    public function activity(): HasMany {
+        return $this->hasMany(Activity::class);
     }
 }

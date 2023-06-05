@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -27,11 +28,19 @@ class ProjectController extends Controller
                 'description' => $request->description
             ]);
     
-            if($project) 
+            if($project) {
+                DB::table('activity_log')->insert([
+                    'user_id' => $request->user_id,
+                    'table_name' => 'project',
+                    'record' => $request->name,
+                    'action' => 'created'
+                ]);
+            
                 return response()->json([
                     'message' => "Project created successfully!",
                     'project' => $project
                 ], 200);
+            }
             else 
                 return response()->json([
                     'message' => "Error creating project!"
@@ -63,6 +72,14 @@ class ProjectController extends Controller
                     'name' => $request->name,
                     'description' => $request->description
                 ]);
+
+                DB::table('activity_log')->insert([
+                    'user_id' => $request->user_id,
+                    'table_name' => 'project',
+                    'record' => $request->name,
+                    'action' => 'updated'
+                ]);
+
                 return response()->json([
                     'message' => "Project updated successfully!",
                     'project' => $project
@@ -78,7 +95,15 @@ class ProjectController extends Controller
     public function destroy(Request $request, $id) {
         $project = Project::find($id);
         if($project) {
+            DB::table('activity_log')->insert([
+                'user_id' => $request->user_id,
+                'table_name' => 'project',
+                'record' => $project->name,
+                'action' => 'deleted'
+            ]);
+
             $project->delete();
+
             return response()->json([
                 'message' => "Project deleted successfully!",
                 'project' => $project
@@ -87,6 +112,36 @@ class ProjectController extends Controller
         else
             return response()->json([
                 'message' => "Project not found!"
+            ], 404);
+    }
+
+    public function destroy_selected(Request $request) {
+        $flag = true;
+        foreach ($request->ids as $id) {
+            $project = Project::find($id);
+            if($project) {
+                DB::table('activity_log')->insert([
+                    'user_id' => $request->user_id,
+                    'table_name' => 'project',
+                    'record' => $project->name,
+                    'action' => 'deleted'
+                ]);
+
+                $project->delete(); 
+            }
+            else {
+                $flag = false;
+            }
+        }
+        if($flag) {
+            return response()->json([
+                'message' => "Projects deleted successfully!",
+                'project' => $project
+            ], 200);
+        }
+        else
+            return response()->json([
+                'message' => "Projects not found!"
             ], 404);
     }
 }

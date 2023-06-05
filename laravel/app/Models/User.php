@@ -19,4 +19,8 @@ class User extends Model
     public function project(): HasMany {
         return $this->hasMany(Project::class);
     }
+
+    public function activity_log(): HasMany {
+        return $this->hasMany(ActivityLog::class);
+    }
 }
