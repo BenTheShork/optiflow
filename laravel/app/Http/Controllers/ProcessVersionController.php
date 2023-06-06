@@ -28,7 +28,8 @@ class ProcessVersionController extends Controller
                 'major' => $request->major,
                 'minor' => $request->minor,
                 'patch' => $request->patch,
-                'grade' => $request->grade
+                'grade' => $request->grade,
+                'file' => $request->file
             ]);
     
             if($process_version) {
@@ -77,7 +78,8 @@ class ProcessVersionController extends Controller
                     'major' => $request->major,
                     'minor' => $request->minor,
                     'patch' => $request->patch,
-                    'grade' => $request->grade
+                    'grade' => $request->grade,
+                    'file' => $request->file
                 ]);
 
                 DB::table('activity_log')->insert([
