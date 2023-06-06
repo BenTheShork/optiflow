@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Version } from '@src/app/share/classes/version.class';
-import { AlertService, AlertType } from '@src/app/share/services/alert.service';
+import { AlertService } from '@src/app/share/services/alert.service';
 import { VersionApiService } from '@src/app/share/services/api/version-api.service';
-import { ErrorHandleService } from '@src/app/share/services/error-handle.service';
 import { LegalizationDatagridService } from '@src/app/share/services/legalization-data-grid.service';
 import { DxDataGridComponent } from 'devextreme-angular';
 import { dxDataGridColumn } from 'devextreme/ui/data_grid';
@@ -33,7 +32,6 @@ export class VersionsTableComponent implements OnInit {
     private legalizationDatagridService: LegalizationDatagridService,
     private route: ActivatedRoute,
     private versionApiService: VersionApiService,
-    private errorHandleService: ErrorHandleService,
     private alertService: AlertService,
     private readonly router: Router,
   ) {}
@@ -115,14 +113,11 @@ export class VersionsTableComponent implements OnInit {
                 return false;
             }),
             tap(() => {
-              this.alertService.notify('successfully saved', AlertType.Success, 5000);
+              this.alertService.success('alerts.successful-create');
               this.refreshVersions.emit();
             }),
             catchError((err: any) => {
-                this.errorHandleService.handleError(
-                    err,
-                    'cannot save'
-                );
+                this.alertService.error('request-errors.cannot-save', err);
                 return of(true);
             })
         )
@@ -138,14 +133,11 @@ export class VersionsTableComponent implements OnInit {
                 return false;
             }),
             tap(() => {
-              this.alertService.notify('successfully updated', AlertType.Success, 5000);
+              this.alertService.success('alerts.successful-update');
               this.refreshVersions.emit();
             }),
             catchError((err: any) => {
-                this.errorHandleService.handleError(
-                    err,
-                    'cannot update'
-                );
+                this.alertService.error('request-errors.cannot-update', err);
                 return of(true);
             })
         ).toPromise();
@@ -170,14 +162,12 @@ export class VersionsTableComponent implements OnInit {
         .deleteVersions(this.selectedRows)
         .pipe(
             map(() => {
+                this.alertService.success('alerts.successful-delete')
                 this.refreshVersions.emit();
                 return false;
             }),
             catchError((err: any) => {
-                this.errorHandleService.handleError(
-                    err,
-                    'cannot delete'
-                );
+                this.alertService.error('request-errors.cannot-delete', err);
                 return of(true);
             })
         )
@@ -187,14 +177,12 @@ export class VersionsTableComponent implements OnInit {
         .deleteVersion(this.versionIdToDelete)
         .pipe(
             map(() => {
+                this.alertService.success('alerts.successful-delete')
                 this.refreshVersions.emit();
                 return false;
             }),
             catchError((err: any) => {
-                this.errorHandleService.handleError(
-                    err,
-                    'cannot delete'
-                );
+                this.alertService.error('request-errors.cannot-delete', err);
                 return of(true);
             })
         )

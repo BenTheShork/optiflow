@@ -1697,7 +1697,7 @@
 .dx-field-label {
   float: left;
   width: 40%;
-  overflow: hidden;
+  /*overflow: hidden;*/
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #333;

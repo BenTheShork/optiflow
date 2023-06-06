@@ -41,7 +41,7 @@
                     <button [disabled]="!hasSelectedRows()"
                         (click)="deleteSelectedRows()" 
                         class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
-                        Delete selected
+                        {{ 'table.delete-selected' | translate }}
                     </button>
                 </div>
             </dxi-item>
@@ -49,14 +49,14 @@
             <dxi-item location="after" locateInMenu="auto">
                 <div *dxTemplate>
                     <button (click)="onAddClick()" class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
-                        Create Version <i
+                        {{ 'version.create-version' | translate }} <i
                             class="bi bi-plus-circle-fill text-success font-size-2 lh-1"></i>
                     </button>
                 </div>
             </dxi-item>
             <dxi-item location="before">
                 <dx-button
-                  text="Clear Selection"
+                [text]="'table.clear-selection' | translate"
                   [disabled]="!selectedRows?.length"
                   (onClick)="grid$.instance.clearSelection()"
                 >
@@ -64,33 +64,33 @@
             </dxi-item>
         </dxo-toolbar>
         <!-- Columns definition -->
-        <dxi-column dataField="major" dataType="number" [caption]="'Major'">
+        <dxi-column dataField="major" dataType="number" [caption]="'version.major' | translate">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="minor" dataType="number" [caption]="'Minor'">
+        <dxi-column dataField="minor" dataType="number" [caption]="'version.minor' | translate">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="patch" dataType="number" [caption]="'Patch'">
+        <dxi-column dataField="patch" dataType="number" [caption]="'version.patch' | translate">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="description" dataType="string" [caption]="'Description'">
+        <dxi-column dataField="description" dataType="string" [caption]="'version.description' | translate">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="total_duration" dataType="number" cellTemplate="durationCellTemplate" [caption]="'Total duration'" [allowEditing]="false">
+        <dxi-column dataField="total_duration" dataType="number" cellTemplate="durationCellTemplate" [caption]="'version.total-duration' | translate" [allowEditing]="false">
             <div *dxTemplate="let cellData of 'durationCellTemplate'">
                 {{ formatDuration(cellData.value) }}
             </div>
         </dxi-column>
-        <dxi-column dataField="total_num_people" dataType="number" [caption]="'Number of people'" [allowEditing]="false">
+        <dxi-column dataField="total_num_people" dataType="number" [caption]="'version.total-num-poeple' | translate" [allowEditing]="false">
         </dxi-column>
-        <dxi-column dataField="grade" dataType="number" [caption]="'Grade'">
+        <dxi-column dataField="grade" dataType="number" [caption]="'version.grade' | translate">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="created_at" dataType="date" [caption]="'Created'" [allowEditing]="false">
+        <dxi-column dataField="created_at" dataType="date" [caption]="'version.created' | translate" [allowEditing]="false">
         </dxi-column>
-        <dxi-column dataField="updated_at" dataType="date" [caption]="'Updated'" [allowEditing]="false">
+        <dxi-column dataField="updated_at" dataType="date" [caption]="'version.updated' | translate" [allowEditing]="false">
         </dxi-column>
     </dx-data-grid>
 </div>
-<app-confirmation-popup [title]="'delete property'" [description]="'confirm delete property'" [(popupVisible)]="confirmationVisible" (changeConfirmed)="confirmProcessRemoval()">
+<app-confirmation-popup [title]="'version.delete-version' | translate" [description]="'version.delete-version-description' | translate" [(popupVisible)]="confirmationVisible" (changeConfirmed)="confirmProcessRemoval()">
 </app-confirmation-popup>

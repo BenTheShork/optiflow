@@ -5,24 +5,24 @@
       <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
       <form class="login100-form validate-form" #loginForm="ngForm">
         <span class="login100-form-title p-b-49">
-        Sign Up
+          {{ 'auth.sign-up' | translate }}
         </span>
     
         <div class="wrap-input100 validate-input m-b-23" data-validate = "Email is required">
-        <span class="label-input100">Email</span>
-        <input class="input100" type="text" name="email" placeholder="Type your email" [(ngModel)]="email">
+        <span class="label-input100">{{ 'auth.email' | translate }}</span>
+        <input class="input100" type="text" name="email" [placeholder]="'auth.type-email' | translate" [(ngModel)]="email">
         <span class="focus-input100" data-symbol="&#xf206;"></span>
         </div>
     
         <div class="wrap-input100 validate-input m-b-23" data-validate="Password is required">
-        <span class="label-input100">Password</span>
-        <input class="input100" type="password" name="pass" placeholder="Type your password" [(ngModel)]="password">
+        <span class="label-input100">{{ 'auth.password' | translate }}</span>
+        <input class="input100" type="password" name="pass" [placeholder]="'auth.type-password' | translate" [(ngModel)]="password">
         <span class="focus-input100" data-symbol="&#xf190;"></span>
         </div>
 
         <div class="wrap-input100 validate-input" data-validate="Password is required">
-          <span class="label-input100">Retype Password</span>
-          <input class="input100" type="password" name="pass" placeholder="Repeat your password" [(ngModel)]="rpassword">
+          <span class="label-input100">{{ 'auth.repeat-password' | translate }}</span>
+          <input class="input100" type="password" name="pass" [placeholder]="'auth.type-repeat-password' | translate" [(ngModel)]="rpassword">
           <span class="focus-input100" data-symbol="&#xf190;"></span>
         </div>
         
@@ -33,7 +33,7 @@
         <div class="text-right p-t-8 p-b-31">
          
         <a href="#">
-          Forgot password?
+          {{ 'auth.forgot-password' | translate }}
           </a>
         </div>
         
@@ -41,7 +41,7 @@
           <div class="wrap-login100-form-btn">
           <div class="login100-form-bgbtn"></div>
           <button class="login100-form-btn" [disabled]="!loginForm.valid" (click)="signup()">
-            Sign Up
+            {{ 'auth.sign-up' | translate }}
           </button>
           </div>
           
@@ -49,7 +49,7 @@
     
         <div class="txt1 text-center p-t-54 p-b-20">
           <span>
-            Already have an account?:
+            {{ 'auth.have-account' | translate }}
           </span>
         </div>
     
@@ -60,7 +60,7 @@
           </span>
     
           <a href="/signin" class="txt2">
-          Sign in
+            {{ 'auth.sign-in' | translate }}
           </a>
         </div>
         </form>
