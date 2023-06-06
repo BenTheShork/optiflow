@@ -17,6 +17,8 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
+        console.log(result);
+        
         return result;
       })
       .catch((error) => {

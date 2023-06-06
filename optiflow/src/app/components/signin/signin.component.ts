@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '@src/app/authorization/auth.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -24,15 +24,19 @@ export class SignIn implements OnInit {
   password: string = '';
   errorMessage: string = ''; // Define a variable to hold the error message
 
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService, private readonly router: Router) { }
 
   ngOnInit() { }
 
   login() {
+   
+    
     this.authService.signin(this.email, this.password)
       .then((userCredential) => {
-        console.log('You have been successfully logged in!');
-        // Do something with the userCredential if needed
+        console.log(userCredential);
+        let user = userCredential.user.email;
+        sessionStorage.setItem('token', userCredential.user.uid);
+        this.router.navigate(['/projects/']);
       })
       .catch((error) => {
         console.log(error);
