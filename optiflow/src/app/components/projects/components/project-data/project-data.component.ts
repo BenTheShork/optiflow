@@ -2,11 +2,10 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from '@src/app/share/classes/project.class';
 import { UnsubscribeDirective } from '@src/app/share/directives/unsubsrcibe.directive';
-import { AlertService, AlertType } from '@src/app/share/services/alert.service';
+import { AlertService } from '@src/app/share/services/alert.service';
 import { ProjectApiService } from '@src/app/share/services/api/project-api.service';
-import { ErrorHandleService } from '@src/app/share/services/error-handle.service';
 import { DxValidationGroupComponent } from 'devextreme-angular';
-import { catchError, finalize, map, takeUntil, tap, throwError } from 'rxjs';
+import { catchError, finalize, takeUntil, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-project-data',
@@ -23,7 +22,6 @@ export class ProjectDataComponent  extends UnsubscribeDirective {
     private projectApiService: ProjectApiService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
-    private errorHandleService: ErrorHandleService,
     private alertService: AlertService
   ) { 
     super();
@@ -35,7 +33,6 @@ export class ProjectDataComponent  extends UnsubscribeDirective {
             return;
         } else {
           this.patchProject(this.project);
-          //this.patchRegulation({[field]: e.value});
         }
     }
   }
@@ -44,9 +41,9 @@ export class ProjectDataComponent  extends UnsubscribeDirective {
     this.projectApiService.patchProject(this.project.id, obj)
     .pipe(
         takeUntil(this.unsubscribe$),
-        tap(() => this.alertService.notify('successfully saved', AlertType.Success, 5000)),
+        tap(() => this.alertService.success('alerts.successful-updated')),
         catchError((error) => {
-            this.errorHandleService.handleError(error, 'cannot update');
+            this.alertService.error('request-errors.cannot-update', error);
             return throwError(error);
         })
     ).subscribe();
@@ -58,11 +55,11 @@ export class ProjectDataComponent  extends UnsubscribeDirective {
     .pipe(
         takeUntil(this.unsubscribe$),
         finalize(() => {
-          this.alertService.notify('successfully saved', AlertType.Success, 5000);
+          this.alertService.success('alerts.successful-create');
           this.router.navigate(['/project']);
         }),
         catchError((error) => {
-            this.errorHandleService.handleError(error,'cannot save');
+            this.alertService.error('request-errors.cannot-save', error);
             return throwError(error);
         })
     ).subscribe();

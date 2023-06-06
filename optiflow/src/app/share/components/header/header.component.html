@@ -14,35 +14,57 @@
             <div>
                 <li [routerLinkActive]="['active']" class="nav-item">
                     <a class="nav-link" (click)="toggleMenu()" routerLink="/dashboard">
-                        <i class="bi bi-speedometer2"> </i> Dashboard
+                        <i class="bi bi-speedometer2"> </i> {{ 'header.dashboard' | translate }}
                     </a>
                 </li>
                 <li [routerLinkActive]="['active']" class="nav-item">
                     <a class="nav-link" (click)="toggleMenu()" routerLink="/project">
-                        <i class="bi bi-list-check"></i> Projects
+                        <i class="bi bi-list-check"></i> {{ 'header.projects' | translate }}
                     </a>
                 </li>
                 <li [routerLinkActive]="['active']" class="nav-item">
                     <a class="nav-link" (click)="toggleMenu()" routerLink="/insights">
-                        <i class="bi bi-bar-chart-steps"> </i> Insights
+                        <i class="bi bi-bar-chart-steps"> </i> {{ 'header.insights' | translate }}
                     </a>
                 </li>
                 <li [routerLinkActive]="['active']" class="nav-item">
                     <a class="nav-link" (click)="toggleMenu()" routerLink="/activity-log">
-                        <i class="bi bi-list-ul"> </i> Activity Log
+                        <i class="bi bi-list-ul"> </i> {{ 'header.activity-log' | translate }}
                     </a>
                 </li>
                 <li [routerLinkActive]="['active']" class="nav-item">
                     <a class="nav-link" (click)="toggleMenu()" routerLink="/preferences">
-                        <i class="bi bi-person-gear"> </i> Preferences
+                        <i class="bi bi-person-gear"> </i> {{ 'header.preferences' | translate }}
                     </a>
                 </li>
             </div>
             <div class="bottom-area">
+                <!-- LANGUAGE SWITCHING -->
+
+				<li class="nav-item" *ngIf="selectedLanguage$ | async as selectedLanguage">
+					<a
+						role="button"
+						*ngIf="selectedLanguage === Language.SL"
+						class="nav-link pe-auto"
+						(click)="setLanguage(Language.EN)"
+					>
+						<img class="language-icon" src="/assets/icons/slovenia_flag.svg" alt="Slovenia flag" />
+						{{ 'header.switch-language' | translate }}
+					</a>
+					<a
+						role="button"
+						*ngIf="selectedLanguage === Language.EN"
+						class="nav-link"
+						(click)="setLanguage(Language.SL)"
+					>
+						<img class="language-icon" src="/assets/icons/british_flag.svg" alt="British flag" />
+						{{ 'header.switch-language' | translate }}
+					</a>
+				</li>
                 <!-- LOG OUT -->
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['auth']" (click)="logout()">
-                        <i class="bi bi-box-arrow-right"> </i> Logout
+                        <i class="bi bi-box-arrow-right"> </i> {{ 'header.logout' | translate }}
                     </a>
                 </li>
                 <!-- USER INFO -->

@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Project } from '@src/app/share/classes/project.class';
-import { AlertService, AlertType } from '@src/app/share/services/alert.service';
+import { AlertService } from '@src/app/share/services/alert.service';
 import { ProjectApiService } from '@src/app/share/services/api/project-api.service';
-import { ErrorHandleService } from '@src/app/share/services/error-handle.service';
 import { LegalizationDatagridService } from '@src/app/share/services/legalization-data-grid.service';
 import { LoadingScreenService } from '@src/app/share/services/loading-screen.service';
 import { DxDataGridComponent } from 'devextreme-angular';
@@ -31,7 +30,6 @@ export class ProjectsOverviewComponent {
     private route: ActivatedRoute,
     private projectApiService: ProjectApiService,
     private readonly loadingService: LoadingScreenService,
-    private errorHandleService: ErrorHandleService,
     private alertService: AlertService,
     private readonly router: Router,
     private legalizationDatagridService: LegalizationDatagridService
@@ -97,11 +95,11 @@ export class ProjectsOverviewComponent {
           return false;
         }),
         tap(() => {
-          this.alertService.notify('successfully saved', AlertType.Success, 5000);
+          this.alertService.success('alerts.successful-create');
           this.refreshData();
         }),
         catchError((err: any) => {
-          this.errorHandleService.handleError(err, 'cannot save');
+          this.alertService.error('request-errors.cannot-save', err);
           return of(true);
         })
       ).toPromise();
@@ -116,11 +114,11 @@ export class ProjectsOverviewComponent {
                 return false;
             }),
             tap(() => {
-              this.alertService.notify('successfully saved', AlertType.Success, 5000);
+              this.alertService.success('alerts.successful-update');
               this.refreshData();
             }),
             catchError((err: any) => {
-                this.errorHandleService.handleError(err, 'cannot update');
+                this.alertService.error('request-errors.cannot-update', err);
                 return of(true);
             })
         ).toPromise();
@@ -137,7 +135,7 @@ export class ProjectsOverviewComponent {
       this.projectApiService.deleteProjects(this.selectedRows)
       .pipe(
           catchError((err: any) => {
-              this.errorHandleService.handleError(err, 'cannot delete');
+              this.alertService.error('request-errors.cannot-delete', err);
               return of(true);
           }),
           finalize(() => this.refreshData())
@@ -146,7 +144,7 @@ export class ProjectsOverviewComponent {
       this.projectApiService.deleteProject(this.projectIdToDelete)
       .pipe(
           catchError((err: any) => {
-              this.errorHandleService.handleError(err, 'cannot delete');
+              this.alertService.error('request-errors.cannot-delete', err);
               return of(true);
           }),
           finalize(() => this.refreshData())
