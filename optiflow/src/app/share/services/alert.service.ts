@@ -41,6 +41,12 @@ export class AlertService {
                     null,
                     this.options
                 );
+            } else if (error.status === 409) {
+                this.toastr.error(
+                    this.generateHTMLmessage(this.translate.instant(message), 'danger'),
+                    null,
+                    this.options
+                );
             } else {
                 console.error('error: ' + (message || 'NULL'));
                 console.error(error);

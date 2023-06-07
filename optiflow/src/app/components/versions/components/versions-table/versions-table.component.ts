@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { VersionStatus } from '@src/app/share/classes/version-status.enum';
 import { Version } from '@src/app/share/classes/version.class';
 import { AlertService } from '@src/app/share/services/alert.service';
 import { VersionApiService } from '@src/app/share/services/api/version-api.service';
@@ -13,7 +14,7 @@ import { catchError, map, of, tap } from 'rxjs';
   templateUrl: './versions-table.component.html',
   styleUrls: ['./versions-table.component.scss']
 })
-export class VersionsTableComponent implements OnInit {
+export class VersionsTableComponent implements OnInit, OnChanges {
 
   @ViewChild(DxDataGridComponent) grid$: DxDataGridComponent;
 
@@ -25,6 +26,10 @@ export class VersionsTableComponent implements OnInit {
   public confirmationVisible = false;
   selectedRows: number[] = [];
   selectionChangedBySelectbox: boolean;
+  isEditing = false;
+  patternPositive = '^[1-9]+[0-9]*$';
+  patternVersion = '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$';
+  formattedVersions: Version[];
   
   private versionIdToDelete: string;
 
@@ -35,6 +40,14 @@ export class VersionsTableComponent implements OnInit {
     private alertService: AlertService,
     private readonly router: Router,
   ) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.version && this.version) {
+      this.formattedVersions = this.version.map(v => ({
+        ...v,
+        formattedVersion: `${v.major}.${v.minor}.${v.patch}`,
+      }));
+    }
+  }
 
   ngOnInit() {
     if (!this.processId) {
@@ -74,38 +87,45 @@ export class VersionsTableComponent implements OnInit {
     }
   }
 
-  onCellPrepared(e: {
-    rowType: string;
-    column: dxDataGridColumn;
-    data: Version;
-    cellElement: { classList: { add: (arg0: string) => void } };
-  }) {
+  onCellPrepared(e: any) {
     if(e.data) {
-      this.legalizationDatagridService.onCellPrepared(e);
+      if (this.isEditing === false) {
+        e.cellElement.style.cursor = 'pointer';
+      }
     }
   }
 
   redirectToDetails(event: any): void {
-    if (!event.column.name) {
-      return;
+    if (this.isEditing === false) {
+      if (!event.column.name) {
+        return;
+      }
+      this.router.navigate(['./', event.data.id], {
+        relativeTo: this.route
+      });
     }
-    this.router.navigate(['./', event.data.id], {
-      relativeTo: this.route
-    });
+  }
+
+  parseVersionString(versionString: string, version: Version): void {
+    const parts = versionString.split('.');
+    if (parts.length === 3) {
+      version.major = parseInt(parts[0]);
+      version.minor = parseInt(parts[1]);
+      version.patch = parseInt(parts[2]);
+    }
   }
 
   onRowInserting(e: any) {
+    this.isEditing = false;
     let newVersion = new Version ({
-      major: e.data.major,
-      minor: e.data.minor,
-      patch: e.data.patch,
       description: e.data.description,
       process_id: parseInt(this.processId),
       grade: e.data.grade,
       total_num_people: 0,
-      total_duration: 0
+      total_duration: 0,
+      status: VersionStatus.Inactive
     });
-    console.log(newVersion);
+    this.parseVersionString(e.data.formattedVersion,newVersion);
     e.cancel = this.versionApiService
         .postVersion(newVersion)
         .pipe(
@@ -125,6 +145,7 @@ export class VersionsTableComponent implements OnInit {
   }
 
   onRowUpdating(e: any) {
+    this.isEditing = false;
     const mergedData = Object.assign({}, e.oldData, e.newData);
     e.cancel = this.versionApiService
         .patchVersion(e.key, mergedData)
@@ -144,12 +165,20 @@ export class VersionsTableComponent implements OnInit {
   }
 
   onRowRemoving(e: any) {
+    this.isEditing = false;
     e.cancel = true;
     this.confirmationVisible = true;
     this.versionIdToDelete = e.key;
   }
 
+  cancelHandler() {
+    this.isEditing = false;
+  }
+
   onEditorPreparing(e: any) {
+    if (e.parentType === 'dataRow' && (e.editorName === 'dxTextBox' || e.editorName === 'dxNumberBox')) {
+      this.isEditing = true;
+    }
     if (e.dataField === 'description' && e.parentType === 'dataRow') {
         e.editorName = 'dxTextArea';
         e.editorOptions.height = 100;

@@ -31,6 +31,7 @@
     },
     "version": {
         "versions": "Versions",
+        "version": "Version",
         "create-version": "Create Version",
         "major": "Major",
         "minor": "Minor",
@@ -120,7 +121,9 @@
     "accept": "Accept",
     "decline": "Decline",
     "privacy-policy": "Privacy Policy",
-    "terms-conditions": "Terms & Conditions",
+    "about-us": "About Us",
     "page-not-found": "Page not found",
-    "page-not-found-description":"The URL you specified was not found."
+    "page-not-found-description":"The URL you specified was not found.",
+    "positive-number": "Please enter a positive whole number",
+    "incorrect-format": "Version format must be x.y.z"
 }

@@ -6,7 +6,7 @@
             <a class="title" routerLink="/project"> {{ 'header.projects' | translate }}</a> / 
             <a class="title" *ngIf="project$ | async as project" [routerLink]="'/project/' + project.id"> {{ project.name }}</a> / 
             <a class="title" routerLink="../"> {{ processName }}</a> / 
-            <a class="title" [routerLink]="'/project/projectId/' + processId + '/' + versionId"> {{ version.major }}.{{ version.minor }}{{ version.patch }}</a>
+            <a class="title" [routerLink]="'/project/projectId/' + processId + '/' + versionId"> {{ version.major }}.{{ version.minor }}.{{ version.patch }}</a>
         </span>
         <app-version-data [version]="version" [processes]="process$ | async" [canEdit]="true">
         </app-version-data>

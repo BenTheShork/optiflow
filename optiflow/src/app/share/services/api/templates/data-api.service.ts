@@ -136,9 +136,11 @@ export abstract class DataApiService<T, G = T> {
      *
      * @param resourceId
      * @param urlExtension
+     * @param params
      */
-    protected deleteOne(resourceId: string, urlExtension: string = ''): Observable<void | T> {
-        return this.http.delete<null | T>(this.url + urlExtension + '/'  + resourceId);
+    protected deleteOne(resourceId: string, urlExtension: string = '', params?: any): Observable<void | T> {
+        const options = { body: params };
+        return this.http.delete<null | T>(this.url + urlExtension + '/'  + resourceId, options);
     }
 
     /**
@@ -148,7 +150,7 @@ export abstract class DataApiService<T, G = T> {
      * @param params
      */
     protected deleteAll(urlExtension: string = '', params?: any): Observable<void> {
-        const options = new Options(params);
+        const options = { body: params }
         return this.http.delete<null>(this.url + urlExtension, options);
     }
 }

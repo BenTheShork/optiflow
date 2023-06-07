@@ -25,6 +25,7 @@ export class ProjectsOverviewComponent {
 
   selectedRows: number[] = [];
   selectionChangedBySelectbox: boolean;
+  isEditing = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,12 +60,14 @@ export class ProjectsOverviewComponent {
   }
 
   redirectToDetails(e: any) {
-    if (!e.column.name) {
-      return;
+    if (this.isEditing === false) {
+      if (!e.column.name) {
+        return;
+      }
+      this.router.navigate(['./', e.data.id], {
+        relativeTo: this.route
+      });
     }
-    this.router.navigate(['./', e.data.id], {
-      relativeTo: this.route
-    });
   }
 
   onAddClick(): void {
@@ -73,16 +76,17 @@ export class ProjectsOverviewComponent {
     }
   }
 
-  onCellPrepared(e: {
-      rowType: string;
-      column: dxDataGridColumn;
-      data: Project;
-      cellElement: { classList: { add: (arg0: string) => void } };
-  }) {
-      this.legalizationDatagridService.onCellPrepared(e);
+  onCellPrepared(e: any) {
+      //this.legalizationDatagridService.onCellPrepared(e);
+      if(e.data) {
+        if (this.isEditing === false) {
+          e.cellElement.style.cursor = 'pointer';
+        }
+      }
   }
 
   onRowInserting(e: any) {
+    this.isEditing = false;
     let newProject = new Project({
       name: e.data.name,
       description: e.data.description,
@@ -106,11 +110,11 @@ export class ProjectsOverviewComponent {
   }
 
   onRowUpdating(e: any) {
+    this.isEditing = false;
     const mergedData = Object.assign({}, e.oldData, e.newData);
     e.cancel = this.projectApiService.patchProject(e.key, mergedData)
         .pipe(
             map(item => {
-                e.newData = item;
                 return false;
             }),
             tap(() => {
@@ -125,9 +129,24 @@ export class ProjectsOverviewComponent {
   }
 
   onRowRemoving(e: any) {
+    this.isEditing = false;
     e.cancel = true;
     this.confirmationVisible = true;
     this.projectIdToDelete = e.key;
+  }
+
+  cancelHandler() {
+    this.isEditing = false;
+  }
+
+  onEditorPreparing(e: any) {
+    if (e.parentType === 'dataRow' && (e.editorName === 'dxTextBox' || e.editorName === 'dxNumberBox')) {
+      this.isEditing = true;
+    }
+    if (e.dataField === 'description' && e.parentType === 'dataRow') {
+        e.editorName = 'dxTextArea';
+        e.editorOptions.height = 100;
+    }
   }
 
   confirmProjectRemoval() {

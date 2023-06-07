@@ -363,9 +363,11 @@
 }
 .dx-icon-edit {
   font: 14px/1 DXIcons;
+  color: #e67c35 !important;
 }
 .dx-icon-edit::before {
   content: "\f023";
+  color: #e67c35 !important;
 }
 .dx-icon-email {
   font: 14px/1 DXIcons;
@@ -399,9 +401,11 @@
 }
 .dx-icon-filter {
   font: 14px/1 DXIcons;
+  color: #5e87be !important;
 }
 .dx-icon-filter::before {
   content: "\f050";
+  color: #5e87be !important;
 }
 .dx-icon-folder {
   font: 14px/1 DXIcons;
@@ -621,9 +625,11 @@
 }
 .dx-icon-trash {
   font: 14px/1 DXIcons;
+  color: #bf1c1c !important;
 }
 .dx-icon-trash::before {
   content: "\f03e";
+  color: #bf1c1c !important;
 }
 .dx-icon-user {
   font: 14px/1 DXIcons;
@@ -1443,9 +1449,11 @@
 }
 .dx-icon-deleterow {
   font: 14px/1 DXIcons;
+  color: #bf1c1c !important;
 }
 .dx-icon-deleterow::before {
   content: "\f137";
+  color: #bf1c1c !important;
 }
 .dx-icon-deletecolumn {
   font: 14px/1 DXIcons;
@@ -1491,9 +1499,11 @@
 }
 .dx-icon-edittableheader {
   font: 14px/1 DXIcons;
+  color: #e67c35 !important;
 }
 .dx-icon-edittableheader::before {
   content: "\f142";
+  color: #e67c35 !important;
 }
 .dx-icon-addtableheader {
   font: 14px/1 DXIcons;
@@ -12530,11 +12540,13 @@ input.dx-hidden {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  color: #5e87be !important;
 }
 .dx-datagrid-filter-panel .dx-datagrid-filter-panel-clear-filter:hover,
 .dx-datagrid-filter-panel .dx-datagrid-filter-panel-text:hover {
   text-decoration: underline;
   cursor: pointer;
+  color: #5e87be !important;
 }
 .dx-datagrid-filter-panel .dx-datagrid-filter-panel-checkbox {
   padding-right: 10px;
@@ -12542,6 +12554,7 @@ input.dx-hidden {
 .dx-datagrid-filter-panel .dx-icon-filter {
   margin: auto 7px auto auto;
   cursor: pointer;
+  color: #5e87be !important;
 }
 .dx-datagrid {
   position: relative;
@@ -12790,6 +12803,7 @@ input.dx-hidden {
 .dx-datagrid-filter-panel.dx-state-focused .dx-icon-filter:focus {
   outline: #96b8c5 solid 2px;
   outline-offset: 3px;
+  color: #5e87be !important;
 }
 .dx-datagrid-form-buttons-container {
   float: right;
@@ -13401,9 +13415,11 @@ input.dx-hidden {
   background-size: 18px 18px;
   padding: 0;
   text-align: center;
+  color: #e67c35 !important;
 }
 .dx-datagrid-addrow-button .dx-icon-edit-button-addrow::before {
   content: "\f00b";
+  color: #e67c35 !important;
 }
 .dx-datagrid-cancel-button .dx-icon-edit-button-cancel {
   font: 18px/18px DXIcons;
@@ -13413,9 +13429,11 @@ input.dx-hidden {
   background-size: 18px 18px;
   padding: 0;
   text-align: center;
+  color: #e67c35 !important;
 }
 .dx-datagrid-cancel-button .dx-icon-edit-button-cancel::before {
   content: "\f04c";
+  color: #e67c35 !important;
 }
 .dx-datagrid-save-button .dx-icon-edit-button-save {
   font: 18px/18px DXIcons;
@@ -13425,9 +13443,11 @@ input.dx-hidden {
   background-size: 18px 18px;
   padding: 0;
   text-align: center;
+  color: #e67c35 !important;
 }
 .dx-datagrid-save-button .dx-icon-edit-button-save::before {
   content: "\f041";
+  color: #e67c35 !important;
 }
 .dx-apply-button .dx-icon-apply-filter {
   font: 18px/18px DXIcons;
@@ -13864,6 +13884,7 @@ input.dx-hidden {
 .dx-datagrid-filter-panel .dx-icon-filter {
   outline: 0;
   color: #E8C035;
+  color: #5e87be !important;
 }
 .dx-context-menu.dx-overlay-content {
   overflow: inherit;
