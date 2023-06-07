@@ -19,7 +19,7 @@ class ProjectController extends Controller
         if(count($duplicate)) {
             return response()->json([
                 'message' => "Project already exists!"
-            ], 200);
+            ], 409);
         }
         else {
             $project = Project::create([

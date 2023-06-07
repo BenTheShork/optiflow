@@ -23,7 +23,8 @@ class ProcessVersion extends Model
         'total_duration',
         'total_num_people',
         'grade',
-        'file'
+        'file',
+        'status'
     ];
 
     public function process(): BelongsTo {

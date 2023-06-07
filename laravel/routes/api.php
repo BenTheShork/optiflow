@@ -28,6 +28,7 @@ Route::get('user', [UserController::class, 'index']);
 Route::post('user', [UserController::class, 'store']);
 
 Route::get('project', [ProjectController::class, 'index']);
+Route::get('project/{id}', [ProjectController::class, 'show']);
 Route::post('project', [ProjectController::class, 'store']);
 Route::patch('project/{id}', [ProjectController::class, 'update']);
 Route::delete('project/{id}', [ProjectController::class, 'destroy']);

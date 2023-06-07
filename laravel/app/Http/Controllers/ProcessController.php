@@ -19,7 +19,7 @@ class ProcessController extends Controller
         if(count($duplicate)>0) {
             return response()->json([
                 'message' => "Process already exists!"
-            ], 200);
+            ], 409);
         }
         else {
             $process = Process::create([

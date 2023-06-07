@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Process;
 use App\Models\ProcessVersion;
 use Illuminate\Http\Request;
@@ -19,9 +20,11 @@ class ProcessVersionController extends Controller
         if(count($duplicate)>0) {
             return response()->json([
                 'message' => "Process version already exists!"
-            ], 200);
+            ], 409);
         }
         else {
+            $last_version_id = ProcessVersion::where('process_id', $request->process_id)->latest()->value('id');
+
             $process_version = ProcessVersion::create([
                 'process_id' => $request->process_id,
                 'description' => $request->description,
@@ -29,10 +32,29 @@ class ProcessVersionController extends Controller
                 'minor' => $request->minor,
                 'patch' => $request->patch,
                 'grade' => $request->grade,
-                'file' => $request->file
+                'file' => $request->file,
+                'status' => $request->status
             ]);
     
             if($process_version) {
+                if($last_version_id) {
+                    $last_version = ProcessVersion::find($last_version_id);
+                    $children = ProcessVersion::find($last_version_id)->activity;
+                    if(count($children)>0)
+                        foreach($children as $activity) {
+                            $newActivity = Activity::create([
+                                'process_version_id' => $process_version->id,
+                                'sequence_number' => $activity->sequence_number,
+                                'name' => $activity->name,
+                                'description' => $activity->description,
+                                'duration' => $activity->duration,
+                                'num_people' => $activity->num_people
+                            ]);
+                        }
+                    $process_version->file = $last_version->file;
+                    $process_version->save();
+                }
+
                 DB::table('activity_log')->insert([
                     'user_id' => $request->user_id,
                     'table_name' => 'process_version',
@@ -79,7 +101,8 @@ class ProcessVersionController extends Controller
                     'minor' => $request->minor,
                     'patch' => $request->patch,
                     'grade' => $request->grade,
-                    'file' => $request->file
+                    'file' => $request->file,
+                    'status' => $request->status
                 ]);
 
                 DB::table('activity_log')->insert([

@@ -19,7 +19,7 @@ class ActivityController extends Controller
         if(count($duplicate)>0) {
             return response()->json([
                 'message' => "Activity already exists!"
-            ], 200);
+            ], 409);
         }
         else {
             $num_activities = ProcessVersion::find($request->process_version_id)->activity->count();
