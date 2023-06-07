@@ -25,6 +25,7 @@ export class VersionsTableComponent implements OnInit {
   public confirmationVisible = false;
   selectedRows: number[] = [];
   selectionChangedBySelectbox: boolean;
+  isEditing = false;
   
   private versionIdToDelete: string;
 
@@ -74,27 +75,27 @@ export class VersionsTableComponent implements OnInit {
     }
   }
 
-  onCellPrepared(e: {
-    rowType: string;
-    column: dxDataGridColumn;
-    data: Version;
-    cellElement: { classList: { add: (arg0: string) => void } };
-  }) {
+  onCellPrepared(e: any) {
     if(e.data) {
-      this.legalizationDatagridService.onCellPrepared(e);
+      if (this.isEditing === false) {
+        e.cellElement.style.cursor = 'pointer';
+      }
     }
   }
 
   redirectToDetails(event: any): void {
-    if (!event.column.name) {
-      return;
+    if (this.isEditing === false) {
+      if (!event.column.name) {
+        return;
+      }
+      this.router.navigate(['./', event.data.id], {
+        relativeTo: this.route
+      });
     }
-    this.router.navigate(['./', event.data.id], {
-      relativeTo: this.route
-    });
   }
 
   onRowInserting(e: any) {
+    this.isEditing = false;
     let newVersion = new Version ({
       major: e.data.major,
       minor: e.data.minor,
@@ -125,6 +126,7 @@ export class VersionsTableComponent implements OnInit {
   }
 
   onRowUpdating(e: any) {
+    this.isEditing = false;
     const mergedData = Object.assign({}, e.oldData, e.newData);
     e.cancel = this.versionApiService
         .patchVersion(e.key, mergedData)
@@ -144,12 +146,20 @@ export class VersionsTableComponent implements OnInit {
   }
 
   onRowRemoving(e: any) {
+    this.isEditing = false;
     e.cancel = true;
     this.confirmationVisible = true;
     this.versionIdToDelete = e.key;
   }
 
+  cancelHandler() {
+    this.isEditing = false;
+  }
+
   onEditorPreparing(e: any) {
+    if (e.parentType === 'dataRow' && (e.editorName === 'dxTextBox' || e.editorName === 'dxNumberBox')) {
+      this.isEditing = true;
+    }
     if (e.dataField === 'description' && e.parentType === 'dataRow') {
         e.editorName = 'dxTextArea';
         e.editorOptions.height = 100;
