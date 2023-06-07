@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { ActivatedRoute, Router } from '@angular/router';
 import { VersionStatus } from '@src/app/share/classes/version-status.enum';
 import { Version } from '@src/app/share/classes/version.class';
+import { VERSION_STATUSES } from '@src/app/share/consts/version-status.const';
 import { AlertService } from '@src/app/share/services/alert.service';
 import { VersionApiService } from '@src/app/share/services/api/version-api.service';
 import { LegalizationDatagridService } from '@src/app/share/services/legalization-data-grid.service';
@@ -30,6 +31,13 @@ export class VersionsTableComponent implements OnInit, OnChanges {
   patternPositive = '^[1-9]+[0-9]*$';
   patternVersion = '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$';
   formattedVersions: Version[];
+
+  editorOptions = {
+    itemTemplate: 'versionItemTemplate',
+    fieldTemplate: 'versionFieldTemplate'
+  };
+
+  readonly VERSION_STATUSES = VERSION_STATUSES;
   
   private versionIdToDelete: string;
 
@@ -123,7 +131,7 @@ export class VersionsTableComponent implements OnInit, OnChanges {
       grade: e.data.grade,
       total_num_people: 0,
       total_duration: 0,
-      status: VersionStatus.Inactive
+      status: e.data.status
     });
     this.parseVersionString(e.data.formattedVersion,newVersion);
     e.cancel = this.versionApiService
@@ -183,6 +191,10 @@ export class VersionsTableComponent implements OnInit, OnChanges {
         e.editorName = 'dxTextArea';
         e.editorOptions.height = 100;
     }
+  }
+
+  actionVisible(rowInfo: any) {
+    return rowInfo.row.data.status === VersionStatus.Active;
   }
 
   confirmProcessRemoval() {

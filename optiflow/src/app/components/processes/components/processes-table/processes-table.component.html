@@ -81,13 +81,13 @@
             <dxo-lookup [dataSource]="PROCESS_STATUSES" displayExpr="name" valueExpr="id">
             </dxo-lookup>
             <div *dxTemplate="let cellData of 'processCellTemplate'">
-                {{PROCESS_STATUSES[cellData.value].name}}
+                {{PROCESS_STATUSES[cellData.value].name | translate }}
             </div>
             <div *dxTemplate="let data of 'processFieldTemplate'">
                 <dx-text-box [value]="data?.name"></dx-text-box>
             </div>
             <div *dxTemplate="let data of 'processItemTemplate'">
-                {{ data?.name }}
+                {{ data?.name  | translate }}
             </div>
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
