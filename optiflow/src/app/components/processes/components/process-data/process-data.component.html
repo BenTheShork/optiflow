@@ -17,7 +17,10 @@
         </div>
         <div class="dx-field-label w-50" *ngIf="PROCESS_STATUSES">
             {{ 'process.status' | translate }}*:
-            <dx-select-box valueExpr="id" displayExpr="name" [showClearButton]="true" [(value)]="process.status" [acceptCustomValue]="false" width="100%" [items]="PROCESS_STATUSES" class="dx-field-value" (onValueChanged)="onValueChanged($event,'status')">
+            <dx-select-box valueExpr="id" displayExpr="name" itemTemplate="item" [showClearButton]="true" [(value)]="process.status" [acceptCustomValue]="false" width="100%" [items]="PROCESS_STATUSES" class="dx-field-value" (onValueChanged)="onValueChanged($event,'status')">
+                <div *dxTemplate="let data of 'item'">
+                    {{ data.name | translate }}
+                </div>
                 <dx-validator>
                     <dxi-validation-rule type="required" [message]="'table.mandatory-field' | translate"></dxi-validation-rule>
                 </dx-validator>

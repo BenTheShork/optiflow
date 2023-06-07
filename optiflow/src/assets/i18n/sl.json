@@ -42,6 +42,8 @@
         "grade": "Ocena",
         "created": "Kreirano",
         "updated": "Ažurirano",
+        "status": "Status",
+        "process": "Proces",
         "delete-version": "Izbriši Različico",
         "delete-version-description": "Ali ste prepričani, da želite izbrisati Različico iz procesa?"
     },
@@ -125,5 +127,8 @@
     "page-not-found": "Stran ni najdena",
     "page-not-found-description":"URL, ki ste ga navedli, ni bil najden.",
     "positive-number": "Vnesite pozitivno celo število",
-    "incorrect-format": "Oblika različice mora biti x.y.z"
+    "incorrect-format": "Oblika različice mora biti x.y.z",
+    "active": "Aktivno",
+    "inactive": "Neaktivno",
+    "completed": "Dokončano"
 }

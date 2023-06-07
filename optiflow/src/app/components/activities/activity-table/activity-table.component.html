@@ -3,11 +3,13 @@
         [remoteOperations]="true" [wordWrapEnabled]="true" [columnAutoWidth]="false" columnResizingMode="widget" [noDataText]="activity?.length === 0 ? 'no data' : ''" (onCellPrepared)="onCellPrepared($event)" (onRowInserting)="onRowInserting($event)" (onRowUpdating)="onRowUpdating($event)"
         (onRowRemoving)="onRowRemoving($event)" (onEditorPreparing)="onEditorPreparing($event)" [(selectedRowKeys)]="selectedRows" (onSelectionChanged)="selectionChangedHandler()" (onEditCanceled)="cancelHandler()">
 
-        <dxo-selection
-            [selectAllMode]="'allMode'"
-            [showCheckBoxesMode]="'always'"
-            mode="multiple"
-        ></dxo-selection>
+        <div *ngIf="canEdit">
+            <dxo-selection
+                [selectAllMode]="'allMode'"
+                [showCheckBoxesMode]="'always'"
+                mode="multiple"
+            ></dxo-selection>
+        </div>
 
         <dxo-paging [pageSize]="10"></dxo-paging>
         <dxo-pager [visible]="true" [showPageSizeSelector]="true" [allowedPageSizes]="[6, 12, 24]" [showNavigationButtons]="true">
@@ -20,7 +22,7 @@
         <dxo-sorting mode="single"></dxo-sorting>
 
         <!-- Editing settings -->
-        <dxo-editing [allowAdding]="true" [allowUpdating]="true" [allowDeleting]="true" mode="row" refreshMode="reshape" [useIcons]="true">
+        <dxo-editing [allowAdding]="canEdit" [allowUpdating]="canEdit" [allowDeleting]="canEdit" mode="row" refreshMode="reshape" [useIcons]="true">
         </dxo-editing>
         <dxo-filter-panel [visible]="true"></dxo-filter-panel>
 
@@ -36,7 +38,7 @@
             <dxi-item location="before" name="addRowButton"></dxi-item>
             <dxi-item location="before" name="exportButton"></dxi-item>
             <dxi-item location="before" name="columnChooserButton"></dxi-item>
-            <dxi-item location="before" name="columnChooserButton">
+            <dxi-item location="before" name="deleteSelectedButton">
                 <div *dxTemplate>
                     <button [disabled]="!hasSelectedRows()"
                         (click)="deleteSelectedRows()" 
@@ -45,7 +47,7 @@
                     </button>
                 </div>
             </dxi-item>
-            <dxi-item location="before">
+            <dxi-item location="before" name="clearSelectionButton">
                 <dx-button
                   [text]="'table.clear-selection' | translate"
                   [disabled]="!selectedRows?.length"

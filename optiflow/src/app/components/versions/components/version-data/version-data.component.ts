@@ -1,6 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Process } from '@src/app/share/classes/process.class';
+import { VersionStatus } from '@src/app/share/classes/version-status.enum';
 import { Version } from '@src/app/share/classes/version.class';
+import { VERSION_STATUSES } from '@src/app/share/consts/version-status.const';
 import { UnsubscribeDirective } from '@src/app/share/directives/unsubsrcibe.directive';
 import { AlertService } from '@src/app/share/services/alert.service';
 import { VersionApiService } from '@src/app/share/services/api/version-api.service';
@@ -15,13 +17,15 @@ import { catchError, map, takeUntil, tap, throwError } from 'rxjs';
 export class VersionDataComponent extends UnsubscribeDirective implements OnChanges {
   @Input() version: Version = new Version();
   @Input() processes: Process[] = [];
-  @Input() canEdit = false;
+  @Input() canEdit = true;
 
   @ViewChild('validationGroup', {static: false}) validationGroup: DxValidationGroupComponent;
 
   patternPositive = '^[1-9]+[0-9]*$';
   patternVersion = '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$';
   versionString: string;
+  readonly VERSION_STATUSES = VERSION_STATUSES;
+  status: typeof VersionStatus = VersionStatus;
 
   constructor(
     private versionApiService: VersionApiService,

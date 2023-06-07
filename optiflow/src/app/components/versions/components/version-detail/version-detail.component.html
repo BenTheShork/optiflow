@@ -14,7 +14,7 @@
 
     <div class="d-flex flex-column" *ngIf="version.id">
         <h2 class="fw-bold title-mobile overview">{{ 'activity.activities' | translate }}</h2>
-        <app-activity-table [activity]="activities$ | async" (refreshActivities)="refreshActivities()" [versionId]="versionId">
+        <app-activity-table [activity]="activities$ | async" (refreshActivities)="refreshActivities()" [versionId]="versionId" [canEdit]="version.status === status.Active">
         </app-activity-table>
     </div>
 </ng-container>

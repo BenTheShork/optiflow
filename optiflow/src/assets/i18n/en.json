@@ -42,6 +42,8 @@
         "grade": "Grade",
         "created": "Created at",
         "updated": "Updated at",
+        "status": "Status",
+        "process": "Process",
         "delete-version": "Delete Version",
         "delete-version-description": "Are you sure you want to delete version from process?"
     },
@@ -125,5 +127,8 @@
     "page-not-found": "Page not found",
     "page-not-found-description":"The URL you specified was not found.",
     "positive-number": "Please enter a positive whole number",
-    "incorrect-format": "Version format must be x.y.z"
+    "incorrect-format": "Version format must be x.y.z",
+    "active": "Active",
+    "inactive": "Inactive",
+    "completed": "Completed"
 }

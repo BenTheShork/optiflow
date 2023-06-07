@@ -19,6 +19,7 @@ export class ActivityTableComponent implements OnInit {
 
   @Input() activity: Activity[];
   @Input() versionId: string;
+  @Input() canEdit: boolean;
 
   @Output() refreshActivities = new EventEmitter();
 
