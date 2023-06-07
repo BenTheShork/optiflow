@@ -130,5 +130,6 @@
     "incorrect-format": "Oblika različice mora biti x.y.z",
     "active": "Aktivno",
     "inactive": "Neaktivno",
-    "completed": "Dokončano"
+    "completed": "Dokončano",
+    "Conflict": "Že obstaja!"
 }

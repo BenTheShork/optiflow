@@ -130,5 +130,6 @@
     "incorrect-format": "Version format must be x.y.z",
     "active": "Active",
     "inactive": "Inactive",
-    "completed": "Completed"
+    "completed": "Completed",
+    "Conflict": "Already exists!"
 }
