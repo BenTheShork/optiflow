@@ -1,7 +1,7 @@
 <div class="card mt-4 py-3 px-3 exported-variables w-100">
     <dx-data-grid #processesGrid class="data-grid-search processes status-grid" [dataSource]="process" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
         [remoteOperations]="true" [wordWrapEnabled]="true" [columnAutoWidth]="false" columnResizingMode="widget" [noDataText]="process?.length === 0 ? 'no data' : ''" (onCellPrepared)="onCellPrepared($event)" (onRowInserting)="onRowInserting($event)" (onRowUpdating)="onRowUpdating($event)"
-        (onRowRemoving)="onRowRemoving($event)" (onCellClick)="redirectToDetails($event)" (onEditorPreparing)="onEditorPreparing($event)" [(selectedRowKeys)]="selectedRows" (onSelectionChanged)="selectionChangedHandler()">
+        (onRowRemoving)="onRowRemoving($event)" (onCellClick)="redirectToDetails($event)" (onEditorPreparing)="onEditorPreparing($event)" [(selectedRowKeys)]="selectedRows" (onSelectionChanged)="selectionChangedHandler()" (onEditCanceled)="cancelHandler()">
 
         <dxo-selection
             [selectAllMode]="'allMode'"

@@ -31,6 +31,7 @@
     },
     "version": {
         "versions": "Različice",
+        "version": "Različica",
         "create-version": "Kreiraj Različico",
         "major": "Major",
         "minor": "Minor",
@@ -122,5 +123,7 @@
     "privacy-policy": "Politika zasebnosti",
     "about-us": "O nas",
     "page-not-found": "Stran ni najdena",
-    "page-not-found-description":"URL, ki ste ga navedli, ni bil najden."
+    "page-not-found-description":"URL, ki ste ga navedli, ni bil najden.",
+    "positive-number": "Vnesite pozitivno celo število",
+    "incorrect-format": "Oblika različice mora biti x.y.z"
 }

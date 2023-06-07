@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Process } from '@src/app/share/classes/process.class';
 import { Version } from '@src/app/share/classes/version.class';
 import { UnsubscribeDirective } from '@src/app/share/directives/unsubsrcibe.directive';
@@ -12,18 +12,41 @@ import { catchError, map, takeUntil, tap, throwError } from 'rxjs';
   templateUrl: './version-data.component.html',
   styleUrls: ['./version-data.component.scss']
 })
-export class VersionDataComponent extends UnsubscribeDirective {
+export class VersionDataComponent extends UnsubscribeDirective implements OnChanges {
   @Input() version: Version = new Version();
   @Input() processes: Process[] = [];
   @Input() canEdit = false;
 
   @ViewChild('validationGroup', {static: false}) validationGroup: DxValidationGroupComponent;
 
+  patternPositive = '^[1-9]+[0-9]*$';
+  patternVersion = '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$';
+  versionString: string;
+
   constructor(
     private versionApiService: VersionApiService,
     private alertService: AlertService
   ) { 
     super();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.versionString = this.getVersionString();
+  }
+
+  getVersionString(): string {
+    return `${this.version.major}.${this.version.minor}.${this.version.patch}`;
+  }
+
+  parseVersionString(e: { value: any; event: any; previousValue?: any }): void {
+    const parts = this.versionString.split('.');
+    if (parts.length === 3) {
+      this.version.major = parseInt(parts[0]);
+      this.version.minor = parseInt(parts[1]);
+      this.version.patch = parseInt(parts[2]);
+    }
+    if (this.version.id && e.event && this.validationGroup.instance.validate().isValid) {
+      this.patchVersion(this.version);
+    }
   }
 
   onValueChanged(e: { value: any; event: any; previousValue?: any }, field: string): void {

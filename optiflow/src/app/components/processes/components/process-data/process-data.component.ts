@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Process } from '@src/app/share/classes/process.class';
 import { Project } from '@src/app/share/classes/project.class';
-import { PROCESS_STATUSES } from '@src/app/share/consts/process-status.conts';
+import { PROCESS_STATUSES } from '@src/app/share/consts/process-status.const';
 import { UnsubscribeDirective } from '@src/app/share/directives/unsubsrcibe.directive';
 import { AlertService } from '@src/app/share/services/alert.service';
 import { ProcessApiService } from '@src/app/share/services/api/process-api.service';

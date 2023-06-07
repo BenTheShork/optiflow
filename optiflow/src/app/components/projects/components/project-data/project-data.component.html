@@ -8,7 +8,7 @@
             </dx-text-box>
         </div>
         <div class="dx-field-label w-50"> {{ 'project.description' | translate }}:
-            <dx-text-area [(value)]="project.description" height="100px" [maxLength]="2000" width="100%" class="dx-field-value" (onValueChanged)="onValueChanged($event, 'description')">
+            <dx-text-area [(value)]="project.description" style="height: auto;" [maxHeight]="300" [maxLength]="2000" width="100%" class="dx-field-value" (onValueChanged)="onValueChanged($event, 'description')">
             </dx-text-area>
         </div>
         <div class="dx-field-label w-50">{{ 'project.num-processes' | translate }}:

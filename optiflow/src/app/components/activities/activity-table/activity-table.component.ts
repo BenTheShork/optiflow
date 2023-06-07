@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Activity } from '@src/app/share/classes/activity.class';
 import { AlertService } from '@src/app/share/services/alert.service';
 import { ActivityApiService } from '@src/app/share/services/api/activity-api.service';
@@ -24,6 +25,8 @@ export class ActivityTableComponent implements OnInit {
   public confirmationVisible = false;
   selectedRows: number[] = [];
   selectionChangedBySelectbox: boolean;
+  patternPositive = '^[1-9]+[0-9]*$';
+  isEditing = false;
   
   private activityIdToDelete: string;
 
@@ -33,6 +36,7 @@ export class ActivityTableComponent implements OnInit {
     private activityApiService: ActivityApiService,
     private alertService: AlertService,
     private readonly router: Router,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -40,7 +44,6 @@ export class ActivityTableComponent implements OnInit {
         this.versionId = this.route.snapshot.queryParamMap.get('versionId');
     }
   }
-
   formatDuration(duration: number): string {
     const hours = Math.floor(duration / 60);
     const minutes = duration % 60;
@@ -67,18 +70,16 @@ export class ActivityTableComponent implements OnInit {
     this.confirmationVisible = true;
   }
 
-  onCellPrepared(e: {
-    rowType: string;
-    column: dxDataGridColumn;
-    data: Activity;
-    cellElement: { classList: { add: (arg0: string) => void } };
-  }) {
+  onCellPrepared(e: any) {
     if(e.data) {
-      this.legalizationDatagridService.onCellPrepared(e);
+      if (this.isEditing === false) {
+        e.cellElement.style.cursor = 'pointer';
+      }
     }
   }
 
   onRowInserting(e: any) {
+    this.isEditing = false;
     let newActivity = new Activity ({
       name: e.data.name,
       description: e.data.description,
@@ -105,6 +106,7 @@ export class ActivityTableComponent implements OnInit {
   }
 
   onRowUpdating(e: any) {
+    this.isEditing = false;
     const mergedData = Object.assign({}, e.oldData, e.newData);
     e.cancel = this.activityApiService
         .patchActivity(e.key, mergedData)
@@ -124,16 +126,24 @@ export class ActivityTableComponent implements OnInit {
   }
 
   onRowRemoving(e: any) {
+    this.isEditing = false;
     e.cancel = true;
     this.confirmationVisible = true;
     this.activityIdToDelete = e.key;
   }
 
   onEditorPreparing(e: any) {
+    if (e.parentType === 'dataRow' && (e.editorName === 'dxTextBox' || e.editorName === 'dxNumberBox')) {
+      this.isEditing = true;
+    }
     if (e.dataField === 'description' && e.parentType === 'dataRow') {
         e.editorName = 'dxTextArea';
         e.editorOptions.height = 100;
     }
+  }
+
+  cancelHandler() {
+    this.isEditing = false;
   }
 
   confirmActivityRemoval() {

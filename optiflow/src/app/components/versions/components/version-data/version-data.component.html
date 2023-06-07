@@ -1,28 +1,15 @@
 <dx-validation-group #validationGroup>
     <form (submit)="postVersion($event)">
-        <div class="dx-field-label w-33"> {{ 'version.major' | translate }}*:
-            <dx-number-box [(value)]="version.major" (onValueChanged)="onValueChanged($event, 'major')" width=100% [disabled]="!canEdit" class="dx-field-value">
+        <div class="dx-field-label w-33"> {{ 'version.version' | translate }}*:
+            <dx-text-box [(value)]="versionString" (onValueChanged)="parseVersionString($event)" width=100% [disabled]="!canEdit" class="dx-field-value">
                 <dx-validator>
                     <dxi-validation-rule type="required" [message]="'table.mandatory-field' | translate"></dxi-validation-rule>
+                    <dxi-validation-rule type="pattern" [message]="'incorrect-format' | translate" [pattern]="patternVersion"></dxi-validation-rule>
                 </dx-validator>
-            </dx-number-box>
-        </div>
-        <div class="dx-field-label w-33"> {{ 'version.minor' | translate }}*:
-            <dx-number-box [(value)]="version.minor" (onValueChanged)="onValueChanged($event, 'minor')" width=100% [disabled]="!canEdit" class="dx-field-value">
-                <dx-validator>
-                    <dxi-validation-rule type="required" [message]="'table.mandatory-field' | translate"></dxi-validation-rule>
-                </dx-validator>
-            </dx-number-box>
-        </div>
-        <div class="dx-field-label w-33"> {{ 'version.patch' | translate }}*:
-            <dx-number-box [(value)]="version.patch" (onValueChanged)="onValueChanged($event, 'patch')" width=100% [disabled]="!canEdit" class="dx-field-value">
-                <dx-validator>
-                    <dxi-validation-rule type="required" [message]="'table.mandatory-field' | translate"></dxi-validation-rule>
-                </dx-validator>
-            </dx-number-box>
+            </dx-text-box>
         </div>
         <div class="dx-field-label w-50"> {{ 'version.description' | translate }}:
-            <dx-text-area [(value)]="version.description" height="100px" [maxLength]="2000" width="100%" class="dx-field-value" (onValueChanged)="onValueChanged($event, 'description')" [disabled]="!canEdit">
+            <dx-text-area [(value)]="version.description" style="height: auto;" [maxHeight]="300" [maxLength]="2000" width="100%" class="dx-field-value"  (onValueChanged)="onValueChanged($event, 'description')" [disabled]="!canEdit">
             </dx-text-area>
         </div>
         <div class="dx-field-label w-50">{{ 'version.total-duration' | translate }}:
@@ -37,6 +24,7 @@
             <dx-number-box [(value)]="version.grade" (onValueChanged)="onValueChanged($event, 'grade')" width="100%" class="dx-field-value">
                 <dx-validator>
                     <dxi-validation-rule type="required" [message]="'table.mandatory-field' | translate"></dxi-validation-rule>
+                    <dxi-validation-rule type="pattern" [message]="'positive-number' | translate" [pattern]="patternPositive"></dxi-validation-rule>
                 </dx-validator>
             </dx-number-box>
         </div>

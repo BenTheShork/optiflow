@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProcessStatus } from '@src/app/share/classes/process-status.enum';
 import { Process } from '@src/app/share/classes/process.class';
-import { PROCESS_STATUSES } from '@src/app/share/consts/process-status.conts';
+import { PROCESS_STATUSES } from '@src/app/share/consts/process-status.const';
 import { AlertService } from '@src/app/share/services/alert.service';
 import { ProcessApiService } from '@src/app/share/services/api/process-api.service';
 import { LegalizationDatagridService } from '@src/app/share/services/legalization-data-grid.service';
@@ -37,6 +37,7 @@ export class ProcessesTableComponent implements OnInit {
   private processIdToDelete: string;
   selectedRows: number[] = [];
   selectionChangedBySelectbox: boolean;
+  isEditing = false;
 
   constructor(
     private legalizationDatagridService: LegalizationDatagridService,
@@ -73,27 +74,27 @@ export class ProcessesTableComponent implements OnInit {
     }
   }
 
-  onCellPrepared(e: {
-    rowType: string;
-    column: dxDataGridColumn;
-    data: Process;
-    cellElement: { classList: { add: (arg0: string) => void } };
-  }) {
+  onCellPrepared(e: any) {
+    //this.legalizationDatagridService.onCellPrepared(e);
     if(e.data) {
-      this.legalizationDatagridService.onCellPrepared(e);
+      if (this.isEditing === false) {
+        e.cellElement.style.cursor = 'pointer';
+      }
     }
   }
 
   redirectToDetails(event: any): void {
-    if (!event.column.name) {
-      return;
-    }
-    this.router.navigate(['./', event.data.id], {
-      relativeTo: this.route
-  });
+    if (this.isEditing === false) {
+      if (!event.column.name) {
+        return;
+      }
+      this.router.navigate(['./', event.data.id], {
+        relativeTo: this.route
+    });}
   }
 
   onRowInserting(e: any) {
+    this.isEditing = false;
     let newProcess = new Process ({
       name: e.data.name,
       description: e.data.description,
@@ -120,6 +121,7 @@ export class ProcessesTableComponent implements OnInit {
   }
 
   onRowUpdating(e: any) {
+    this.isEditing = false;
     const mergedData = Object.assign({}, e.oldData, e.newData);
     e.cancel = this.processApiService
         .patchProcess(e.key, mergedData)
@@ -139,16 +141,24 @@ export class ProcessesTableComponent implements OnInit {
   }
 
   onRowRemoving(e: any) {
+    this.isEditing = false;
     e.cancel = true;
     this.confirmationVisible = true;
     this.processIdToDelete = e.key;
   }
 
   onEditorPreparing(e: any) {
+    if (e.parentType === 'dataRow' && (e.editorName === 'dxTextBox' || e.editorName === 'dxNumberBox')) {
+      this.isEditing = true;
+    }
     if (e.dataField === 'description' && e.parentType === 'dataRow') {
         e.editorName = 'dxTextArea';
         e.editorOptions.height = 100;
     }
+  }
+
+  cancelHandler() {
+    this.isEditing = false;
   }
 
   confirmProcessRemoval() {

@@ -5,7 +5,7 @@
 <div class="card mt-4 py-3 px-3 exported-variables w-100">
     <dx-data-grid #projectsGrid class="data-grid-search projects" [dataSource]="project$ | async" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
         [remoteOperations]="true" [wordWrapEnabled]="true" [columnAutoWidth]="false" columnResizingMode="widget" [noDataText]="'no data'" (onCellPrepared)="onCellPrepared($event)" (onRowInserting)="onRowInserting($event)" (onRowUpdating)="onRowUpdating($event)"
-        (onRowRemoving)="onRowRemoving($event)" (onCellClick)="redirectToDetails($event)" [(selectedRowKeys)]="selectedRows" (onSelectionChanged)="selectionChangedHandler()">
+        (onRowRemoving)="onRowRemoving($event)" (onCellClick)="redirectToDetails($event)" [(selectedRowKeys)]="selectedRows" (onEditorPreparing)="onEditorPreparing($event)" (onSelectionChanged)="selectionChangedHandler()" (onEditCanceled)="cancelHandler()">
 
         <dxo-selection
             [selectAllMode]="'allMode'"

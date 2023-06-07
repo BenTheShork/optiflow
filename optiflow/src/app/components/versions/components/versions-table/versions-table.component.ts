@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { VersionStatus } from '@src/app/share/classes/version-status.enum';
 import { Version } from '@src/app/share/classes/version.class';
 import { AlertService } from '@src/app/share/services/alert.service';
 import { VersionApiService } from '@src/app/share/services/api/version-api.service';
@@ -13,7 +14,7 @@ import { catchError, map, of, tap } from 'rxjs';
   templateUrl: './versions-table.component.html',
   styleUrls: ['./versions-table.component.scss']
 })
-export class VersionsTableComponent implements OnInit {
+export class VersionsTableComponent implements OnInit, OnChanges {
 
   @ViewChild(DxDataGridComponent) grid$: DxDataGridComponent;
 
@@ -26,6 +27,9 @@ export class VersionsTableComponent implements OnInit {
   selectedRows: number[] = [];
   selectionChangedBySelectbox: boolean;
   isEditing = false;
+  patternPositive = '^[1-9]+[0-9]*$';
+  patternVersion = '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$';
+  formattedVersions: Version[];
   
   private versionIdToDelete: string;
 
@@ -36,6 +40,14 @@ export class VersionsTableComponent implements OnInit {
     private alertService: AlertService,
     private readonly router: Router,
   ) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.version && this.version) {
+      this.formattedVersions = this.version.map(v => ({
+        ...v,
+        formattedVersion: `${v.major}.${v.minor}.${v.patch}`,
+      }));
+    }
+  }
 
   ngOnInit() {
     if (!this.processId) {
@@ -94,19 +106,26 @@ export class VersionsTableComponent implements OnInit {
     }
   }
 
+  parseVersionString(versionString: string, version: Version): void {
+    const parts = versionString.split('.');
+    if (parts.length === 3) {
+      version.major = parseInt(parts[0]);
+      version.minor = parseInt(parts[1]);
+      version.patch = parseInt(parts[2]);
+    }
+  }
+
   onRowInserting(e: any) {
     this.isEditing = false;
     let newVersion = new Version ({
-      major: e.data.major,
-      minor: e.data.minor,
-      patch: e.data.patch,
       description: e.data.description,
       process_id: parseInt(this.processId),
       grade: e.data.grade,
       total_num_people: 0,
-      total_duration: 0
+      total_duration: 0,
+      status: VersionStatus.Inactive
     });
-    console.log(newVersion);
+    this.parseVersionString(e.data.formattedVersion,newVersion);
     e.cancel = this.versionApiService
         .postVersion(newVersion)
         .pipe(
