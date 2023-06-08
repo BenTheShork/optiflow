@@ -100,9 +100,9 @@
         </dxi-column>
         <dxi-column dataField="updated_at" dataType="date" [caption]="'version.updated' | translate" [allowEditing]="false">
         </dxi-column>
-        <dxi-column type="buttons">
-            <dxi-button name="edit" [visible]="actionVisible"></dxi-button>
-            <dxi-button name="delete" [visible]="actionVisible"></dxi-button>
+        <dxi-column type="buttons" [width]="110">
+            <dxi-button name="edit" [disabled]="actionVisible"></dxi-button>
+            <dxi-button name="delete" [disabled]="actionVisible"></dxi-button>
         </dxi-column>
     </dx-data-grid>
 </div>

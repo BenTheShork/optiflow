@@ -1,12 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute } from '@angular/router';
 import { Activity } from '@src/app/share/classes/activity.class';
 import { AlertService } from '@src/app/share/services/alert.service';
 import { ActivityApiService } from '@src/app/share/services/api/activity-api.service';
-import { LegalizationDatagridService } from '@src/app/share/services/legalization-data-grid.service';
 import { DxDataGridComponent } from 'devextreme-angular';
-import { dxDataGridColumn } from 'devextreme/ui/data_grid';
 import { catchError, map, of, tap } from 'rxjs';
 
 @Component({
@@ -32,12 +29,9 @@ export class ActivityTableComponent implements OnInit {
   private activityIdToDelete: string;
 
   constructor(
-    private legalizationDatagridService: LegalizationDatagridService,
     private route: ActivatedRoute,
     private activityApiService: ActivityApiService,
     private alertService: AlertService,
-    private readonly router: Router,
-    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -53,6 +47,12 @@ export class ActivityTableComponent implements OnInit {
         return `${minutes} min`;
     } else {
         return `${hours} h ${minutes} min`;
+    }
+  }
+
+  onAddClick(): void {
+    if (this.grid$) {
+        this.grid$.instance.addRow();
     }
   }
 

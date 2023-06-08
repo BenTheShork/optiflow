@@ -194,7 +194,7 @@ export class VersionsTableComponent implements OnInit, OnChanges {
   }
 
   actionVisible(rowInfo: any) {
-    return rowInfo.row.data.status === VersionStatus.Active;
+    return !(rowInfo.row.data.status === VersionStatus.Active);
   }
 
   confirmProcessRemoval() {
