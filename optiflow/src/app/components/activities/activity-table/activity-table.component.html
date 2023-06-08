@@ -55,6 +55,15 @@
                 >
                 </dx-button>
             </dxi-item>
+            <!-- Create Button -->
+            <dxi-item location="after" locateInMenu="auto" [visible]="canEdit">
+                <div *dxTemplate>
+                    <button (click)="onAddClick()" class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
+                        {{ 'activity.create-activity' | translate }} <i
+                            class="bi bi-plus-circle-fill text-success font-size-2 lh-1"></i>
+                    </button>
+                </div>
+            </dxi-item>
         </dxo-toolbar>
         <!-- Columns definition -->
         <dxi-column dataField="sequence_number" dataType="number" [caption]="'activity.sequence-number' | translate" [allowEditing]="false">

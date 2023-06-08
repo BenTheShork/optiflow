@@ -571,9 +571,11 @@
 }
 .dx-icon-revert {
   font: 14px/1 DXIcons;
+  color: #282828 !important;
 }
 .dx-icon-revert::before {
   content: "\f04c";
+  color: #282828 !important;
 }
 .dx-icon-runner {
   font: 14px/1 DXIcons;
@@ -583,9 +585,11 @@
 }
 .dx-icon-save {
   font: 14px/1 DXIcons;
+  color: #277543 !important;
 }
 .dx-icon-save::before {
   content: "\f041";
+  color: #277543 !important;
 }
 .dx-icon-search {
   font: 14px/1 DXIcons;
