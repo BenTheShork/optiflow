@@ -74,6 +74,12 @@
         "delete-project": "Delete Project",
         "delete-project-description": "Are you sure you want to delete this Project?"
     },
+    "activity-log": {
+        "title": "Activity log for User ",
+        "record": "Record",
+        "action": "Action",
+        "date": "Date"
+    },
     "auth": {
         "sign-in": "Sign in",
         "email": "Email",

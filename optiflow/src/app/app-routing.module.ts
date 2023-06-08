@@ -6,12 +6,14 @@ import { PageNotFoundComponent } from './share/components/page-not-found/page-no
 import { ProjectDataComponent } from './components/projects/components/project-data/project-data.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
+import { ActivityLogComponent } from './components/activity-log/activity-log.component';
 
 const routes: Routes = [
   { path: 'signin', component: SignIn },
   { path: 'signup', component: SignupComponent },
   { path: 'about-us', component: AboutUsComponent },
   { path: 'privacy', component: PrivacyPolicyComponent },
+  { path: 'activity-log', component: ActivityLogComponent },
   {
     path: '',
     children: [
