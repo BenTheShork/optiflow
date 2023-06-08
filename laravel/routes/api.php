@@ -24,6 +24,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+//CRUD
 Route::get('user', [UserController::class, 'index']);
 Route::post('user', [UserController::class, 'store']);
 
@@ -56,3 +58,6 @@ Route::delete('activity/{id}', [ActivityController::class, 'destroy']);
 Route::delete('activity', [ActivityController::class, 'destroy_selected']);
 
 Route::get('activitylog', [ActivityLogController::class, 'index']);
+
+//INSIGHTS
+Route::get('insights', [ProcessController::class, 'insights']);

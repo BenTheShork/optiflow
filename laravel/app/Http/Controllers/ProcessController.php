@@ -4,11 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Process;
 use App\Models\Project;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class ProcessController extends Controller
 {
+    //AUTHENTICATION
+    function authAPI($jwt)
+    {
+        try {
+            $publicKeys = Http::get('https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com');
+            $publicKey = $publicKeys[array_key_first($publicKeys->json())];
+            $payload = JWT::decode($jwt, new Key($publicKey, 'RS256'));
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+
+    //ROUTES
     public function index(Request $request) {
         $processes = Project::find($request->project_id)->process;
         return response()->json($processes, 200);
@@ -146,5 +165,27 @@ class ProcessController extends Controller
             return response()->json([
                 'message' => "Processes not found!"
             ], 404);
+    }
+
+    //INSIGHTS
+    public function insights(Request $request) {
+        $projects = Project::where('user_id', $request->user_id)->with('process')->get();
+        foreach ($projects as $project) {
+            unset($project->user_id);
+            unset($project->description);
+            unset($project->created_at);
+            unset($project->updated_at);
+            foreach ($project->process as $process) {
+                unset($process->description);
+                unset($process->best_version);
+                unset($process->project_id);
+                unset($process->created_at);
+                unset($process->updated_at);
+            }
+        }
+        
+        return response()->json([
+            'projects' => $projects
+        ], 200);
     }
 }

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 class ProcessVersionController extends Controller
 {
     public function index(Request $request) {
-        $process_versions = Process::find($request->process_id)->process_version;
+        $process_versions = Process::find($request->process_id)->process_version->sortBy(['major', 'minor', 'patch'])->values();
         return response()->json($process_versions, 200);
     }
 
@@ -42,7 +42,7 @@ class ProcessVersionController extends Controller
                     $children = ProcessVersion::find($last_version_id)->activity;
                     if(count($children)>0)
                         foreach($children as $activity) {
-                            $newActivity = Activity::create([
+                            Activity::create([
                                 'process_version_id' => $process_version->id,
                                 'sequence_number' => $activity->sequence_number,
                                 'name' => $activity->name,
@@ -53,6 +53,10 @@ class ProcessVersionController extends Controller
                         }
                     $process_version->file = $last_version->file;
                     $process_version->save();
+
+                    if($process_version->status = 1) {
+                        ProcessVersion::where('process_id', $request->process_id)->where('id', '!=', $process_version->id)->update(['status' => 0]);
+                    }
                 }
 
                 DB::table('activity_log')->insert([
@@ -104,6 +108,10 @@ class ProcessVersionController extends Controller
                     'file' => $request->file,
                     'status' => $request->status
                 ]);
+
+                if($process_version->status = 1) {
+                    ProcessVersion::where('process_id', $request->process_id)->where('id', '!=', $process_version->id)->update(['status' => 0]);
+                }
 
                 DB::table('activity_log')->insert([
                     'user_id' => $request->user_id,
