@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Process;
 use App\Models\Project;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -169,22 +170,101 @@ class ProcessController extends Controller
 
     //INSIGHTS
     public function insights(Request $request) {
-        $projects = Project::where('user_id', $request->user_id)->with('process')->get();
+        $projects = Project::where('user_id', $request->user_id)->with('process.process_version')->get();
+        $num_projects = 0;
+        $num_processes = 0;
+        $num_activities = 0;
+        $avg_processes_per_project = 0;
+        $avg_activities_per_process = 0;
+        $total_grade = 0;
+        $total_duration = 0;
+        $total_num_people = 0;
+        $min_duration = 9999999;
+        $version_min_duration = array();
+        $max_duration = 0;
+        $version_max_duration = array();
+        $min_num_people = 9999999;
+        $version_min_num_people = array();
+        $max_num_people = 0;
+        $version_max_num_people = array();
+
         foreach ($projects as $project) {
-            unset($project->user_id);
-            unset($project->description);
-            unset($project->created_at);
-            unset($project->updated_at);
+            $num_projects++;
+            unset($project->user_id, $project->description, $project->created_at, $project->updated_at);
+
             foreach ($project->process as $process) {
-                unset($process->description);
-                unset($process->best_version);
-                unset($process->project_id);
-                unset($process->created_at);
-                unset($process->updated_at);
+                $num_processes++;
+                unset($process->description, $process->best_version, $process->project_id, $process->created_at, $process->updated_at);
+
+                foreach ($process->process_version as $version) {
+                    $num_activities++;
+                    $total_grade += $version->grade;
+                    $total_duration += $version->total_duration;
+                    $total_num_people += $version->total_num_people;
+                    if($version->total_duration > $max_duration) {
+                        $max_duration = $version->total_duration;
+                        $version_max_duration['project_id'] = $project->id;
+                        $version_max_duration['project_name'] = $project->name;
+                        $version_max_duration['process_id'] = $process->id;
+                        $version_max_duration['process_name'] = $process->name;
+                        $version_max_duration['version_id'] = $version->id;
+                        $version_max_duration['version_number'] = $version->major.'.'.$version->minor.'.'.$version->patch;
+                        $version_max_duration['duration'] = $version->total_duration;
+                    }
+                    if($version->total_num_people > $max_num_people) {
+                        $max_num_people = $version->total_num_people;
+                        $version_max_num_people['project_id'] = $project->id;
+                        $version_max_num_people['project_name'] = $project->name;
+                        $version_max_num_people['process_id'] = $process->id;
+                        $version_max_num_people['process_name'] = $process->name;
+                        $version_max_num_people['version_id'] = $version->id;
+                        $version_max_num_people['version_number'] = $version->major.'.'.$version->minor.'.'.$version->patch;
+                        $version_max_num_people['num_people'] = $version->total_num_people;
+                    }
+                    if($version->total_duration < $min_duration) {
+                        $min_duration = $version->total_duration;
+                        $version_min_duration['project_id'] = $project->id;
+                        $version_min_duration['project_name'] = $project->name;
+                        $version_min_duration['process_id'] = $process->id;
+                        $version_min_duration['process_name'] = $process->name;
+                        $version_min_duration['version_id'] = $version->id;
+                        $version_min_duration['version_number'] = $version->major.'.'.$version->minor.'.'.$version->patch;
+                        $version_min_duration['duration'] = $version->total_duration;
+                    }
+                    if($version->total_num_people < $min_num_people) {
+                        $min_num_people = $version->total_num_people;
+                        $version_min_num_people['project_id'] = $project->id;
+                        $version_min_num_people['project_name'] = $project->name;
+                        $version_min_num_people['process_id'] = $process->id;
+                        $version_min_num_people['process_name'] = $process->name;
+                        $version_min_num_people['version_id'] = $version->id;
+                        $version_min_num_people['version_number'] = $version->major.'.'.$version->minor.'.'.$version->patch;
+                        $version_min_num_people['num_people'] = $version->total_num_people;
+                    }
+                    unset($version->process_id, $version->description, $version->major, $version->minor, $version->patch, $version->file, $version->created_at, $version->updated_at);
+                }
             }
         }
-        
+
+        $avg_processes_per_project = $num_processes/$num_projects;
+        $avg_activities_per_process = $num_activities/$num_processes;
+        $avg_grade_per_process = $total_grade/$num_processes;
+        $avg_duration_per_process = $total_duration/$num_processes;
+        $avg_num_people_per_process = $total_num_people/$num_processes;
+
         return response()->json([
+            'total_num_projects' => $num_projects,
+            'total_num_processes' => $num_processes,
+            'total_num_activities' => $num_activities,
+            'avg_processes_per_project' =>  number_format(round($avg_processes_per_project, 2), 2),
+            'avg_activities_per_process' =>  number_format(round($avg_activities_per_process, 2), 2),
+            'avg_grade_per_process' =>  number_format(round($avg_grade_per_process, 2), 2),
+            'avg_duration_per_process' => number_format(round($avg_duration_per_process, 2), 2),
+            'avg_num_people_per_process' => number_format(round($avg_num_people_per_process, 2), 2),
+            'version_max_duration' => $version_max_duration,
+            'version_min_duration' => $version_min_duration,
+            'version_max_num_people' => $version_max_num_people,
+            'version_min_num_people' => $version_min_num_people,
             'projects' => $projects
         ], 200);
     }
