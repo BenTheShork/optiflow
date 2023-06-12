@@ -15,6 +15,12 @@ class ProjectController extends Controller
     }
 
     public function store(Request $request) {
+        $count = User::find($request->user_id)->project->count();
+        if($count==10) {
+            return response()->json([
+                'message' => "Project limit exceeded!"
+            ], 403);
+        }
         $duplicate = User::find($request->user_id)->project->where('name', $request->name);
         if(count($duplicate)) {
             return response()->json([
@@ -38,7 +44,8 @@ class ProjectController extends Controller
             
                 return response()->json([
                     'message' => "Project created successfully!",
-                    'project' => $project
+                    'project' => $project,
+                    'count' => $count
                 ], 200);
             }
             else 

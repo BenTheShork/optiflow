@@ -16,6 +16,24 @@ class ProcessVersionController extends Controller
     }
 
     public function store(Request $request) {
+        $count_major =  Process::find($request->process_id)->process_version->where('major', $request->major)->count();
+        $count_minor =  Process::find($request->process_id)->process_version->where('minor', $request->minor)->count();
+        $count_patch =  Process::find($request->process_id)->process_version->where('patch', $request->patch)->count();
+        if($count_major==10) {
+            return response()->json([
+                'message' => "Major version limit exceeded!"
+            ], 403);
+        }
+        if($count_minor==10) {
+            return response()->json([
+                'message' => "Minor version limit exceeded!"
+            ], 403);
+        }
+        if($count_patch==10) {
+            return response()->json([
+                'message' => "Patch version limit exceeded!"
+            ], 403);
+        }
         $duplicate = Process::find($request->process_id)->process_version->where('major', $request->major)->where('minor', $request->minor)->where('patch', $request->patch);
         if(count($duplicate)>0) {
             return response()->json([

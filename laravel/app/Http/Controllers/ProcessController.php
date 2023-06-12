@@ -35,6 +35,12 @@ class ProcessController extends Controller
     }
 
     public function store(Request $request) {
+        $count =  Project::find($request->project_id)->process->count();
+        if($count==20) {
+            return response()->json([
+                'message' => "Process limit exceeded!"
+            ], 403);
+        }
         $duplicate = Project::find($request->project_id)->process->where('name', $request->name);
         if(count($duplicate)>0) {
             return response()->json([

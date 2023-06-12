@@ -15,6 +15,12 @@ class ActivityController extends Controller
     }
 
     public function store(Request $request) {
+        $count = ProcessVersion::find($request->process_version_id)->activity->count();
+        if($count==30) {
+            return response()->json([
+                'message' => "Activity limit exceeded!"
+            ], 403);
+        }
         $duplicate = ProcessVersion::find($request->process_version_id)->activity->where('name', $request->name);
         if(count($duplicate)>0) {
             return response()->json([
