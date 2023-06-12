@@ -33,4 +33,23 @@ class UserController extends Controller
                 'message' => "Error creating user!"
             ], 500);
     }
+
+    public function update(Request $request, $id) {
+        $user = User::find($id);
+        if($user) {
+            $user->update([
+                'token' => $request->token
+            ]);
+            return response()->json([
+                'message' => "Token updated successfully!",
+                'user' => $user
+            ], 200); 
+        }
+        else 
+            return response()->json([
+                'status' => 404,
+                'message' => "User not found!"
+            ]);
+    }
+
 }
