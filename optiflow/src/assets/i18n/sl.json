@@ -76,6 +76,15 @@
         "delete-project": "Izbriši Projekt",
         "delete-project-description": "Ali ste prepričani, da želite izbrisati tisti Projekt?"
     },
+    "activity-log": {
+        "title": "Dnevnik dejavnosti za uporabnika",
+        "table-name": "Naziv tabele",
+        "record": "Zapis",
+        "action": "Akcija",
+        "created": "Kreirano",
+        "updated": "Ažurirano",
+        "date": "Datum"
+    },
     "auth": {
         "sign-in": "Prijava",
         "email": "Email",

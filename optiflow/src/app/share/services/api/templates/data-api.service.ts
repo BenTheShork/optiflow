@@ -43,6 +43,20 @@ export abstract class DataApiService<T, G = T> {
     }
 
     /**
+     * This method calls the backend to receive a paginated resource.
+     *
+     * @param resourceId
+     * @param controller
+     * @param params
+     */
+    protected getOnePaginated(resourceId?: string, controller: string = '', params?: any): Observable<T> {
+        const options = new Options(params);
+        const resource = (resourceId !== undefined) ? ('/' + resourceId) : '';
+        return this.http.get<T>(this.url + controller + resource, options)
+            .pipe(map((res) => new this.type(res)));
+    }
+
+    /**
      * This method calls the backend to create the resource.
      *
      * @param resource
