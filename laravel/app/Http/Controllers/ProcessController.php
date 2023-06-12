@@ -248,6 +248,8 @@ class ProcessController extends Controller
                         $version_min_num_people['num_people'] = $version->total_num_people;
                     }
                     unset($version->process_id, $version->description, $version->major, $version->minor, $version->patch, $version->file, $version->created_at, $version->updated_at);
+                    
+                    unset($process->process_version);
                 }
             }
         }
