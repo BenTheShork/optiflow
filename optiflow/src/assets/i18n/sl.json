@@ -76,8 +76,11 @@
     },
     "activity-log": {
         "title": "Dnevnik dejavnosti za uporabnika",
+        "table-name": "Naziv tabele",
         "record": "Zapis",
         "action": "Akcija",
+        "created": "Kreirano",
+        "updated": "Ažurirano",
         "date": "Datum"
     },
     "auth": {

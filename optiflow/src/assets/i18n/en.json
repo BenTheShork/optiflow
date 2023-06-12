@@ -76,8 +76,11 @@
     },
     "activity-log": {
         "title": "Activity log for User ",
+        "table-name": "Table name",
         "record": "Record",
         "action": "Action",
+        "created": "Created at",
+        "updated": "Updated at",
         "date": "Date"
     },
     "auth": {

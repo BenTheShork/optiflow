@@ -1,18 +1,16 @@
-<h2 class="fw-bold title-mobile overview">{{ 'header.projects' | translate }}>{{ 'header.activity-log' | translate }}</h2>
+<h2 class="fw-bold title-mobile overview">{{ 'header.activity-log' | translate }}</h2>
 <span class="title">
     {{ 'activity-log.title' | translate }} FIRSTNAME LASTNAME
 </span>
 <div class="card mt-4 py-3 px-3 exported-variables w-100">
-    <dx-data-grid #activityGrid class="data-grid-search activity" [dataSource]="activity$ | async" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
+    <dx-data-grid #activityGrid class="data-grid-search activity" [dataSource]="dataSource" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
         [remoteOperations]="true" [wordWrapEnabled]="true" [columnAutoWidth]="false" columnResizingMode="widget" [noDataText]="'no data'">
 
         <dxo-paging [pageSize]="10"></dxo-paging>
-        <dxo-pager [visible]="true" [showPageSizeSelector]="true" [allowedPageSizes]="[6, 12, 24]" [showNavigationButtons]="true">
+        <dxo-pager [visible]="true" [showPageSizeSelector]="true" [allowedPageSizes]="[10, 20, 50]" [showNavigationButtons]="true">
         </dxo-pager>
 
         <!-- Filtering & Sorting settings -->
-        <dxo-header-filter [visible]="true"></dxo-header-filter>
-        <dxo-filter-row [visible]="true"></dxo-filter-row>
         <dxo-search-panel [visible]="true" [width]="320"></dxo-search-panel>
         <dxo-sorting mode="single"></dxo-sorting>
 
@@ -29,13 +27,15 @@
             <dxi-item location="before" name="columnChooserButton"></dxi-item>
         </dxo-toolbar>
         <!-- Columns definition -->
-        <dxi-column dataField="table_name" dataType="string" [caption]="'activity-log.element' | translate">
+        <dxi-column dataField="table_name" dataType="string" [caption]="'activity-log.table-name' | translate">
         </dxi-column>
         <dxi-column dataField="record" dataType="string" [caption]="'activity-log.record' | translate">
         </dxi-column>
         <dxi-column dataField="action" dataType="string" [caption]="'activity-log.action' | translate">
         </dxi-column>
-        <dxi-column dataField="created_at" dataType="date" [caption]="'activity-log.date' | translate">
+        <dxi-column dataField="created_at" dataType="date" [caption]="'activity-log.created' | translate">
+        </dxi-column>
+        <dxi-column dataField="updated_at" dataType="date" [caption]="'activity-log.updated' | translate">
         </dxi-column>
     </dx-data-grid>
 </div>
