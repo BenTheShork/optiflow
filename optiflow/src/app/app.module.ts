@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { ActivityLogComponent } from './components/activity-log/activity-log.component';
+import { BpmnModelerComponent } from './components/bpmn-modeler/bpmn-modeler.component';
 
 export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -27,7 +28,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
 export const setupLanguageFactory = (service: LanguageService) => service.initialize();
 
 @NgModule({
-  declarations: [AppComponent, SignIn, SignupComponent, AboutUsComponent, PrivacyPolicyComponent, ActivityLogComponent],
+  declarations: [AppComponent, SignIn, SignupComponent, AboutUsComponent, PrivacyPolicyComponent, ActivityLogComponent, BpmnModelerComponent],
   imports: [
     BrowserModule,
     FormsModule,

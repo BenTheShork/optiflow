@@ -1,0 +1,14 @@
+:host {
+    display: block;
+    height: 100%;
+  }
+  
+  #canvas {
+    height: calc(100% - 40px);
+  }
+  
+  #save-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+  }
