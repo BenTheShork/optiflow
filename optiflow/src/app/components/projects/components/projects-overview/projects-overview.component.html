@@ -5,7 +5,7 @@
 <div class="card mt-4 py-3 px-3 exported-variables w-100">
     <dx-data-grid #projectsGrid class="data-grid-search projects" [dataSource]="project$ | async" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
         [remoteOperations]="true" [wordWrapEnabled]="true" [columnAutoWidth]="false" columnResizingMode="widget" [noDataText]="'no data'" (onCellPrepared)="onCellPrepared($event)" (onRowInserting)="onRowInserting($event)" (onRowUpdating)="onRowUpdating($event)"
-        (onRowRemoving)="onRowRemoving($event)" (onCellClick)="redirectToDetails($event)" [(selectedRowKeys)]="selectedRows" (onEditorPreparing)="onEditorPreparing($event)" (onSelectionChanged)="selectionChangedHandler()" (onEditCanceled)="cancelHandler()">
+        (onRowRemoving)="onRowRemoving($event)" (onCellClick)="redirectToDetails($event)" (onContentReady)="onGridContentReady()" [(selectedRowKeys)]="selectedRows" (onEditorPreparing)="onEditorPreparing($event)" (onSelectionChanged)="selectionChangedHandler()" (onEditCanceled)="cancelHandler()">
 
         <dxo-selection
             [selectAllMode]="'allMode'"
@@ -79,6 +79,10 @@
         <dxi-column dataField="created_at" dataType="date" [caption]="'project.created' | translate" [allowEditing]="false">
         </dxi-column>
         <dxi-column dataField="updated_at" dataType="date" [caption]="'project.updated' | translate" [allowEditing]="false">
+        </dxi-column>
+        <dxi-column type="buttons" [width]="110">
+            <dxi-button name="edit"></dxi-button>
+            <dxi-button name="delete"></dxi-button>
         </dxi-column>
     </dx-data-grid>
 </div>

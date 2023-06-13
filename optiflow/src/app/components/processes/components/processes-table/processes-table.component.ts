@@ -161,6 +161,14 @@ export class ProcessesTableComponent implements OnInit {
     this.isEditing = false;
   }
 
+  public onGridContentReady(): void {
+    // Check if the "Save" button was clicked without making any changes
+    const saveButton = document.querySelector('.dx-link-save');
+    saveButton?.addEventListener('click', () => {
+      this.isEditing = false;
+    });
+  }
+
   confirmProcessRemoval() {
     if (this.selectedRows.length > 0) {
       this.processApiService

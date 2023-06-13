@@ -171,6 +171,14 @@ export class ProjectsOverviewComponent {
     }
   }
 
+  public onGridContentReady(): void {
+    // Check if the "Save" button was clicked without making any changes
+    const saveButton = document.querySelector('.dx-link-save');
+    saveButton?.addEventListener('click', () => {
+      this.isEditing = false;
+    });
+  }
+
   private refreshData() {
     this.loadingService.startLoading();
     this.project$ = this.projectApiService.getProjects(4)
