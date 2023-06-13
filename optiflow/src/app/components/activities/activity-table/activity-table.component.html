@@ -56,6 +56,13 @@
                 </dx-button>
             </dxi-item>
             <!-- Create Button -->
+            <dxi-item location="after" locateInMenu="auto">
+                <div *dxTemplate>
+                    <button (click)="onBpmnClick()" class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
+                        {{ 'activity.bpmn-diagram' | translate }}
+                    </button>
+                </div>
+            </dxi-item>
             <dxi-item location="after" locateInMenu="auto" [visible]="canEdit">
                 <div *dxTemplate>
                     <button (click)="onAddClick()" class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
@@ -90,6 +97,7 @@
         <dxi-column dataField="updated_at" dataType="date" [caption]="'activity.updated' | translate" [allowEditing]="false">
         </dxi-column>
     </dx-data-grid>
+    <ng-template #childContainer></ng-template>
 </div>
 <app-confirmation-popup [title]="'activity.delete-activity' | translate" [description]="'activity.delete-activity-description' | translate" [(popupVisible)]="confirmationVisible" (changeConfirmed)="confirmActivityRemoval()">
 </app-confirmation-popup>

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Activity } from '@src/app/share/classes/activity.class';
 import { AlertService } from '@src/app/share/services/alert.service';
 import { ActivityApiService } from '@src/app/share/services/api/activity-api.service';
@@ -32,6 +32,7 @@ export class ActivityTableComponent implements OnInit {
     private route: ActivatedRoute,
     private activityApiService: ActivityApiService,
     private alertService: AlertService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -54,6 +55,15 @@ export class ActivityTableComponent implements OnInit {
     if (this.grid$) {
         this.grid$.instance.addRow();
     }
+  }
+
+  onBpmnClick(): void {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        versionId: this.versionId
+      }
+    };
+    this.router.navigate(['/bpmn-modeler'], navigationExtras);
   }
 
   hasSelectedRows(): boolean {

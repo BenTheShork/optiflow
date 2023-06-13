@@ -14,6 +14,7 @@ export class Version {
     public updated_at: string = null;
     public user_id: number = null;
     public status: VersionStatus = null;
+    public file: any = null;
 
     constructor(versionShape?: Partial<Version>) {
 
@@ -56,6 +57,9 @@ export class Version {
             }
             if (versionShape.status != null) {
                 this.status = versionShape.status;
+            }
+            if (versionShape.file != null) {
+                this.file = versionShape.file;
             }
         }
     }

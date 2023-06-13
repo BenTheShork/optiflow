@@ -27,6 +27,7 @@
         "num-people": "Number of People",
         "created": "Created at",
         "updated": "Updated at",
+        "bpmn-diagram": "BPMN diagram",
         "create-activity": "Create Activity",
         "delete-activity": "Delete Activity",
         "delete-activity-description": "Are you sure you want to delete activity from version?"

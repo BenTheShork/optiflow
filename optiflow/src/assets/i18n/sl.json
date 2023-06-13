@@ -27,6 +27,7 @@
         "num-people": "Število ljudi",
         "created": "Kreirano",
         "updated": "Ažurirano",
+        "bpmn-diagram": "BPMN dijagram",
         "create-activity": "Ustvari Dejavnost",
         "delete-activity": "Izbriši dejavnost",
         "delete-activity-description": "Ali ste prepričani, da želite izbrisati dejavnost iz različice?"

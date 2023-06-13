@@ -7,6 +7,11 @@
 @import 'node_modules/bootstrap/scss/bootstrap'; // importing bootstrap after changing bootstrap variables
 @import 'node_modules/angular-calendar/css/angular-calendar.css';
 @import 'angular-calendar-styles.scss';
+@import 'node_modules/bpmn-js/dist/assets/diagram-js.css';
+@import 'node_modules/bpmn-js/dist/assets/bpmn-font/css/bpmn.css';
+@import 'node_modules/bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css';
+@import 'node_modules/bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css';
+
 @font-face {
     font-family: 'poppins';
     src: url('/assets/fonts/poppins/Poppins-Regular.ttf');
