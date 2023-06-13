@@ -13,11 +13,6 @@
             <div class="logo-image text-center"></div>
             <div>
                 <li [routerLinkActive]="['active']" class="nav-item">
-                    <a class="nav-link" (click)="toggleMenu()" routerLink="/dashboard">
-                        <i class="bi bi-speedometer2"> </i> {{ 'header.dashboard' | translate }}
-                    </a>
-                </li>
-                <li [routerLinkActive]="['active']" class="nav-item">
                     <a class="nav-link" (click)="toggleMenu()" routerLink="/project">
                         <i class="bi bi-list-check"></i> {{ 'header.projects' | translate }}
                     </a>

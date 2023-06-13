@@ -1,6 +1,5 @@
 {
     "header": {
-        "dashboard": "Namiz",
         "projects": "Projekti",
         "insights": "Vpogledi",
         "activity-log": "Dnevnik aktivnosti",
@@ -86,6 +85,27 @@
         "updated": "Ažurirano",
         "date": "Datum"
     },
+    "insights": {
+        "total_num_projects": "Skupno število projektov",
+        "total_num_processes": "Skupno število procesov",
+        "total_num_activities": "Skupno število dejavnosti",
+        "avg_processes_per_project": "Povprečno število procesov na projekt",
+        "avg_activities_per_process": "Povprečne dejavnosti na proces",
+        "avg_grade_per_process": "Povprečna ocena na proces",
+        "avg_duration_per_process": "Povprečno trajanje na proces",
+        "avg_num_people_per_process": "Povprečno število ljudi na proces",
+        "version_max_duration": "Različica z najdaljšim trajanjem",
+        "version_min_duration": "Različica z najmanjšim trajanjem",
+        "version_max_num_people": "RRazličica z največ ljudmi",
+        "version_min_num_people": "Različica z najmanjšim številom ljudmi",
+        "pie-chart-title": "Razčlenitev statusa procesa",
+        "bar-chart-title": "Razčlenitev projekta",
+        "process_num": "Število procesov",
+        "version_num": "Število različic",
+        "project-name": "Naziv projekta",
+        "process-name": "Naziv procesa",
+        "version-number": "Različica"
+    },
     "auth": {
         "sign-in": "Prijava",
         "email": "Email",
@@ -161,9 +181,12 @@
     "page-not-found": "Stran ni najdena",
     "page-not-found-description":"URL, ki ste ga navedli, ni bil najden.",
     "positive-number": "Vnesite pozitivno celo število",
+    "number-range": "Vnesite število med 1 in 10",
     "incorrect-format": "Oblika različice mora biti x.y.z",
     "active": "Aktivno",
     "inactive": "Neaktivno",
     "completed": "Dokončano",
-    "Conflict": "Že obstaja!"
+    "Conflict": "Že obstaja!",
+    "export-bpmn": "Eksportiraj v .BPMN",
+    "go-back": "Nazaj"
 }

@@ -7,7 +7,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { SignIn } from './components/signin/signin.component';
 import { FormsModule } from '@angular/forms';
 import { SignupComponent } from './components/signup/signup.component';
-import { DxButtonModule, DxDataGridModule, DxDateBoxModule, DxNumberBoxModule, DxSelectBoxModule, DxTagBoxModule, DxTextAreaModule, DxTextBoxModule, DxValidationGroupModule, DxValidatorModule } from 'devextreme-angular';
+import { DxButtonModule, DxChartModule, DxDataGridModule, DxDateBoxModule, DxNumberBoxModule, DxPieChartModule, DxSelectBoxModule, DxTagBoxModule, DxTextAreaModule, DxTextBoxModule, DxValidationGroupModule, DxValidatorModule } from 'devextreme-angular';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
@@ -21,6 +21,8 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { ActivityLogComponent } from './components/activity-log/activity-log.component';
 import { BpmnModelerComponent } from './components/bpmn-modeler/bpmn-modeler.component';
+import { InsightsOverviewComponent } from './components/insights-overview/insights-overview.component';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -28,7 +30,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
 export const setupLanguageFactory = (service: LanguageService) => service.initialize();
 
 @NgModule({
-  declarations: [AppComponent, SignIn, SignupComponent, AboutUsComponent, PrivacyPolicyComponent, ActivityLogComponent, BpmnModelerComponent],
+  declarations: [AppComponent, SignIn, SignupComponent, AboutUsComponent, PrivacyPolicyComponent, ActivityLogComponent, BpmnModelerComponent, InsightsOverviewComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -42,7 +44,9 @@ export const setupLanguageFactory = (service: LanguageService) => service.initia
     DxValidatorModule,
     DxDateBoxModule,
     DxTagBoxModule,
+    DxPieChartModule,
     DxNumberBoxModule,
+    DxChartModule,
     HttpClientModule,
     DxValidationGroupModule,
     AppRoutingModule,
@@ -64,3 +68,5 @@ export const setupLanguageFactory = (service: LanguageService) => service.initia
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+platformBrowserDynamic().bootstrapModule(AppModule);

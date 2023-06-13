@@ -29,6 +29,18 @@ export abstract class DataApiService<T, G = T> {
     }
 
     /**
+     * This method calls the backend to return all resources.
+     *
+     * @param params
+     * @param urlExtension
+     */
+    protected getAllIns(params?: any, urlExtension: string = ''): Observable<T> {
+        const options = new Options(params);
+        return this.http.get<T[]>(this.url + urlExtension, options)
+            .pipe(map((res) => new this.type(res)));
+    }
+
+    /**
      * This method calls the backend to receive a resource with the given id.
      *
      * @param resourceId

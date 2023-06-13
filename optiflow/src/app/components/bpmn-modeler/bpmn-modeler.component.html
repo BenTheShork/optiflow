@@ -5,5 +5,18 @@
       <strong>Failed to render diagram: </strong>
       {{ importError.message }}
     </div>
-    <button id="save-button" (click)="exportDiagram()">Export to .BPMN</button>
+    <div class="d-flex flex-row mt-4 justify-content-around">
+      <dx-button
+        id="save-button"
+        [text]="'export-bpmn' | translate"
+        (onClick)="exportDiagram()"
+                >
+      </dx-button>
+      <dx-button
+        id="back-button"
+        [text]="'go-back' | translate"
+        (onClick)="goBack()"
+                >
+      </dx-button>
+    </div>
 </div>
