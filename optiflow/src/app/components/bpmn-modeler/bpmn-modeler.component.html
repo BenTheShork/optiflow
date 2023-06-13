@@ -1,0 +1,22 @@
+<div class="diagram-parent">
+    <div #ref class="diagram-container"></div>
+  
+    <div class="import-error" *ngIf="importError">
+      <strong>Failed to render diagram: </strong>
+      {{ importError.message }}
+    </div>
+    <div class="d-flex flex-row mt-4 justify-content-around">
+      <dx-button
+        id="save-button"
+        [text]="'export-bpmn' | translate"
+        (onClick)="exportDiagram()"
+                >
+      </dx-button>
+      <dx-button
+        id="back-button"
+        [text]="'go-back' | translate"
+        (onClick)="goBack()"
+                >
+      </dx-button>
+    </div>
+</div>

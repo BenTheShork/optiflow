@@ -29,6 +29,18 @@ export abstract class DataApiService<T, G = T> {
     }
 
     /**
+     * This method calls the backend to return all resources.
+     *
+     * @param params
+     * @param urlExtension
+     */
+    protected getAllIns(params?: any, urlExtension: string = ''): Observable<T> {
+        const options = new Options(params);
+        return this.http.get<T[]>(this.url + urlExtension, options)
+            .pipe(map((res) => new this.type(res)));
+    }
+
+    /**
      * This method calls the backend to receive a resource with the given id.
      *
      * @param resourceId
@@ -38,6 +50,20 @@ export abstract class DataApiService<T, G = T> {
     protected getOne(resourceId?: string, controller: string = '', params?: any): Observable<T> {
         const options = new Options(params);
         const resource = (resourceId !== undefined) ? '/' + resourceId : '';
+        return this.http.get<T>(this.url + controller + resource, options)
+            .pipe(map((res) => new this.type(res)));
+    }
+
+    /**
+     * This method calls the backend to receive a paginated resource.
+     *
+     * @param resourceId
+     * @param controller
+     * @param params
+     */
+    protected getOnePaginated(resourceId?: string, controller: string = '', params?: any): Observable<T> {
+        const options = new Options(params);
+        const resource = (resourceId !== undefined) ? ('/' + resourceId) : '';
         return this.http.get<T>(this.url + controller + resource, options)
             .pipe(map((res) => new this.type(res)));
     }
@@ -129,6 +155,21 @@ export abstract class DataApiService<T, G = T> {
      * @param action
      * @param params
      */
+    protected updateVers(resourceId: string, resource: Partial<G>, action: string = '', params?: any): Observable<T> {
+        const options = new Options(params);
+        const data = new UpdateRequest<Partial<G>>(resource, Object.keys(resource));
+        return this.http.patch<G>(this.url + action + '/' + resourceId, data.data, options)
+            .pipe(map((res) => new this.type(res)));
+    }
+
+    /**
+     * This method calls the backend to update|patch a resource with the given id.
+     *
+     * @param resourceId
+     * @param resource
+     * @param action
+     * @param params
+     */
     protected updateEmpty(resourceId: string, resource: Partial<G>, action: string = '', params?: any): Observable<void> {
         const options = new Options(params);
         const data = new UpdateRequest<Partial<G>>(resource, Object.keys(resource));
@@ -151,9 +192,11 @@ export abstract class DataApiService<T, G = T> {
      *
      * @param resourceId
      * @param urlExtension
+     * @param params
      */
-    protected deleteOne(resourceId: string, urlExtension: string = ''): Observable<void | T> {
-        return this.http.delete<null | T>(this.url + urlExtension + '/'  + resourceId);
+    protected deleteOne(resourceId: string, urlExtension: string = '', params?: any): Observable<void | T> {
+        const options = { body: params };
+        return this.http.delete<null | T>(this.url + urlExtension + '/'  + resourceId, options);
     }
 
     /**
@@ -163,7 +206,7 @@ export abstract class DataApiService<T, G = T> {
      * @param params
      */
     protected deleteAll(urlExtension: string = '', params?: any): Observable<void> {
-        const options = new Options(params);
+        const options = { body: params }
         return this.http.delete<null>(this.url + urlExtension, options);
     }
 }

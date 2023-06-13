@@ -1,3 +1,5 @@
+import { Process } from "./process.class";
+
 export class Project {
     public id: string = null;
     public name: string = null;
@@ -6,6 +8,7 @@ export class Project {
     public num_processes: number = null;
     public created_at: string = null;
     public updated_at: string = null;
+    public process: Process[] = null;
 
     constructor(projectShape?: Partial<Project>) {
 
@@ -36,6 +39,9 @@ export class Project {
             }
             if (projectShape.updated_at != null) {
                 this.updated_at = projectShape.updated_at;
+            }
+            if (projectShape.process != null) {
+                this.process = projectShape.process;
             }
         }
     }

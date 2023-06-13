@@ -2,10 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProcessStatus } from '@src/app/share/classes/process-status.enum';
 import { Process } from '@src/app/share/classes/process.class';
-import { PROCESS_STATUSES } from '@src/app/share/consts/process-status.conts';
-import { AlertService, AlertType } from '@src/app/share/services/alert.service';
+import { PROCESS_STATUSES } from '@src/app/share/consts/process-status.const';
+import { AlertService } from '@src/app/share/services/alert.service';
 import { ProcessApiService } from '@src/app/share/services/api/process-api.service';
-import { ErrorHandleService } from '@src/app/share/services/error-handle.service';
 import { LegalizationDatagridService } from '@src/app/share/services/legalization-data-grid.service';
 import { DxDataGridComponent } from 'devextreme-angular';
 import { dxDataGridColumn } from 'devextreme/ui/data_grid';
@@ -38,12 +37,12 @@ export class ProcessesTableComponent implements OnInit {
   private processIdToDelete: string;
   selectedRows: number[] = [];
   selectionChangedBySelectbox: boolean;
+  isEditing = false;
 
   constructor(
     private legalizationDatagridService: LegalizationDatagridService,
     private route: ActivatedRoute,
     private processApiService: ProcessApiService,
-    private errorHandleService: ErrorHandleService,
     private alertService: AlertService,
     private readonly router: Router,
   ) {}
@@ -75,27 +74,27 @@ export class ProcessesTableComponent implements OnInit {
     }
   }
 
-  onCellPrepared(e: {
-    rowType: string;
-    column: dxDataGridColumn;
-    data: Process;
-    cellElement: { classList: { add: (arg0: string) => void } };
-  }) {
+  onCellPrepared(e: any) {
+    //this.legalizationDatagridService.onCellPrepared(e);
     if(e.data) {
-      this.legalizationDatagridService.onCellPrepared(e);
+      if (this.isEditing === false) {
+        e.cellElement.style.cursor = 'pointer';
+      }
     }
   }
 
   redirectToDetails(event: any): void {
-    if (!event.column.name) {
-      return;
-    }
-    this.router.navigate(['./', event.data.id], {
-      relativeTo: this.route
-  });
+    if (this.isEditing === false) {
+      if (!event.column.name) {
+        return;
+      }
+      this.router.navigate(['./', event.data.id], {
+        relativeTo: this.route
+    });}
   }
 
   onRowInserting(e: any) {
+    this.isEditing = false;
     let newProcess = new Process ({
       name: e.data.name,
       description: e.data.description,
@@ -110,14 +109,11 @@ export class ProcessesTableComponent implements OnInit {
                 return false;
             }),
             tap(() => {
-              this.alertService.notify('successfully saved', AlertType.Success, 5000);
+              this.alertService.success('alerts.successful-create');
               this.refreshProcesses.emit();
             }),
             catchError((err: any) => {
-                this.errorHandleService.handleError(
-                    err,
-                    'cannot save'
-                );
+                this.alertService.error('request-errors.cannot-save', err);
                 return of(true);
             })
         )
@@ -125,6 +121,7 @@ export class ProcessesTableComponent implements OnInit {
   }
 
   onRowUpdating(e: any) {
+    this.isEditing = false;
     const mergedData = Object.assign({}, e.oldData, e.newData);
     e.cancel = this.processApiService
         .patchProcess(e.key, mergedData)
@@ -133,30 +130,43 @@ export class ProcessesTableComponent implements OnInit {
                 return false;
             }),
             tap(() => {
-              this.alertService.notify('successfully updated', AlertType.Success, 5000);
+              this.alertService.success('alerts.successful-update');
               this.refreshProcesses.emit();
             }),
             catchError((err: any) => {
-                this.errorHandleService.handleError(
-                    err,
-                    'cannot update'
-                );
+                this.alertService.error('request-errors.cannot-update', err);
                 return of(true);
             })
         ).toPromise();
   }
 
   onRowRemoving(e: any) {
+    this.isEditing = false;
     e.cancel = true;
     this.confirmationVisible = true;
     this.processIdToDelete = e.key;
   }
 
   onEditorPreparing(e: any) {
+    if (e.parentType === 'dataRow' && (e.editorName === 'dxTextBox' || e.editorName === 'dxNumberBox')) {
+      this.isEditing = true;
+    }
     if (e.dataField === 'description' && e.parentType === 'dataRow') {
         e.editorName = 'dxTextArea';
         e.editorOptions.height = 100;
     }
+  }
+
+  cancelHandler() {
+    this.isEditing = false;
+  }
+
+  public onGridContentReady(): void {
+    // Check if the "Save" button was clicked without making any changes
+    const saveButton = document.querySelector('.dx-link-save');
+    saveButton?.addEventListener('click', () => {
+      this.isEditing = false;
+    });
   }
 
   confirmProcessRemoval() {
@@ -165,14 +175,12 @@ export class ProcessesTableComponent implements OnInit {
       .deleteProcesses(this.selectedRows)
       .pipe(
           map(() => {
+              this.alertService.success('alerts.successful-delete')
               this.refreshProcesses.emit();
               return false;
           }),
           catchError((err: any) => {
-              this.errorHandleService.handleError(
-                  err,
-                  'cannot delete'
-              );
+              this.alertService.error('request-errors.cannot-delete', err);
               return of(true);
           })
       ).toPromise();
@@ -181,14 +189,12 @@ export class ProcessesTableComponent implements OnInit {
       .deleteProcess(this.processIdToDelete)
       .pipe(
           map(() => {
+              this.alertService.success('alerts.successful-delete')
               this.refreshProcesses.emit();
               return false;
           }),
           catchError((err: any) => {
-              this.errorHandleService.handleError(
-                  err,
-                  'cannot delete'
-              );
+              this.alertService.error('request-errors.cannot-delete', err);
               return of(true);
           })
       ).toPromise();

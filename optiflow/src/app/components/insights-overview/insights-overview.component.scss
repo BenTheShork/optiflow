@@ -1,0 +1,39 @@
+::ng-deep #pie {
+    height: 440px;
+  }
+  
+  ::ng-deep #pie * {
+    margin: 0 auto;
+  }
+
+  ::ng-deep #chart {
+    height: 440px;
+  }
+  .stats {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin-right: 1.5rem;
+    width: 200px;
+
+    .stats-content {
+      text-align: center;
+      .stats-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        word-wrap: break-word;
+      }
+      
+      .stats-value {
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+    
+    .stats-icon {
+      font-size: 48px;
+    }  
+  }
