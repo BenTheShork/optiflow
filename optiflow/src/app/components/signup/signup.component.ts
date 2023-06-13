@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@src/app/authorization/auth.service';
-import { User } from '@src/app/share/classes/user.class';
 import { UnsubscribeDirective } from '@src/app/share/directives/unsubsrcibe.directive';
 import { UserApiService } from '@src/app/share/services/api/user-api.service';
-import { Observable, catchError, finalize, map, takeUntil, tap, throwError } from 'rxjs';
 import { AlertService, AlertType } from '@src/app/share/services/alert.service';
 import { Router } from '@angular/router';
-import { ErrorHandleService } from '@src/app/share/services/error-handle.service';
 import { log } from 'console';
 @Component({
   selector: 'app-signup',
@@ -30,9 +27,6 @@ export class SignupComponent extends UnsubscribeDirective implements OnInit {
   rpassword: string = '';
   constructor(
     private authService: AuthService,
-    private userApiService: UserApiService,
-    private alertService: AlertService,
-    private errorHandleService: ErrorHandleService,
     private readonly router: Router
     ) { 
       super() 

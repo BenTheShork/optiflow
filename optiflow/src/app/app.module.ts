@@ -22,6 +22,7 @@ import { ActivityLogComponent } from './components/activity-log/activity-log.com
 import { BpmnModelerComponent } from './components/bpmn-modeler/bpmn-modeler.component';
 import { InsightsOverviewComponent } from './components/insights-overview/insights-overview.component';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AuthService } from './authorization/auth.service';
 
 export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');

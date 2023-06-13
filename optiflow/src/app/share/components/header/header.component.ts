@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Language } from '../../classes/language.enum';
 import { LanguageService } from '../../services/language.service';
+import { AuthService } from '@src/app/authorization/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -20,17 +21,16 @@ export class HeaderComponent implements OnInit{
    lastName: string;
 
   constructor(
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private authService: AuthService
 	) {}
-  ngOnInit(): void {
-    this.selectedLanguage$ = this.languageService.getSelectedLanguage();
-  }
 
   setLanguage(language: Language) {
 		this.languageService.setSelectedLanguage(language);
 	}
 
   ngOnInit() {
+    this.selectedLanguage$ = this.languageService.getSelectedLanguage();
     // Retrieve values from session storage
     if(sessionStorage.getItem('username') != null && sessionStorage.getItem('username')){
       this.userName = sessionStorage.getItem('username');
