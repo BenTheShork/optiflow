@@ -1,3 +1,9 @@
-<div id="canvas"></div>
-
-<button id="save-button" (click)="exportDiagram()">Export to .BPMN</button>
+<div class="diagram-parent">
+    <div #ref class="diagram-container"></div>
+  
+    <div class="import-error" *ngIf="importError">
+      <strong>Failed to render diagram: </strong>
+      {{ importError.message }}
+    </div>
+    <button id="save-button" (click)="exportDiagram()">Export to .BPMN</button>
+</div>

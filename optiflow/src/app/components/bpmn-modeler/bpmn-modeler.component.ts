@@ -1,22 +1,28 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { AfterContentInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Version } from '@src/app/share/classes/version.class';
 import { AlertService } from '@src/app/share/services/alert.service';
 import { VersionApiService } from '@src/app/share/services/api/version-api.service';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
-import { Observable, Subject, catchError, takeUntil, tap, throwError } from 'rxjs';
+import { Observable, Subject, Subscription, catchError, from, map, switchMap, takeUntil, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-bpmn-modeler',
   templateUrl: './bpmn-modeler.component.html',
   styleUrls: ['./bpmn-modeler.component.scss']
 })
-export class BpmnModelerComponent implements OnInit, OnDestroy {
+export class BpmnModelerComponent implements AfterContentInit, OnChanges, OnDestroy, OnInit {
+  @ViewChild('ref', { static: true }) private el: ElementRef;
+
+  diagramUrl = 'https://cdn.staticaly.com/gh/bpmn-io/bpmn-js-examples/dfceecba/starter/diagram.bpmn';
+  importError?: Error;
+
   public version$ = new Observable<Version>();
-  private bpmnModeler: any;
   public versionId: string;
 
   private temp: Version;
+  private bpmnJS= new BpmnJS();
   private unsubscribe$ = new Subject<void>();
 
   file = `<?xml version="1.0" encoding="UTF-8"?>
@@ -88,9 +94,33 @@ export class BpmnModelerComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private versionApiService: VersionApiService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private http: HttpClient
   ) {
     this.versionId = this.route.snapshot.queryParamMap.get('versionId');
+  }
+
+  handleImported(event: any) {
+
+    const {
+      type,
+      error,
+      warnings
+    } = event;
+
+    if (type === 'success') {
+      console.log(`Rendered diagram (%s warnings)`, warnings.length);
+    }
+
+    if (type === 'error') {
+      console.error('Failed to render diagram', error);
+    }
+
+    this.importError = error;
+  }
+
+  ngAfterContentInit(): void {
+    this.bpmnJS.attachTo(this.el.nativeElement);
   }
 
   ngOnInit(): void {
@@ -99,29 +129,41 @@ export class BpmnModelerComponent implements OnInit, OnDestroy {
       this.version$.subscribe(version => {
         this.temp = version;
         if (version.file) {
-          console.log('has bpmn');
           this.file = version.file;
         } else {
-          console.log('no bpmn');
         }
-        this.bpmnModeler = new BpmnJS({
-          container: '#canvas',
-          keyboard: {
-            bindTo: window
+        this.loadUrl(this.file);
+        this.bpmnJS.on('import.done', ({ error }: { error?: Error })=> {
+          if (!error) {
+            this.bpmnJS.get('canvas').zoom('fit-viewport');
           }
         });
-        this.openDiagram(this.file);
-      })
+      });
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // re-import whenever the url changes
+    if (changes.url) {
+      this.loadUrl(changes.url.currentValue);
     }
   }
 
   ngOnDestroy(): void {
+    this.bpmnJS.destroy();
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 
+  /**
+   * Load diagram from URL and emit completion event
+   */
+  loadUrl(url: string): void {
+    this.bpmnJS.importXML(url);
+  }
+
   exportDiagram(): void {
-    this.bpmnModeler.saveXML({ format: true }).then((result: any) => {
+    this.bpmnJS.saveXML({ format: true }).then((result: any) => {
       this.temp.file = result.xml;
       this.versionApiService.patchVersion(this.temp.id, this.temp).pipe(
         takeUntil(this.unsubscribe$),
@@ -136,23 +178,13 @@ export class BpmnModelerComponent implements OnInit, OnDestroy {
     });
   }
 
-  openDiagram(bpmnXML: string): void {
-    this.bpmnModeler.importXML(bpmnXML).then(() => {
-      const canvas = this.bpmnModeler.get('canvas');
-      const overlays = this.bpmnModeler.get('overlays');
-
-      canvas.zoom('fit-viewport');
-
-      overlays.add('SCAN_OK', 'note', {
-        position: {
-          bottom: 0,
-          right: 0
-        }
-      });
-
-      canvas.addMarker('SCAN_OK', 'needs-discussion');
-    }).catch((err: any) => {
-      console.error('Could not import BPMN 2.0 diagram', err);
-    });
+  /**
+   * Creates a Promise to import the given XML into the current
+   * BpmnJS instance, then returns it as an Observable.
+   *
+   * @see https://github.com/bpmn-io/bpmn-js-callbacks-to-promises#importxml
+   */
+  private importDiagram(xml: string): Observable<{warnings: Array<any>}> {
+    return from(this.bpmnJS.importXML(xml) as Promise<{warnings: Array<any>}>);
   }
 }

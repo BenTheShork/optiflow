@@ -33,7 +33,7 @@
     "angular-calendar": "^0.31.0",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.8.1",
-    "bpmn-js": "^13.2.0",
+    "bpmn-js": "7.3.0",
     "date-fns": "^2.29.3",
     "devextreme": "^22.2.4",
     "devextreme-angular": "^22.2.4",
