@@ -90,7 +90,7 @@ export class ProjectsOverviewComponent {
     let newProject = new Project({
       name: e.data.name,
       description: e.data.description,
-      user_id: 4
+      user_id: Number(sessionStorage.getItem('userid'))
     });
     e.cancel = this.projectApiService.postProject(newProject)
       .pipe(
@@ -181,7 +181,7 @@ export class ProjectsOverviewComponent {
 
   private refreshData() {
     this.loadingService.startLoading();
-    this.project$ = this.projectApiService.getProjects(4)
+    this.project$ = this.projectApiService.getProjects(Number(sessionStorage.getItem('userid')))
       .pipe(finalize(() => this.loadingService.stopLoading()));
   }
 }

@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '@src/app/authorization/auth.service';
-
+import { User } from '@src/app/share/classes/user.class';
+import { UnsubscribeDirective } from '@src/app/share/directives/unsubsrcibe.directive';
+import { UserApiService } from '@src/app/share/services/api/user-api.service';
+import { Observable, catchError, finalize, map, takeUntil, tap, throwError } from 'rxjs';
+import { AlertService, AlertType } from '@src/app/share/services/alert.service';
+import { Router } from '@angular/router';
+import { ErrorHandleService } from '@src/app/share/services/error-handle.service';
+import { log } from 'console';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -16,12 +23,20 @@ import { AuthService } from '@src/app/authorization/auth.service';
     '../../../assets/vendor/daterangepicker/daterangepicker.css',
     './signup.component.scss'],
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent extends UnsubscribeDirective implements OnInit {
   email: string = '';
   password: string = '';
   errorMessage: string = '';
   rpassword: string = '';
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private userApiService: UserApiService,
+    private alertService: AlertService,
+    private errorHandleService: ErrorHandleService,
+    private readonly router: Router
+    ) { 
+      super() 
+    }
 
   ngOnInit() { }
 
@@ -30,6 +45,7 @@ export class SignupComponent implements OnInit {
       this.authService.signup(this.email, this.password)
         .then((userCredential) => {
           this.errorMessage = '';
+          this.router.navigate(['/signin']);
         })
         .catch((error) => {
           if(error.code === 'auth/email-already-in-use')
@@ -40,6 +56,7 @@ export class SignupComponent implements OnInit {
           this.errorMessage = 'The password is too weak. Please try again.';
           else
           this.errorMessage = 'An error has occurred. Please try again later.';
+          console.log(error);
         });
     }
     else if(this.email === '' || this.password === '' || this.rpassword === ''){
@@ -52,4 +69,5 @@ export class SignupComponent implements OnInit {
     else
     this.errorMessage = 'An error has occurred.';
   }
+  
 }

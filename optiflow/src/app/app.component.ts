@@ -31,7 +31,9 @@ export class AppComponent implements OnInit {
         else if (this.router.url === '/signup') return false;
         else return true;
     }
-
+    ngOnInit(): void {
+        
+    }
     /*ngOnInit(): void {
         if (this.router.url === '/') {
             this.router.navigateByUrl('/signin')

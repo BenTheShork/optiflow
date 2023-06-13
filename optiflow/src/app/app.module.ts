@@ -11,7 +11,6 @@ import { DxButtonModule, DxChartModule, DxDataGridModule, DxDateBoxModule, DxNum
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
-import { AuthService } from './auth.service';
 import { ShareModule } from './share/share.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LanguageService } from './share/services/language.service';

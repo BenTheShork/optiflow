@@ -16,6 +16,8 @@ export class HeaderComponent implements OnInit{
   Language = Language;
 
   private unsubscribe$ = new Subject<void>();
+   userName: string;
+   lastName: string;
 
   constructor(
     private languageService: LanguageService
@@ -28,11 +30,19 @@ export class HeaderComponent implements OnInit{
 		this.languageService.setSelectedLanguage(language);
 	}
 
+  ngOnInit() {
+    // Retrieve values from session storage
+    if(sessionStorage.getItem('username') != null && sessionStorage.getItem('username')){
+      this.userName = sessionStorage.getItem('username');
+    }
+   
+  }
   toggleMenu() {
 		this.isMenuOpen = !this.isMenuOpen;
 	}
 
   logout(): void {
+    this.authService.logout();
   }
 
 }
