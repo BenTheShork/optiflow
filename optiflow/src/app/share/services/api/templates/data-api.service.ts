@@ -56,6 +56,21 @@ export abstract class DataApiService<T, G = T> {
     }
 
     /**
+     * This method calls the backend to create the resource.
+     *
+     * @param resource
+     * @param urlExtension
+     * @param params
+     */
+    protected createUser(resource: G, urlExtension: string = '', params?: any): Observable<T> {
+        const options = new Options(params);
+        return this.http.post<G>(this.url + urlExtension, resource, options)
+            .pipe(
+                map((res: G) => new this.type(res) as T)
+            );
+    }
+
+    /**
      * This method calls the backend to create the resource and does not expect any return.
      *
      * @param resource

@@ -33,7 +33,7 @@ export class ProcessDataComponent extends UnsubscribeDirective {
     private readonly router: Router
   ) { 
     super();
-    this.projects$ = this.projectApiService.getProjects(4);
+    this.projects$ = this.projectApiService.getProjects(Number(sessionStorage.getItem('userid')));
   }
 
   onValueChanged(e: { value: any; event: any; previousValue?: any }, field: string): void {

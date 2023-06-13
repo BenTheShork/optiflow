@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { DataApiService } from './templates/data-api.service';
 import { User } from '../../classes/user.class';
-
+import { UserCredentials } from '../../classes/userCredentials.class';
 @Injectable({
     providedIn: 'root'
 })
@@ -17,15 +17,15 @@ export class UserApiService extends DataApiService<User> {
 
     // api/authenticates
 
-    getUsers(username: string): Observable<User[]> {
+    getUsers(username: string): Observable<any[]> {
         const params = {
             username
         };
         return this.getAll(params);
     }
 
-    getUser(id: string): Observable<User> {
-        return this.getOne(id);
+    getUser(username: string): Observable<User> {
+        return this.getOne(username);
     }
 
     patchUser(id: string, process: Partial<User>): Observable<User> {

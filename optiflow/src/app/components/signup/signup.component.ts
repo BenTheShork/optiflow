@@ -45,7 +45,7 @@ export class SignupComponent extends UnsubscribeDirective implements OnInit {
       this.authService.signup(this.email, this.password)
         .then((userCredential) => {
           this.errorMessage = '';
-          this.postUser(userCredential);
+          this.router.navigate(['/signin']);
         })
         .catch((error) => {
           if(error.code === 'auth/email-already-in-use')
@@ -69,23 +69,5 @@ export class SignupComponent extends UnsubscribeDirective implements OnInit {
     else
     this.errorMessage = 'An error has occurred.';
   }
-  postUser(e: any) {
-    console.log(e.user._delegate.email);
-    let userCredetials:User = {username: e.user._delegate.email, token: e.user._delegate.uid};
-    
-    this.userApiService.postUser(userCredetials)
-    .pipe(
-         takeUntil(this.unsubscribe$),
-        tap(() => {
-          
-          this.alertService.notify('Successfully registered!', AlertType.Success, 5000);
-          
-          this.router.navigate(['/signin/']);
-        }),
-        catchError((error) => {
-            this.errorHandleService.handleError(error,'An error has occured!');
-            return throwError(error);
-        })
-    ).subscribe();
-  }
+  
 }

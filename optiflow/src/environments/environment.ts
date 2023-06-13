@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    api: 'http://staging.gpc-hosting.com/api',
+    api: 'https://staging.gpc-hosting.com/api',
   firebase: {
     projectId: 'optiflow-6460c',
     appId: '1:944159745042:web:e508e55fc0c0552fa7a4cb',
