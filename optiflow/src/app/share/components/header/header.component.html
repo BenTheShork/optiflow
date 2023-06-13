@@ -39,28 +39,28 @@
                 </li>
             </div>
             <div class="bottom-area">
+                <!-- DARK MODE -->
+                <label class="toggle-switch" [class.active]="isDarkMode">
+                    <input type="checkbox" [(ngModel)]="isDarkMode" (change)="setDarkMode()">
+                    <div class="slider">
+                        <ng-container *ngIf="isDarkMode; else lightmode">
+                            <img src="../../../../assets/switch/moon.svg">
+                        </ng-container>
+                        <ng-template #lightmode>
+                            <img src="../../../../assets/switch/sun.svg">
+                        </ng-template>
+                    </div>
+                </label>
                 <!-- LANGUAGE SWITCHING -->
 
-				<li class="nav-item" *ngIf="selectedLanguage$ | async as selectedLanguage">
-					<a
-						role="button"
-						*ngIf="selectedLanguage === Language.SL"
-						class="nav-link pe-auto"
-						(click)="setLanguage(Language.EN)"
-					>
-						<img class="language-icon" src="/assets/icons/slovenia_flag.svg" alt="Slovenia flag" />
-						{{ 'header.switch-language-sl' | translate }}
-					</a>
-					<a
-						role="button"
-						*ngIf="selectedLanguage === Language.EN"
-						class="nav-link"
-						(click)="setLanguage(Language.SL)"
-					>
-						<img class="language-icon" src="/assets/icons/british_flag.svg" alt="British flag" />
-						{{ 'header.switch-language-en' | translate }}
-					</a>
-				</li>
+                <li class="nav-item" *ngIf="selectedLanguage$ | async as selectedLanguage">
+                    <a role="button" *ngIf="selectedLanguage === Language.SL" class="nav-link pe-auto" (click)="setLanguage(Language.EN)">
+                        <img class="language-icon" src="/assets/icons/slovenia_flag.svg" alt="Slovenia flag" /> {{ 'header.switch-language-sl' | translate }}
+                    </a>
+                    <a role="button" *ngIf="selectedLanguage === Language.EN" class="nav-link" (click)="setLanguage(Language.SL)">
+                        <img class="language-icon" src="/assets/icons/british_flag.svg" alt="British flag" /> {{ 'header.switch-language-en' | translate }}
+                    </a>
+                </li>
                 <!-- LOG OUT -->
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['auth']" (click)="logout()">

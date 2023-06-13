@@ -53,6 +53,25 @@ dx-data-grid {
     }
 }
 
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode form,
+.dark-mode #text,
+.dark-mode .dx-field-label,
+.dark-mode .card,
+.dark-mode .dx-datagrid-header-panel,
+.dark-mode .dx-toolbar-items-container,
+.dark-mode .dx-button,
+.dark-mode .dx-icon,
+.dark-mode .dx-row>td,
+.dark-mode .dx-texteditor.dx-editor-outlined,
+.dark-mode,
+.dark-mode .dx-datagrid-filter-panel {
+    background-color: #131417 !important;
+    color: #f8f9fa !important;
+    border-color: #f8f9fa !important;
+}
+
 .master-detail {
     .dx-master-detail-cell {
         padding: 0 !important;

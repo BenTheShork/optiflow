@@ -10,7 +10,7 @@ import { StatusMessagePipe } from './pipes/status-message.pipe';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { ToastrModule } from 'ngx-toastr';
-
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,6 +19,7 @@ import { ToastrModule } from 'ngx-toastr';
     CommonModule,
     DxPopupModule,
     DxButtonModule,
+    FormsModule,
     RouterModule,
     DxProgressBarModule,
     TranslateModule,
