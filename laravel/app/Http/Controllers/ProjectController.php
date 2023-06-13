@@ -6,12 +6,34 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+use Exception;
 
 class ProjectController extends Controller
 {
+
+    //AUTHENTICATION
+    function authAPI($jwt)
+    {
+        try {
+            $publicKeys = Http::get('https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com');
+            $publicKey = $publicKeys[array_key_first($publicKeys->json())];
+            $payload = JWT::decode($jwt, new Key($publicKey, 'RS256'));
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     public function index(Request $request) {
-        $projects = User::find($request->user_id)->project;
-        return response()->json($projects, 200);
+        if($this->authAPI($request->token)) {
+            $projects = User::find($request->user_id)->project;
+            return response()->json($projects, 200);
+        } else {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
     }
 
     public function store(Request $request) {
@@ -22,7 +44,7 @@ class ProjectController extends Controller
             ], 403);
         }
         $duplicate = User::find($request->user_id)->project->where('name', $request->name);
-        if(count($duplicate)) {
+        if(count($duplicate)>0) {
             return response()->json([
                 'message' => "Project already exists!"
             ], 409);
