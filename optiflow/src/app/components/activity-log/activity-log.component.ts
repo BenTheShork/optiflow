@@ -47,7 +47,7 @@ export class ActivityLogComponent {
         });
         body.user_id = 4;
         return lastValueFrom(
-          httpClient.post('http://staging.gpc-hosting.com/api/activitylog', body)
+          httpClient.post('https://staging.gpc-hosting.com/api/activitylog', body)
         ).then((data: any) => ({
             data: data.data,
             totalCount: data.total,

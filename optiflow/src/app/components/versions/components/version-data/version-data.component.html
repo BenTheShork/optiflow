@@ -35,6 +35,7 @@
                 <dx-validator>
                     <dxi-validation-rule type="required" [message]="'table.mandatory-field' | translate"></dxi-validation-rule>
                     <dxi-validation-rule type="pattern" [message]="'positive-number' | translate" [pattern]="patternPositive"></dxi-validation-rule>
+                    <dxi-validation-rule type="range" [message]="'number-range' | translate" [min]="1" [max]="10"></dxi-validation-rule>
                 </dx-validator>
             </dx-number-box>
         </div>

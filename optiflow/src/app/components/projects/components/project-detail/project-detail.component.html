@@ -2,7 +2,6 @@
     <div class="d-flex flex-column">
         <h2 class="fw-bold title-mobile overview">{{ 'header.projects' | translate }}</h2>
         <span>
-            <a class="title" routerLink="/dashboard">{{ 'header.dashboard' | translate }}</a> /
             <a class="title" routerLink="/project"> {{ 'header.projects' | translate }}</a> / 
             <a class="title" [routerLink]="'/project/' + projectId"> {{ project.name }}</a>
         </span>

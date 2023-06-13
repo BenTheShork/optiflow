@@ -81,6 +81,7 @@
         <dxi-column dataField="grade" dataType="number" [caption]="'version.grade' | translate">
             <dxi-validation-rule type="required"></dxi-validation-rule>
             <dxi-validation-rule type="pattern" [message]="'positive-number' | translate" [pattern]="patternPositive"></dxi-validation-rule>
+            <dxi-validation-rule type="range" [message]="'number-range' | translate" [min]="1" [max]="10"></dxi-validation-rule>
         </dxi-column>
         <dxi-column cellTemplate="versionCellTemplate" dataField="status" [caption]="'version.status' | translate" [editorOptions]="editorOptions">
             <dxo-lookup [dataSource]="VERSION_STATUSES" displayExpr="name" valueExpr="id">

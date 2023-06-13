@@ -1,6 +1,5 @@
 {
     "header": {
-        "dashboard": "Dashboard",
         "projects": "Projects",
         "insights": "Insights",
         "activity-log": "Activity Log",
@@ -86,6 +85,27 @@
         "updated": "Updated at",
         "date": "Date"
     },
+    "insights": {
+        "total_num_projects": "Total number of projects",
+        "total_num_processes": "Total number of processes",
+        "total_num_activities": "Total number of activities",
+        "avg_processes_per_project": "Average processes per project",
+        "avg_activities_per_process": "Average activities per process",
+        "avg_grade_per_process": "Average grade per process",
+        "avg_duration_per_process": "Average duration per process",
+        "avg_num_people_per_process": "Average number of people per process",
+        "version_max_duration": "Version with the highest duration",
+        "version_min_duration": "Version with the smallest duration",
+        "version_max_num_people": "Version with the most amount of poeple",
+        "version_min_num_people": "Version with the least amount of poeple",
+        "pie-chart-title": "Proccess status breakdown",
+        "bar-chart-title": "Project breakdown",
+        "process_num": "Number of processes",
+        "version_num": "Number of versions",
+        "project-name": "Project name",
+        "process-name": "Process name",
+        "version-number": "Version number"
+    },
     "auth": {
         "sign-in": "Sign in",
         "email": "Email",
@@ -160,9 +180,12 @@
     "page-not-found": "Page not found",
     "page-not-found-description":"The URL you specified was not found.",
     "positive-number": "Please enter a positive whole number",
+    "number-range": "Please insert a number between 1 and 10",
     "incorrect-format": "Version format must be x.y.z",
     "active": "Active",
     "inactive": "Inactive",
     "completed": "Completed",
-    "Conflict": "Already exists!"
+    "Conflict": "Already exists!",
+    "export-bpmn": "Export to .BPMN",
+    "go-back": "Go back"
 }

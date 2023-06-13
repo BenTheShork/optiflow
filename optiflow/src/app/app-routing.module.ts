@@ -8,6 +8,7 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { ActivityLogComponent } from './components/activity-log/activity-log.component';
 import { BpmnModelerComponent } from './components/bpmn-modeler/bpmn-modeler.component';
+import { InsightsOverviewComponent } from './components/insights-overview/insights-overview.component';
 
 const routes: Routes = [
   { path: 'signin', component: SignIn },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'privacy', component: PrivacyPolicyComponent },
   { path: 'activity-log', component: ActivityLogComponent },
   { path: 'bpmn-modeler', component: BpmnModelerComponent },
+  { path: 'insights', component: InsightsOverviewComponent },
   {
     path: '',
     children: [

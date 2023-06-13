@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { AfterContentInit, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Version } from '@src/app/share/classes/version.class';
 import { AlertService } from '@src/app/share/services/alert.service';
 import { VersionApiService } from '@src/app/share/services/api/version-api.service';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
-import { Observable, Subject, Subscription, catchError, from, map, switchMap, takeUntil, tap, throwError } from 'rxjs';
+import { Observable, Subject, catchError, from, takeUntil, tap, throwError } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-bpmn-modeler',
@@ -95,7 +96,8 @@ export class BpmnModelerComponent implements AfterContentInit, OnChanges, OnDest
     private route: ActivatedRoute,
     private versionApiService: VersionApiService,
     private alertService: AlertService,
-    private http: HttpClient
+    private http: HttpClient,
+    private location: Location
   ) {
     this.versionId = this.route.snapshot.queryParamMap.get('versionId');
   }
@@ -176,6 +178,10 @@ export class BpmnModelerComponent implements AfterContentInit, OnChanges, OnDest
     }).catch((err: any) => {
       console.error('Could not save BPMN 2.0 diagram', err);
     });
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   /**

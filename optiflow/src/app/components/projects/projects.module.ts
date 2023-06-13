@@ -4,7 +4,6 @@ import { DxButtonModule, DxDataGridModule, DxDateBoxModule, DxNumberBoxModule, D
 import { ProjectDataComponent } from './components/project-data/project-data.component';
 import { ProjectsOverviewComponent } from './components/projects-overview/projects-overview.component';
 import { ProjectDetailComponent } from './components/project-detail/project-detail.component';
-import { AppModule } from '@src/app/app.module';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { ProjectRoutingModule } from './projects-routing.module';
 import { ShareModule } from '@src/app/share/share.module';
