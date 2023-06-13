@@ -30,7 +30,7 @@ export class VersionApiService extends DataApiService<Version> {
 
     patchVersion(id: string, version: Partial<Version>): Observable<Version> {
         version.user_id = 4;
-        return this.update(id, {}, '', version);
+        return this.updateVers(id, version, '');
     }
 
     postVersion(version: Version): Observable<Version> {

@@ -140,6 +140,21 @@ export abstract class DataApiService<T, G = T> {
      * @param action
      * @param params
      */
+    protected updateVers(resourceId: string, resource: Partial<G>, action: string = '', params?: any): Observable<T> {
+        const options = new Options(params);
+        const data = new UpdateRequest<Partial<G>>(resource, Object.keys(resource));
+        return this.http.patch<G>(this.url + action + '/' + resourceId, data.data, options)
+            .pipe(map((res) => new this.type(res)));
+    }
+
+    /**
+     * This method calls the backend to update|patch a resource with the given id.
+     *
+     * @param resourceId
+     * @param resource
+     * @param action
+     * @param params
+     */
     protected updateEmpty(resourceId: string, resource: Partial<G>, action: string = '', params?: any): Observable<void> {
         const options = new Options(params);
         const data = new UpdateRequest<Partial<G>>(resource, Object.keys(resource));
