@@ -1,9 +1,12 @@
-import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Activity } from '@src/app/share/classes/activity.class';
-import { AlertService } from '@src/app/share/services/alert.service';
+import { AlertService, AlertType } from '@src/app/share/services/alert.service';
 import { ActivityApiService } from '@src/app/share/services/api/activity-api.service';
+import { ErrorHandleService } from '@src/app/share/services/error-handle.service';
+import { LegalizationDatagridService } from '@src/app/share/services/legalization-data-grid.service';
 import { DxDataGridComponent } from 'devextreme-angular';
+import { dxDataGridColumn } from 'devextreme/ui/data_grid';
 import { catchError, map, of, tap } from 'rxjs';
 
 @Component({
@@ -16,23 +19,22 @@ export class ActivityTableComponent implements OnInit {
 
   @Input() activity: Activity[];
   @Input() versionId: string;
-  @Input() canEdit: boolean;
 
   @Output() refreshActivities = new EventEmitter();
 
   public confirmationVisible = false;
   selectedRows: number[] = [];
   selectionChangedBySelectbox: boolean;
-  patternPositive = '^[1-9]+[0-9]*$';
-  isEditing = false;
   
   private activityIdToDelete: string;
 
   constructor(
+    private legalizationDatagridService: LegalizationDatagridService,
     private route: ActivatedRoute,
     private activityApiService: ActivityApiService,
+    private errorHandleService: ErrorHandleService,
     private alertService: AlertService,
-    private router: Router
+    private readonly router: Router,
   ) {}
 
   ngOnInit() {
@@ -40,6 +42,7 @@ export class ActivityTableComponent implements OnInit {
         this.versionId = this.route.snapshot.queryParamMap.get('versionId');
     }
   }
+
   formatDuration(duration: number): string {
     const hours = Math.floor(duration / 60);
     const minutes = duration % 60;
@@ -49,21 +52,6 @@ export class ActivityTableComponent implements OnInit {
     } else {
         return `${hours} h ${minutes} min`;
     }
-  }
-
-  onAddClick(): void {
-    if (this.grid$) {
-        this.grid$.instance.addRow();
-    }
-  }
-
-  onBpmnClick(): void {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        versionId: this.versionId
-      }
-    };
-    this.router.navigate(['/bpmn-modeler'], navigationExtras);
   }
 
   hasSelectedRows(): boolean {
@@ -81,16 +69,18 @@ export class ActivityTableComponent implements OnInit {
     this.confirmationVisible = true;
   }
 
-  onCellPrepared(e: any) {
+  onCellPrepared(e: {
+    rowType: string;
+    column: dxDataGridColumn;
+    data: Activity;
+    cellElement: { classList: { add: (arg0: string) => void } };
+  }) {
     if(e.data) {
-      if (this.isEditing === false) {
-        e.cellElement.style.cursor = 'pointer';
-      }
+      this.legalizationDatagridService.onCellPrepared(e);
     }
   }
 
   onRowInserting(e: any) {
-    this.isEditing = false;
     let newActivity = new Activity ({
       name: e.data.name,
       description: e.data.description,
@@ -105,11 +95,14 @@ export class ActivityTableComponent implements OnInit {
                 return false;
             }),
             tap(() => {
-              this.alertService.success('alerts.successful-create');
+              this.alertService.notify('successfully saved', AlertType.Success, 5000);
               this.refreshActivities.emit();
             }),
             catchError((err: any) => {
-                this.alertService.error('request-errors.cannot-save', err);
+                this.errorHandleService.handleError(
+                    err,
+                    'cannot save'
+                );
                 return of(true);
             })
         )
@@ -117,7 +110,6 @@ export class ActivityTableComponent implements OnInit {
   }
 
   onRowUpdating(e: any) {
-    this.isEditing = false;
     const mergedData = Object.assign({}, e.oldData, e.newData);
     e.cancel = this.activityApiService
         .patchActivity(e.key, mergedData)
@@ -126,35 +118,30 @@ export class ActivityTableComponent implements OnInit {
                 return false;
             }),
             tap(() => {
-              this.alertService.success('alerts.successful-upate');
+              this.alertService.notify('successfully updated', AlertType.Success, 5000);
               this.refreshActivities.emit();
             }),
             catchError((err: any) => {
-                this.alertService.error('request-errors.cannot-update', err);
+                this.errorHandleService.handleError(
+                    err,
+                    'cannot update'
+                );
                 return of(true);
             })
         ).toPromise();
   }
 
   onRowRemoving(e: any) {
-    this.isEditing = false;
     e.cancel = true;
     this.confirmationVisible = true;
     this.activityIdToDelete = e.key;
   }
 
   onEditorPreparing(e: any) {
-    if (e.parentType === 'dataRow' && (e.editorName === 'dxTextBox' || e.editorName === 'dxNumberBox')) {
-      this.isEditing = true;
-    }
     if (e.dataField === 'description' && e.parentType === 'dataRow') {
         e.editorName = 'dxTextArea';
         e.editorOptions.height = 100;
     }
-  }
-
-  cancelHandler() {
-    this.isEditing = false;
   }
 
   confirmActivityRemoval() {
@@ -163,12 +150,14 @@ export class ActivityTableComponent implements OnInit {
         .deleteActivities(this.selectedRows)
         .pipe(
             map(() => {
-                this.alertService.success('alerts.successful-delete');
                 this.refreshActivities.emit();
                 return false;
             }),
             catchError((err: any) => {
-                this.alertService.error('request-errors.cannot-delete', err);
+                this.errorHandleService.handleError(
+                    err,
+                    'cannot delete'
+                );
                 return of(true);
             })
         )
@@ -178,12 +167,14 @@ export class ActivityTableComponent implements OnInit {
         .deleteActivity(this.activityIdToDelete)
         .pipe(
             map(() => {
-                this.alertService.success('alerts.successful-delete');
                 this.refreshActivities.emit();
                 return false;
             }),
             catchError((err: any) => {
-                this.alertService.error('request-errors.cannot-update', err);
+                this.errorHandleService.handleError(
+                    err,
+                    'cannot delete'
+                );
                 return of(true);
             })
         )

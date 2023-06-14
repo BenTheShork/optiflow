@@ -3,11 +3,11 @@
         <img src="assets/icons/frown-regular.svg" />
     </div>
     <div class="block">
-        <h2>{{ 'page-not-found' | translate }}</h2>
+        <h2>Page not found</h2>
         <i class="dx-icon-frown"></i>
     </div>
     <div class="p-10 block">
-        {{ 'page-not-found-description' | translate }}
+        The URL you specified was not found.
     </div>
     <div class="block">
         <dx-progress-bar #progressBar id="progress-bar-status" width="100%" [class.complete]="progressBar.value === maxValue" [min]="0" [max]="maxValue" [showStatus]="false" [value]="maxValue - period">

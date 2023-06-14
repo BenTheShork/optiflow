@@ -38,17 +38,10 @@ export class ProjectApiService extends DataApiService<Project> {
     }
 
     deleteProject(id: string): Observable<void> {
-        const params = {
-            user_id: 4
-        }
-        return this.deleteOne(id, '', params) as Observable<void>;
+        return this.deleteOne(id) as Observable<void>;
     }
 
     deleteProjects(ids: number[]): Observable<void> {
-        const params = {
-            ids: ids,
-            user_id: 4
-        }
-        return this.deleteAll('',params) as Observable<void>;
+        return this.deleteAll('',ids) as Observable<void>;
     }
 }

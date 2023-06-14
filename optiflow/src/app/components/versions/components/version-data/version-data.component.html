@@ -1,48 +1,54 @@
 <dx-validation-group #validationGroup>
     <form (submit)="postVersion($event)">
-        <div class="dx-field-label w-33"> {{ 'version.version' | translate }}*:
-            <dx-text-box [(value)]="versionString" (onValueChanged)="parseVersionString($event)" width=100% [disabled]="version.status === status.Inactive" class="dx-field-value">
+        <div class="dx-field-label w-33"> major*:
+            <dx-number-box [(value)]="version.major" (onValueChanged)="onValueChanged($event, 'major')" width=100% [disabled]="!canEdit" class="dx-field-value">
                 <dx-validator>
-                    <dxi-validation-rule type="required" [message]="'table.mandatory-field' | translate"></dxi-validation-rule>
-                    <dxi-validation-rule type="pattern" [message]="'incorrect-format' | translate" [pattern]="patternVersion"></dxi-validation-rule>
+                    <dxi-validation-rule type="required" message="major is empty"></dxi-validation-rule>
                 </dx-validator>
-            </dx-text-box>
+            </dx-number-box>
         </div>
-        <div class="dx-field-label w-50"> {{ 'version.description' | translate }}:
-            <dx-text-area [(value)]="version.description" style="height: auto;" [maxHeight]="300" [maxLength]="2000" width="100%" class="dx-field-value"  (onValueChanged)="onValueChanged($event, 'description')" [disabled]="version.status === status.Inactive">
+        <div class="dx-field-label w-33"> minor*:
+            <dx-number-box [(value)]="version.minor" (onValueChanged)="onValueChanged($event, 'minor')" width=100% [disabled]="!canEdit" class="dx-field-value">
+                <dx-validator>
+                    <dxi-validation-rule type="required" message="minor is empty"></dxi-validation-rule>
+                </dx-validator>
+            </dx-number-box>
+        </div>
+        <div class="dx-field-label w-33"> patch*:
+            <dx-number-box [(value)]="version.patch" (onValueChanged)="onValueChanged($event, 'patch')" width=100% [disabled]="!canEdit" class="dx-field-value">
+                <dx-validator>
+                    <dxi-validation-rule type="required" message="patch is empty"></dxi-validation-rule>
+                </dx-validator>
+            </dx-number-box>
+        </div>
+        <div class="dx-field-label w-50"> description:
+            <dx-text-area [(value)]="version.description" height="100px" [maxLength]="2000" width="100%" class="dx-field-value" (onValueChanged)="onValueChanged($event, 'description')" [disabled]="!canEdit">
             </dx-text-area>
         </div>
-        <div class="dx-field-label w-50">{{ 'version.total-duration' | translate }}:
+        <div class="dx-field-label w-50">total duration:
             <dx-number-box [(value)]="version.total_duration" width="100%" class="dx-field-value" [disabled]="true">
             </dx-number-box>
         </div>
-        <div class="dx-field-label w-50">{{ 'version.total-num-people' | translate }}:
+        <div class="dx-field-label w-50">number of people:
             <dx-number-box [(value)]="version.total_num_people" width="100%" class="dx-field-value" [disabled]="true">
             </dx-number-box>
         </div>
-        <div class="dx-field-label w-50" *ngIf="VERSION_STATUSES">{{ 'version.status' | translate }}*:
-            <dx-select-box valueExpr="id" displayExpr="name" itemTemplate="item" [showClearButton]="true" [(value)]="version.status" [acceptCustomValue]="false" width="100%" [items]="VERSION_STATUSES" class="dx-field-value" (onValueChanged)="onValueChanged($event,'status')">
-                <div *dxTemplate="let data of 'item'">
-                    {{ data.name | translate }}
-                </div>
+        <div class="dx-field-label w-50">grade*:
+            <dx-number-box [(value)]="version.grade" (onValueChanged)="onValueChanged($event, 'grade')" width="100%" class="dx-field-value">
                 <dx-validator>
-                    <dxi-validation-rule type="required" [message]="'table.mandatory-field' | translate"></dxi-validation-rule>
-                </dx-validator>
-            </dx-select-box>
-        </div>
-        <div class="dx-field-label w-50">{{ 'version.grade' | translate }}*:
-            <dx-number-box [(value)]="version.grade" (onValueChanged)="onValueChanged($event, 'grade')" width="100%" class="dx-field-value" [disabled]="version.status === status.Inactive">
-                <dx-validator>
-                    <dxi-validation-rule type="required" [message]="'table.mandatory-field' | translate"></dxi-validation-rule>
-                    <dxi-validation-rule type="pattern" [message]="'positive-number' | translate" [pattern]="patternPositive"></dxi-validation-rule>
-                    <dxi-validation-rule type="range" [message]="'number-range' | translate" [min]="1" [max]="10"></dxi-validation-rule>
+                    <dxi-validation-rule type="required" message="Grade is empty"></dxi-validation-rule>
                 </dx-validator>
             </dx-number-box>
         </div>
         <div class="dx-field-label w-50" *ngIf="processes">
-            {{ 'version.process' | translate }}*:
-            <dx-select-box displayExpr="name" valueExpr="id" searchMode="contains" searchExpr="name" [searchEnabled]="true" [acceptCustomValue]="false" [(value)]="version.process_id" [items]="processes" (onValueChanged)="onValueChanged($event,'process_id')" [disabled]="version.status === status.Inactive">
+            Process*:
+            <dx-select-box displayExpr="name" valueExpr="id" searchMode="contains" searchExpr="name" [searchEnabled]="true" [acceptCustomValue]="false" [(value)]="version.process_id" [items]="processes" (onValueChanged)="onValueChanged($event,'process_id')">
             </dx-select-box>
+        </div>
+
+        <div class="w-100 m-10" *ngIf="!version.id && canEdit">
+            <dx-button [text]="'save'" icon="save" stylingMode="text" [useSubmitBehavior]="true">
+            </dx-button>
         </div>
     </form>
 </dx-validation-group>

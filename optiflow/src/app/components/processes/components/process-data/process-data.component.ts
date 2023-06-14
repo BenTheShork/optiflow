@@ -2,13 +2,14 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Process } from '@src/app/share/classes/process.class';
 import { Project } from '@src/app/share/classes/project.class';
-import { PROCESS_STATUSES } from '@src/app/share/consts/process-status.const';
+import { PROCESS_STATUSES } from '@src/app/share/consts/process-status.conts';
 import { UnsubscribeDirective } from '@src/app/share/directives/unsubsrcibe.directive';
-import { AlertService } from '@src/app/share/services/alert.service';
+import { AlertService, AlertType } from '@src/app/share/services/alert.service';
 import { ProcessApiService } from '@src/app/share/services/api/process-api.service';
 import { ProjectApiService } from '@src/app/share/services/api/project-api.service';
+import { ErrorHandleService } from '@src/app/share/services/error-handle.service';
 import { DxValidationGroupComponent } from 'devextreme-angular';
-import { Observable, catchError, takeUntil, tap, throwError } from 'rxjs';
+import { Observable, catchError, finalize, map, takeUntil, tap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-process-data',
@@ -27,6 +28,7 @@ export class ProcessDataComponent extends UnsubscribeDirective {
   constructor(
     private processApiService: ProcessApiService,
     private projectApiService: ProjectApiService,
+    private errorHandleService: ErrorHandleService,
     private alertService: AlertService,
     private readonly router: Router
   ) { 
@@ -48,9 +50,9 @@ export class ProcessDataComponent extends UnsubscribeDirective {
     this.processApiService.patchProcess(this.process.id, obj)
     .pipe(
         takeUntil(this.unsubscribe$),
-        tap(() => this.alertService.success('alerts.successful-update')),
+        tap(() => this.alertService.notify('successfully saved', AlertType.Success, 5000)),
         catchError((error) => {
-            this.alertService.error('request-errors.cannot-update', error);
+            this.errorHandleService.handleError(error, 'cannot update');
             return throwError(error);
         })
     ).subscribe();
@@ -62,11 +64,11 @@ export class ProcessDataComponent extends UnsubscribeDirective {
     .pipe(
         takeUntil(this.unsubscribe$),
         tap(() => {
-          this.alertService.success('alerts.successful-create');
+          this.alertService.notify('successfully saved', AlertType.Success, 5000);
           this.router.navigate(['/project/' + this.process.project_id]);
         }),
         catchError((error) => {
-            this.alertService.error('request-errors.cannot-save', error);
+            this.errorHandleService.handleError(error,'cannot save');
             return throwError(error);
         })
     ).subscribe();

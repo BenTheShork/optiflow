@@ -1,15 +1,13 @@
 <div class="card mt-4 py-3 px-3 exported-variables w-100">
     <dx-data-grid #activitiesGrid class="data-grid-search processes status-grid" [dataSource]="activity" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
         [remoteOperations]="true" [wordWrapEnabled]="true" [columnAutoWidth]="false" columnResizingMode="widget" [noDataText]="activity?.length === 0 ? 'no data' : ''" (onCellPrepared)="onCellPrepared($event)" (onRowInserting)="onRowInserting($event)" (onRowUpdating)="onRowUpdating($event)"
-        (onRowRemoving)="onRowRemoving($event)" (onEditorPreparing)="onEditorPreparing($event)" [(selectedRowKeys)]="selectedRows" (onSelectionChanged)="selectionChangedHandler()" (onEditCanceled)="cancelHandler()">
+        (onRowRemoving)="onRowRemoving($event)" (onEditorPreparing)="onEditorPreparing($event)" [(selectedRowKeys)]="selectedRows" (onSelectionChanged)="selectionChangedHandler()">
 
-        <div *ngIf="canEdit">
-            <dxo-selection
-                [selectAllMode]="'allMode'"
-                [showCheckBoxesMode]="'always'"
-                mode="multiple"
-            ></dxo-selection>
-        </div>
+        <dxo-selection
+            [selectAllMode]="'allMode'"
+            [showCheckBoxesMode]="'always'"
+            mode="multiple"
+        ></dxo-selection>
 
         <dxo-paging [pageSize]="10"></dxo-paging>
         <dxo-pager [visible]="true" [showPageSizeSelector]="true" [allowedPageSizes]="[6, 12, 24]" [showNavigationButtons]="true">
@@ -22,7 +20,7 @@
         <dxo-sorting mode="single"></dxo-sorting>
 
         <!-- Editing settings -->
-        <dxo-editing [allowAdding]="canEdit" [allowUpdating]="canEdit" [allowDeleting]="canEdit" mode="row" refreshMode="reshape" [useIcons]="true">
+        <dxo-editing [allowAdding]="true" [allowUpdating]="true" [allowDeleting]="true" mode="row" refreshMode="reshape" [useIcons]="true">
         </dxo-editing>
         <dxo-filter-panel [visible]="true"></dxo-filter-panel>
 
@@ -38,66 +36,47 @@
             <dxi-item location="before" name="addRowButton"></dxi-item>
             <dxi-item location="before" name="exportButton"></dxi-item>
             <dxi-item location="before" name="columnChooserButton"></dxi-item>
-            <dxi-item location="before" name="deleteSelectedButton">
+            <dxi-item location="before" name="columnChooserButton">
                 <div *dxTemplate>
                     <button [disabled]="!hasSelectedRows()"
                         (click)="deleteSelectedRows()" 
-                        class="btn btn-danger ms-auto d-flex align-items-center gap-2">
-                        {{ 'table.delete-selected' | translate }}
+                        class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
+                        Delete selected
                     </button>
                 </div>
             </dxi-item>
-            <dxi-item location="before" name="clearSelectionButton">
+            <dxi-item location="before">
                 <dx-button
-                  [text]="'table.clear-selection' | translate"
+                  text="Clear Selection"
                   [disabled]="!selectedRows?.length"
                   (onClick)="grid$.instance.clearSelection()"
                 >
                 </dx-button>
             </dxi-item>
-            <!-- Create Button -->
-            <dxi-item location="after" locateInMenu="auto">
-                <div *dxTemplate>
-                    <button (click)="onBpmnClick()" class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
-                        {{ 'activity.bpmn-diagram' | translate }}
-                    </button>
-                </div>
-            </dxi-item>
-            <dxi-item location="after" locateInMenu="auto" [visible]="canEdit">
-                <div *dxTemplate>
-                    <button (click)="onAddClick()" class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
-                        {{ 'activity.create-activity' | translate }} <i
-                            class="bi bi-plus-circle-fill text-success font-size-2 lh-1"></i>
-                    </button>
-                </div>
-            </dxi-item>
         </dxo-toolbar>
         <!-- Columns definition -->
-        <dxi-column dataField="sequence_number" dataType="number" [caption]="'activity.sequence-number' | translate" [allowEditing]="false">
+        <dxi-column dataField="sequence_number" dataType="number" [caption]="'Sequence number'" [allowEditing]="false">
         </dxi-column>
-        <dxi-column dataField="name" dataType="string" [caption]="'activity.name' | translate">
+        <dxi-column dataField="name" dataType="string" [caption]="'Name'">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="description" dataType="string" [caption]="'activity.description' | translate">
+        <dxi-column dataField="description" dataType="string" [caption]="'Description'">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="duration" dataType="number" cellTemplate="durationCellTemplate" [caption]="'activity.duration' | translate">
+        <dxi-column dataField="duration" dataType="number" cellTemplate="durationCellTemplate" [caption]="'Duration'">
             <div *dxTemplate="let cellData of 'durationCellTemplate'">
                 {{ formatDuration(cellData.value) }}
             </div>
             <dxi-validation-rule type="required"></dxi-validation-rule>
-            <dxi-validation-rule type="pattern" [message]="'positive-number' | translate" [pattern]="patternPositive"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="num_people" dataType="number" [caption]="'activity.num-people' | translate">
+        <dxi-column dataField="num_people" dataType="number" [caption]="'Number of people'">
             <dxi-validation-rule type="required"></dxi-validation-rule>
-            <dxi-validation-rule type="pattern" [message]="'positive-number' | translate" [pattern]="patternPositive"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="created_at" dataType="date" [caption]="'activity.created' | translate" [allowEditing]="false">
+        <dxi-column dataField="created_at" dataType="date" [caption]="'Created'" [allowEditing]="false">
         </dxi-column>
-        <dxi-column dataField="updated_at" dataType="date" [caption]="'activity.updated' | translate" [allowEditing]="false">
+        <dxi-column dataField="updated_at" dataType="date" [caption]="'Updated'" [allowEditing]="false">
         </dxi-column>
     </dx-data-grid>
-    <ng-template #childContainer></ng-template>
 </div>
-<app-confirmation-popup [title]="'activity.delete-activity' | translate" [description]="'activity.delete-activity-description' | translate" [(popupVisible)]="confirmationVisible" (changeConfirmed)="confirmActivityRemoval()">
+<app-confirmation-popup [title]="'delete property'" [description]="'confirm delete property'" [(popupVisible)]="confirmationVisible" (changeConfirmed)="confirmActivityRemoval()">
 </app-confirmation-popup>

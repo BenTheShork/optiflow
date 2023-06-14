@@ -8,8 +8,6 @@ import { DxButtonModule, DxPopupModule, DxProgressBarModule } from 'devextreme-a
 import { RouterModule } from '@angular/router';
 import { StatusMessagePipe } from './pipes/status-message.pipe';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -20,24 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
     DxPopupModule,
     DxButtonModule,
     RouterModule,
-    DxProgressBarModule,
-    TranslateModule,
-    ToastrModule.forRoot({
-      positionClass: 'toast-bottom-left',
-      maxOpened: 5,
-      toastClass: '',
-      iconClasses: {
-          success: 'alert alert--success',
-          error: 'alert alert--danger',
-          info: 'alert alert--info',
-          warning: 'alert alert--warning',
-      },
-      // individual
-      closeButton: false,
-      tapToDismiss: true,
-      progressBar: true,
-      preventDuplicates: true
-  }),
+    DxProgressBarModule
   ],
   exports: [
     HeaderComponent, 
@@ -45,8 +26,7 @@ import { ToastrModule } from 'ngx-toastr';
     FooterComponent, 
     ConfirmationPopupComponent,
     StatusMessagePipe,
-    PageNotFoundComponent,
-    TranslateModule,
+    PageNotFoundComponent
   ]
 })
 export class ShareModule { }

@@ -9,7 +9,6 @@ export class Activity {
     public sequence_number: number = null;
     public created_at: string = null;
     public updated_at: string = null;
-    public user_id: number = null;
 
     constructor(activityShape?: Partial<Activity>) {
 
@@ -40,9 +39,6 @@ export class Activity {
             }
             if (activityShape.updated_at != null) {
                 this.updated_at = activityShape.updated_at;
-            }
-            if (activityShape.user_id != null) {
-                this.user_id = activityShape.user_id;
             }
         }
     }

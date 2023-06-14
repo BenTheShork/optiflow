@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Activity } from '@src/app/share/classes/activity.class';
 import { Process } from '@src/app/share/classes/process.class';
 import { Project } from '@src/app/share/classes/project.class';
-import { VersionStatus } from '@src/app/share/classes/version-status.enum';
 import { Version } from '@src/app/share/classes/version.class';
 import { ActivityApiService } from '@src/app/share/services/api/activity-api.service';
 import { ProcessApiService } from '@src/app/share/services/api/process-api.service';
@@ -27,7 +26,6 @@ export class VersionDetailComponent implements OnInit {
   public versionId: string;
   public processId: string;
   public processName: string;
-  status: typeof VersionStatus = VersionStatus;
 
   constructor(
     private versionApiService: VersionApiService,

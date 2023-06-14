@@ -29,27 +29,18 @@ export class ActivityApiService extends DataApiService<Activity> {
     }
 
     patchActivity(id: string, activity: Partial<Activity>): Observable<Activity> {
-        activity.user_id =4;
         return this.update(id, {}, '', activity);
     }
 
     postActivity(activity: Activity): Observable<Activity> {
-        activity.user_id =4;
         return this.create(activity);
     }
 
     deleteActivity(id: string): Observable<void> {
-        const params = {
-            user_id: 4
-        }
-        return this.deleteOne(id, '', params) as Observable<void>;
+        return this.deleteOne(id) as Observable<void>;
     }
 
     deleteActivities(ids: number[]): Observable<void> {
-        const params = {
-            ids: ids,
-            user_id: 4
-        }
-        return this.deleteAll('', params) as Observable<void>;
+        return this.deleteAll('', ids) as Observable<void>;
     }
 }

@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { VersionStatus } from '@src/app/share/classes/version-status.enum';
 import { Version } from '@src/app/share/classes/version.class';
-import { VERSION_STATUSES } from '@src/app/share/consts/version-status.const';
-import { AlertService } from '@src/app/share/services/alert.service';
+import { AlertService, AlertType } from '@src/app/share/services/alert.service';
 import { VersionApiService } from '@src/app/share/services/api/version-api.service';
+import { ErrorHandleService } from '@src/app/share/services/error-handle.service';
 import { LegalizationDatagridService } from '@src/app/share/services/legalization-data-grid.service';
 import { DxDataGridComponent } from 'devextreme-angular';
 import { dxDataGridColumn } from 'devextreme/ui/data_grid';
@@ -15,7 +14,7 @@ import { catchError, map, of, tap } from 'rxjs';
   templateUrl: './versions-table.component.html',
   styleUrls: ['./versions-table.component.scss']
 })
-export class VersionsTableComponent implements OnInit, OnChanges {
+export class VersionsTableComponent implements OnInit {
 
   @ViewChild(DxDataGridComponent) grid$: DxDataGridComponent;
 
@@ -27,17 +26,6 @@ export class VersionsTableComponent implements OnInit, OnChanges {
   public confirmationVisible = false;
   selectedRows: number[] = [];
   selectionChangedBySelectbox: boolean;
-  isEditing = false;
-  patternPositive = '^[1-9]+[0-9]*$';
-  patternVersion = '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$';
-  formattedVersions: Version[];
-
-  editorOptions = {
-    itemTemplate: 'versionItemTemplate',
-    fieldTemplate: 'versionFieldTemplate'
-  };
-
-  readonly VERSION_STATUSES = VERSION_STATUSES;
   
   private versionIdToDelete: string;
 
@@ -45,17 +33,10 @@ export class VersionsTableComponent implements OnInit, OnChanges {
     private legalizationDatagridService: LegalizationDatagridService,
     private route: ActivatedRoute,
     private versionApiService: VersionApiService,
+    private errorHandleService: ErrorHandleService,
     private alertService: AlertService,
     private readonly router: Router,
   ) {}
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.version && this.version) {
-      this.formattedVersions = this.version.map(v => ({
-        ...v,
-        formattedVersion: `${v.major}.${v.minor}.${v.patch}`,
-      }));
-    }
-  }
 
   ngOnInit() {
     if (!this.processId) {
@@ -95,45 +76,38 @@ export class VersionsTableComponent implements OnInit, OnChanges {
     }
   }
 
-  onCellPrepared(e: any) {
+  onCellPrepared(e: {
+    rowType: string;
+    column: dxDataGridColumn;
+    data: Version;
+    cellElement: { classList: { add: (arg0: string) => void } };
+  }) {
     if(e.data) {
-      if (this.isEditing === false) {
-        e.cellElement.style.cursor = 'pointer';
-      }
+      this.legalizationDatagridService.onCellPrepared(e);
     }
   }
 
   redirectToDetails(event: any): void {
-    if (this.isEditing === false) {
-      if (!event.column.name) {
-        return;
-      }
-      this.router.navigate(['./', event.data.id], {
-        relativeTo: this.route
-      });
+    if (!event.column.name) {
+      return;
     }
-  }
-
-  parseVersionString(versionString: string, version: Version): void {
-    const parts = versionString.split('.');
-    if (parts.length === 3) {
-      version.major = parseInt(parts[0]);
-      version.minor = parseInt(parts[1]);
-      version.patch = parseInt(parts[2]);
-    }
+    this.router.navigate(['./', event.data.id], {
+      relativeTo: this.route
+    });
   }
 
   onRowInserting(e: any) {
-    this.isEditing = false;
     let newVersion = new Version ({
+      major: e.data.major,
+      minor: e.data.minor,
+      patch: e.data.patch,
       description: e.data.description,
       process_id: parseInt(this.processId),
       grade: e.data.grade,
       total_num_people: 0,
-      total_duration: 0,
-      status: e.data.status
+      total_duration: 0
     });
-    this.parseVersionString(e.data.formattedVersion,newVersion);
+    console.log(newVersion);
     e.cancel = this.versionApiService
         .postVersion(newVersion)
         .pipe(
@@ -141,11 +115,14 @@ export class VersionsTableComponent implements OnInit, OnChanges {
                 return false;
             }),
             tap(() => {
-              this.alertService.success('alerts.successful-create');
+              this.alertService.notify('successfully saved', AlertType.Success, 5000);
               this.refreshVersions.emit();
             }),
             catchError((err: any) => {
-                this.alertService.error('request-errors.cannot-save', err);
+                this.errorHandleService.handleError(
+                    err,
+                    'cannot save'
+                );
                 return of(true);
             })
         )
@@ -153,7 +130,6 @@ export class VersionsTableComponent implements OnInit, OnChanges {
   }
 
   onRowUpdating(e: any) {
-    this.isEditing = false;
     const mergedData = Object.assign({}, e.oldData, e.newData);
     e.cancel = this.versionApiService
         .patchVersion(e.key, mergedData)
@@ -162,47 +138,30 @@ export class VersionsTableComponent implements OnInit, OnChanges {
                 return false;
             }),
             tap(() => {
-              this.alertService.success('alerts.successful-update');
+              this.alertService.notify('successfully updated', AlertType.Success, 5000);
               this.refreshVersions.emit();
             }),
             catchError((err: any) => {
-                this.alertService.error('request-errors.cannot-update', err);
+                this.errorHandleService.handleError(
+                    err,
+                    'cannot update'
+                );
                 return of(true);
             })
         ).toPromise();
   }
 
   onRowRemoving(e: any) {
-    this.isEditing = false;
     e.cancel = true;
     this.confirmationVisible = true;
     this.versionIdToDelete = e.key;
   }
 
-  cancelHandler() {
-    this.isEditing = false;
-  }
-
   onEditorPreparing(e: any) {
-    if (e.parentType === 'dataRow' && (e.editorName === 'dxTextBox' || e.editorName === 'dxNumberBox')) {
-      this.isEditing = true;
-    }
     if (e.dataField === 'description' && e.parentType === 'dataRow') {
         e.editorName = 'dxTextArea';
         e.editorOptions.height = 100;
     }
-  }
-
-  actionVisible(rowInfo: any) {
-    return !(rowInfo.row.data.status === VersionStatus.Active);
-  }
-
-  public onGridContentReady(): void {
-    // Check if the "Save" button was clicked without making any changes
-    const saveButton = document.querySelector('.dx-link-save');
-    saveButton?.addEventListener('click', () => {
-      this.isEditing = false;
-    });
   }
 
   confirmProcessRemoval() {
@@ -211,12 +170,14 @@ export class VersionsTableComponent implements OnInit, OnChanges {
         .deleteVersions(this.selectedRows)
         .pipe(
             map(() => {
-                this.alertService.success('alerts.successful-delete')
                 this.refreshVersions.emit();
                 return false;
             }),
             catchError((err: any) => {
-                this.alertService.error('request-errors.cannot-delete', err);
+                this.errorHandleService.handleError(
+                    err,
+                    'cannot delete'
+                );
                 return of(true);
             })
         )
@@ -226,12 +187,14 @@ export class VersionsTableComponent implements OnInit, OnChanges {
         .deleteVersion(this.versionIdToDelete)
         .pipe(
             map(() => {
-                this.alertService.success('alerts.successful-delete')
                 this.refreshVersions.emit();
                 return false;
             }),
             catchError((err: any) => {
-                this.alertService.error('request-errors.cannot-delete', err);
+                this.errorHandleService.handleError(
+                    err,
+                    'cannot delete'
+                );
                 return of(true);
             })
         )

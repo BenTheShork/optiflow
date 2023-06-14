@@ -30,27 +30,18 @@ export class ProcessApiService extends DataApiService<Process> {
     }
 
     patchProcess(id: string, process: Partial<Process>): Observable<Process> {
-        process.user_id=4;
         return this.update(id, {}, '', process);
     }
 
     postProcess(process: Process): Observable<Process> {
-        process.user_id=4;
         return this.create(process);
     }
 
     deleteProcess(id: string): Observable<void> {
-        const params = {
-            user_id: 4
-        }
-        return this.deleteOne(id, '', params) as Observable<void>;
+        return this.deleteOne(id) as Observable<void>;
     }
 
     deleteProcesses(ids: number[]): Observable<void> {
-        const params = {
-            ids: ids,
-            user_id: 4
-        }
-        return this.deleteAll('', params) as Observable<void>;
+        return this.deleteAll('', ids) as Observable<void>;
     }
 }

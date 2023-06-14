@@ -4,20 +4,12 @@ import { SignIn } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { PageNotFoundComponent } from './share/components/page-not-found/page-not-found.component';
 import { ProjectDataComponent } from './components/projects/components/project-data/project-data.component';
-import { AboutUsComponent } from './components/about-us/about-us.component';
-import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
-import { ActivityLogComponent } from './components/activity-log/activity-log.component';
-import { BpmnModelerComponent } from './components/bpmn-modeler/bpmn-modeler.component';
-import { InsightsOverviewComponent } from './components/insights-overview/insights-overview.component';
+import { ProcessDataComponent } from './components/processes/components/process-data/process-data.component';
+import { VersionDataComponent } from './components/versions/components/version-data/version-data.component';
 
 const routes: Routes = [
   { path: 'signin', component: SignIn },
   { path: 'signup', component: SignupComponent },
-  { path: 'about-us', component: AboutUsComponent },
-  { path: 'privacy', component: PrivacyPolicyComponent },
-  { path: 'activity-log', component: ActivityLogComponent },
-  { path: 'bpmn-modeler', component: BpmnModelerComponent },
-  { path: 'insights', component: InsightsOverviewComponent },
   {
     path: '',
     children: [

@@ -4,6 +4,7 @@ import { ProjectsOverviewComponent } from './components/projects-overview/projec
 import { ProjectDetailComponent } from './components/project-detail/project-detail.component';
 import { ProcessDetailComponent } from '../processes/components/process-detail/process-detail.component';
 import { VersionDetailComponent } from '../versions/components/version-detail/version-detail.component';
+import { ProjectDataComponent } from './components/project-data/project-data.component';
 
 const projectRoutes: Routes = [
     {

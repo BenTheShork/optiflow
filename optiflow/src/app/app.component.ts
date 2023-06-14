@@ -1,19 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { environment } from '@src/environments/environment';
 import { AuthService } from './authorization/auth.service';
 import { log } from 'console';
-import { TranslateService } from '@ngx-translate/core';
-import { loadMessages } from 'devextreme/localization';
-import { getLanguage } from './share/services/language.service';
-import slMessages from 'devextreme/localization/messages/sl.json';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'optiflow';
   currentRoute: string;
   environment = environment;
@@ -21,9 +17,7 @@ export class AppComponent implements OnInit {
         private route: ActivatedRoute,
         public authService: AuthService,
         public router: Router,
-        private translate: TranslateService
     ) { }
-
 
     isHeaderVisible (): boolean {
         if (this.router.url === '/signin') return false;
@@ -31,10 +25,6 @@ export class AppComponent implements OnInit {
         else return true;
     }
     ngOnInit(): void {
-      
-      loadMessages(slMessages);
-
-      this.translate.setDefaultLang(getLanguage());
         this.router.events.subscribe(event => {
             if (event instanceof NavigationEnd) {
               const currentRoute = this.router.routerState.snapshot.root;
