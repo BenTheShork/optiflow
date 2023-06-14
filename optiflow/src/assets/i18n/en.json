@@ -18,6 +18,7 @@
         "mandatory-field": "Mandatory Field"
     },
     "activity": {
+        "info": "Within each version, the Activity functionality allows you to define and track individual activities or tasks. Assign sequence numbers, names, and descriptions to activities to maintain a clear and structured workflow. By managing activities, you can ensure that every step of your process is well-defined and executed smoothly.",
         "activities": "Activities",
         "sequence-number": "Sequence number",
         "name": "Name",
@@ -32,6 +33,7 @@
         "delete-activity-description": "Are you sure you want to delete activity from version?"
     },
     "version": {
+        "info": "The Version functionality enables you to manage different iterations of your processes. Each version is associated with a specific process and comes with its own version number, description, duration, and other relevant details. You can easily compare and analyze different versions to ensure continuous improvement and optimize your workflows.",
         "versions": "Versions",
         "version": "Version",
         "create-version": "Create Version",
@@ -50,6 +52,7 @@
         "delete-version-description": "Are you sure you want to delete version from process?"
     },
     "process": {
+        "info":"With the Process functionality, you can define and structure your workflows with ease. Create processes by specifying their name and description. Each process can have multiple versions, allowing you to make iterative improvements and track changes over time.",
         "processes": "Processes",
         "versions": "Versions",
         "project": "Project",
@@ -66,6 +69,7 @@
         "delete-process-description": "Are you sure you want to delete process from project?"
     },
     "project": {
+        "info": "The Project functionality allows you to create and manage your projects efficiently. Organize your work into distinct projects, each with its own name and description. Keep track of all the processes and versions associated with each project, ensuring seamless collaboration and organization.",
         "name": "Name",
         "description": "Description",
         "num-processes": "Number of processes",
@@ -77,6 +81,7 @@
         "delete-project-description": "Are you sure you want to delete this Project?"
     },
     "activity-log": {
+        "info": "The Activity Log functionality keeps a record of all activities performed within the system. It serves as an audit trail, capturing important information such as activity timestamps, user actions, and any modifications made to processes, versions, or activities. The activity log ensures transparency, accountability, and traceability, allowing you to review and track the history of actions performed within your web application.",
         "title": "Activity log for User ",
         "table-name": "Table name",
         "record": "Record",
@@ -86,6 +91,7 @@
         "date": "Date"
     },
     "insights": {
+        "info": "The Insights functionality provides you with valuable visual representations and analytics of your processes. Gain actionable insights into the performance, efficiency, and progress of your projects. Utilize various charts and graphs to visualize data such as process versions over time, distribution of grades or status, and other relevant metrics. These insights empower you to make data-driven decisions and optimize your workflows effectively.",
         "total_num_projects": "Total number of projects",
         "total_num_processes": "Total number of processes",
         "total_num_activities": "Total number of activities",

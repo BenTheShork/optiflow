@@ -88,7 +88,7 @@ export class AlertService {
     private generateHTMLmessage(message: string, type: string): string {
       return `
           <div class="d-flex">
-              <img src="${this.getIconImage(type)}" width="20px" height="20px">
+              <img src="${this.getIconImage(type)}" width="20px" alt="alert image" height="20px">
               ${message}
           </div>
       `;

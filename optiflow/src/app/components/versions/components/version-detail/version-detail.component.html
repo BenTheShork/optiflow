@@ -7,6 +7,9 @@
             <a class="title" routerLink="../"> {{ processName }}</a> / 
             <a class="title" [routerLink]="'/project/projectId/' + processId + '/' + versionId"> {{ version.major }}.{{ version.minor }}.{{ version.patch }}</a>
         </span>
+        <div>
+            {{ 'version.info' | translate }}
+        </div>
         <app-version-data [version]="version" [processes]="process$ | async" [canEdit]="true">
         </app-version-data>
     </div>

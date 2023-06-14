@@ -1,4 +1,7 @@
 <h2 class="fw-bold title-mobile overview">{{'header.insights' | translate }}</h2>
+<span>
+    {{ 'insights.info' | translate }}
+</span>
 <div *ngIf="insights$ | async as insights">
     <div class="d-flex align-items-center flex-column">
         <div class="d-flex flex-wrap">

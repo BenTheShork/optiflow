@@ -18,6 +18,7 @@
         "mandatory-field": "Obvezno polje"
     },
     "activity": {
+        "info": "Znotraj vsake različice vam funkcija Activity omogoča definiranje in sledenje posameznim dejavnostim ali opravilom. Dodelite zaporedne številke, imena in opise dejavnostim, da ohranite jasen in strukturiran potek dela. Z upravljanjem dejavnosti lahko zagotovite, da je vsak korak vašega procesa dobro definiran in nemoteno izveden.",
         "activities": "Dejavnosti",
         "sequence-number": "Zaporedna številka",
         "name": "Naziv",
@@ -32,6 +33,7 @@
         "delete-activity-description": "Ali ste prepričani, da želite izbrisati dejavnost iz različice?"
     },
     "version": {
+        "info": "Funkcionalnost različice vam omogoča upravljanje različnih iteracij vaših procesov. Vsaka različica je povezana z določenim procesom in ima svojo številko različice, opis, trajanje in druge pomembne podrobnosti. Z lahkoto lahko primerjate in analizirate različne različice, da zagotovite stalne izboljšave in optimizirate svoje poteke dela.",
         "versions": "Različice",
         "version": "Različica",
         "create-version": "Kreiraj Različico",
@@ -50,6 +52,7 @@
         "delete-version-description": "Ali ste prepričani, da želite izbrisati Različico iz procesa?"
     },
     "process": {
+        "info": "S funkcijo Process lahko z lahkoto definirate in strukturirate svoje delovne tokove. Ustvarite procese tako, da podate njihovo ime in opis. Vsak proces ima lahko več različic, kar vam omogoča ponavljajoče se izboljšave in spremljanje sprememb skozi čas.",
         "processes": "Procesi",
         "versions": "Verzije",
         "project": "Projekt",
@@ -66,6 +69,7 @@
         "delete-process-description": "Ali ste prepričani, da želite izbrisati proces iz Projekta?"
     },
     "project": {
+        "info": "Funkcionalnost projekta vam omogoča učinkovito ustvarjanje in upravljanje projektov. Organizirajte svoje delo v različne projekte, vsak s svojim imenom in opisom. Spremljajte vse procese in različice, povezane z vsakim projektom, ter tako zagotovite brezhibno sodelovanje in organizacijo.",
         "name": "Naziv",
         "description": "Opis",
         "num-processes": "Število procesov",
@@ -77,6 +81,7 @@
         "delete-project-description": "Ali ste prepričani, da želite izbrisati tisti Projekt?"
     },
     "activity-log": {
+        "info": "Funkcionalnost dnevnika dejavnosti vodi evidenco vseh dejavnosti, izvedenih v sistemu. Služi kot revizijska sled, ki zajema pomembne informacije, kot so časovni žigi dejavnosti, uporabniška dejanja in morebitne spremembe procesov, različic ali dejavnosti. Dnevnik dejavnosti zagotavlja preglednost, odgovornost in sledljivost, kar vam omogoča pregled in sledenje zgodovini dejanj, izvedenih v vaši spletni aplikaciji.",
         "title": "Dnevnik dejavnosti za uporabnika",
         "table-name": "Naziv tabele",
         "record": "Zapis",
@@ -86,6 +91,7 @@
         "date": "Datum"
     },
     "insights": {
+        "info": "Funkcionalnost Insights vam nudi dragocene vizualne predstavitve in analitiko vaših procesov. Pridobite uporabne vpoglede v uspešnost, učinkovitost in napredek svojih projektov. Uporabite različne grafikone in grafe za vizualizacijo podatkov, kot so različice procesov skozi čas, porazdelitev ocen ali statusa ter druge ustrezne meritve. Ti vpogledi vam omogočajo, da sprejemate odločitve, ki temeljijo na podatkih, in učinkovito optimizirate svoje poteke dela.",
         "total_num_projects": "Skupno število projektov",
         "total_num_processes": "Skupno število procesov",
         "total_num_activities": "Skupno število dejavnosti",
