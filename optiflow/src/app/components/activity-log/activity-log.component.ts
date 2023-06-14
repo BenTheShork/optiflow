@@ -20,6 +20,7 @@ export class ActivityLogComponent {
 
   public activity$ = new Observable<ActivityLogPagination>();
   currentPage: number = 1;
+  username = sessionStorage.getItem('username');
 
   constructor(
     private route: ActivatedRoute,
@@ -45,7 +46,8 @@ export class ActivityLogComponent {
             body[i] = loadOptions[i];
           }
         });
-        body.user_id = 4;
+        body.user_id = sessionStorage.getItem('userid');
+        body.token = sessionStorage.getItem('token');
         return lastValueFrom(
           httpClient.post('https://staging.gpc-hosting.com/api/activitylog', body)
         ).then((data: any) => ({

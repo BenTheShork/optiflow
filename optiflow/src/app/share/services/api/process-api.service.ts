@@ -17,10 +17,11 @@ export class ProcessApiService extends DataApiService<Process> {
 
     // api/authenticates
 
-    getProcesses(project_id: string, user_id: number): Observable<Process[]> {
+    getProcesses(project_id: string, user_id: number, token: string): Observable<Process[]> {
         const params = {
             project_id,
-            user_id
+            user_id,
+            token
         };
         return this.getAll(params);
     }
@@ -30,18 +31,21 @@ export class ProcessApiService extends DataApiService<Process> {
     }
 
     patchProcess(id: string, process: Partial<Process>): Observable<Process> {
-        process.user_id=4;
+        process.user_id=Number(sessionStorage.getItem('userid'));
+        process.token = sessionStorage.getItem('token');
         return this.update(id, {}, '', process);
     }
 
     postProcess(process: Process): Observable<Process> {
-        process.user_id=4;
+        process.user_id=Number(sessionStorage.getItem('userid'));
+        process.token = sessionStorage.getItem('token');
         return this.create(process);
     }
 
     deleteProcess(id: string): Observable<void> {
         const params = {
-            user_id: 4
+            user_id: Number(sessionStorage.getItem('userid')),
+            token: sessionStorage.getItem('token')
         }
         return this.deleteOne(id, '', params) as Observable<void>;
     }
@@ -49,7 +53,8 @@ export class ProcessApiService extends DataApiService<Process> {
     deleteProcesses(ids: number[]): Observable<void> {
         const params = {
             ids: ids,
-            user_id: 4
+            user_id: Number(sessionStorage.getItem('userid')),
+            token: sessionStorage.getItem('token')
         }
         return this.deleteAll('', params) as Observable<void>;
     }

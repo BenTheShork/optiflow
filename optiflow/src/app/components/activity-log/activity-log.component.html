@@ -1,6 +1,6 @@
 <h2 class="fw-bold title-mobile overview">{{ 'header.activity-log' | translate }}</h2>
 <span class="title">
-    {{ 'activity-log.title' | translate }} FIRSTNAME LASTNAME
+    {{ 'activity-log.title' | translate }} {{ username }}
 </span>
 <div class="card mt-4 py-3 px-3 exported-variables w-100">
     <dx-data-grid #activityGrid class="data-grid-search activity" [dataSource]="dataSource" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"

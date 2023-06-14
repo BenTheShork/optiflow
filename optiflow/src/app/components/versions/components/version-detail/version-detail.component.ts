@@ -47,7 +47,7 @@ export class VersionDetailComponent implements OnInit {
         this.refreshData();
     }
     if (this.processId) {
-      this.process$ = this.processApiService.getProcesses(this.projectId, Number(sessionStorage.getItem('userid')));
+      this.process$ = this.processApiService.getProcesses(this.projectId, Number(sessionStorage.getItem('userid')), sessionStorage.getItem('token'));
       this.process$.subscribe(processes => {
         const process = processes.find(process => process.id == this.processId);
         this.processName = process ? process.name : '';

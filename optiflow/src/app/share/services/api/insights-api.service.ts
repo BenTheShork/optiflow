@@ -17,9 +17,10 @@ export class InsightsApiService extends DataApiService<Insights> {
 
     // api/authenticates
 
-    getInsights(user_id: number): Observable<Insights> {
+    getInsights(user_id: number, token: string): Observable<Insights> {
         const params = {
-            user_id
+            user_id,
+            token
         };
         return this.getAllIns(params);
     }

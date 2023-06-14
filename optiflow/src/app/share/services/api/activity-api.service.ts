@@ -25,22 +25,25 @@ export class ActivityApiService extends DataApiService<Activity> {
     }
 
     getActivity(id: string): Observable<Activity> {
-        return this.getOne(id);
+        return this.getOne(id);       
     }
 
     patchActivity(id: string, activity: Partial<Activity>): Observable<Activity> {
-        activity.user_id =4;
+        activity.user_id = Number(sessionStorage.getItem('userid'));
+        activity.token = sessionStorage.getItem('token');
         return this.update(id, {}, '', activity);
     }
 
     postActivity(activity: Activity): Observable<Activity> {
-        activity.user_id =4;
+        activity.user_id = Number(sessionStorage.getItem('userid'));
+        activity.token = sessionStorage.getItem('token');
         return this.create(activity);
     }
 
     deleteActivity(id: string): Observable<void> {
         const params = {
-            user_id: 4
+            user_id: sessionStorage.getItem('userid'),
+            token: sessionStorage.getItem('token')
         }
         return this.deleteOne(id, '', params) as Observable<void>;
     }
@@ -48,7 +51,8 @@ export class ActivityApiService extends DataApiService<Activity> {
     deleteActivities(ids: number[]): Observable<void> {
         const params = {
             ids: ids,
-            user_id: 4
+            user_id: sessionStorage.getItem('userid'),
+            token: sessionStorage.getItem('token')
         }
         return this.deleteAll('', params) as Observable<void>;
     }

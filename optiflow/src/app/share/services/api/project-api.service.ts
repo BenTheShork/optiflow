@@ -17,9 +17,10 @@ export class ProjectApiService extends DataApiService<Project> {
 
     // api/authenticates
 
-    getProjects(user_id: number): Observable<Project[]> {
+    getProjects(user_id: number, token: string): Observable<Project[]> {
         const params = {
-            user_id
+            user_id,
+            token
         };
         return this.getAll(params);
     }
@@ -29,17 +30,21 @@ export class ProjectApiService extends DataApiService<Project> {
     }
 
     patchProject(id: string, project: Partial<Project>): Observable<Project> {
+        project.user_id=Number(sessionStorage.getItem('userid'));
+        project.token = sessionStorage.getItem('token');
         return this.update(id, {}, '', project);
     }
 
     postProject(project: Project): Observable<Project> {
         project.user_id=Number(sessionStorage.getItem('userid'));
+        project.token = sessionStorage.getItem('token');
         return this.create(project);
     }
 
     deleteProject(id: string): Observable<void> {
         const params = {
-            user_id: 4
+            user_id: sessionStorage.getItem('userid'),
+            token: sessionStorage.getItem('token')
         }
         return this.deleteOne(id, '', params) as Observable<void>;
     }
@@ -47,7 +52,8 @@ export class ProjectApiService extends DataApiService<Project> {
     deleteProjects(ids: number[]): Observable<void> {
         const params = {
             ids: ids,
-            user_id: 4
+            user_id: sessionStorage.getItem('userid'),
+            token: sessionStorage.getItem('token')
         }
         return this.deleteAll('',params) as Observable<void>;
     }
