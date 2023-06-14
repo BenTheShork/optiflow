@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ActivityLogController extends Controller
 {
     public function index(Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $total = DB::table('activity_log')->where('user_id', $request->user_id)->count();
         if($request->filter!=null) {
             $table_name = $request->filter[0][0];

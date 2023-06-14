@@ -4,17 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\ProcessVersion;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ActivityController extends Controller
 {
     public function index(Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $activities = ProcessVersion::find($request->process_version_id)->activity;
         return response()->json($activities, 200);
     }
 
     public function store(Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $count = ProcessVersion::find($request->process_version_id)->activity->count();
         if($count==30) {
             return response()->json([
@@ -58,7 +67,11 @@ class ActivityController extends Controller
         }
     }
 
-    public function show($id) {
+    public function show($id, Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $activity = Activity::find($id);
         if($activity) 
             return response()->json($activity, 200);        
@@ -69,6 +82,10 @@ class ActivityController extends Controller
     }
 
     public function update(Request $request, $id) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $activity = Activity::find($id);
         if($activity) {
             $duplicate = ProcessVersion::find($request->process_version_id)->activity->where('name', $request->name)->where('id', '!=', $id);
@@ -107,6 +124,10 @@ class ActivityController extends Controller
     }
 
     public function destroy(Request $request, $id) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $activity = Activity::find($id);
         if($activity) {
             DB::table('activity_log')->insert([
@@ -135,6 +156,10 @@ class ActivityController extends Controller
     }
 
     public function destroy_selected(Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $flag = true;
         foreach ($request->ids as $id) {
             $activity = Activity::find($id);

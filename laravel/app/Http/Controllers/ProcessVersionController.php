@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Process;
 use App\Models\ProcessVersion;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProcessVersionController extends Controller
 {
     public function index(Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $process_versions = Process::find($request->process_id)->process_version->sortBy(['major', 'minor', 'patch'])->values();
         if(count($process_versions) == 1) {
             $process_version = $process_versions->first();
@@ -21,6 +26,10 @@ class ProcessVersionController extends Controller
     }
 
     public function store(Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $count_major =  Process::find($request->process_id)->process_version->where('major', $request->major)->count();
         $count_minor =  Process::find($request->process_id)->process_version->where('minor', $request->minor)->count();
         $count_patch =  Process::find($request->process_id)->process_version->where('patch', $request->patch)->count();
@@ -101,7 +110,11 @@ class ProcessVersionController extends Controller
         }
     }
 
-    public function show($id) {
+    public function show($id, Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $process_version = ProcessVersion::find($id);
         if($process_version) 
             return response()->json($process_version, 200);        
@@ -112,6 +125,10 @@ class ProcessVersionController extends Controller
     }
 
     public function update(Request $request, $id) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $process_version = ProcessVersion::find($id);
         if($process_version) {
             $duplicate = Process::find($request->process_id)->process_version->where('major', $request->major)->where('minor', $request->minor)->where('patch', $request->patch)->where('id', '!=', $id);
@@ -156,6 +173,10 @@ class ProcessVersionController extends Controller
     }
 
     public function destroy(Request $request, $id) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $process_version = ProcessVersion::find($id);
         if($process_version) {
             DB::table('activity_log')->insert([
@@ -179,6 +200,10 @@ class ProcessVersionController extends Controller
     }
 
     public function destroy_selected(Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $flag = true;
         foreach ($request->ids as $id) {
             $process_version = ProcessVersion::find($id);

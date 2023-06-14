@@ -4,36 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Process;
 use App\Models\Project;
-use Exception;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 
 class ProcessController extends Controller
 {
-    //AUTHENTICATION
-    function authAPI($jwt)
-    {
-        try {
-            $publicKeys = Http::get('https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com');
-            $publicKey = $publicKeys[array_key_first($publicKeys->json())];
-            $payload = JWT::decode($jwt, new Key($publicKey, 'RS256'));
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
-
-
-    //ROUTES
     public function index(Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $processes = Project::find($request->project_id)->process;
         return response()->json($processes, 200);
     }
 
     public function store(Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $count =  Project::find($request->project_id)->process->count();
         if($count==20) {
             return response()->json([
@@ -74,7 +64,11 @@ class ProcessController extends Controller
         }
     }
 
-    public function show($id) {
+    public function show($id, Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $process = Process::find($id);
         if($process) 
             return response()->json($process, 200);        
@@ -85,6 +79,10 @@ class ProcessController extends Controller
     }
 
     public function update(Request $request, $id) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $process = Process::find($id);
         if($process) {
             $duplicate = Project::find($request->project_id)->process->where('name', $request->name)->where('id', '!=', $id);
@@ -121,6 +119,10 @@ class ProcessController extends Controller
     }
 
     public function destroy(Request $request, $id) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $process = Process::find($id);
         if($process) {
             DB::table('activity_log')->insert([
@@ -144,6 +146,10 @@ class ProcessController extends Controller
     }
 
     public function destroy_selected(Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $flag = true;
         foreach ($request->ids as $id) {
             $process = Process::find($id);
@@ -175,6 +181,10 @@ class ProcessController extends Controller
 
     //INSIGHTS
     public function insights(Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $projects = Project::where('user_id', $request->user_id)->with('process.process_version')->get();
         $num_projects = 0;
         $num_processes = 0;
@@ -253,11 +263,13 @@ class ProcessController extends Controller
             }
         }
 
+        if($num_projects>0 && $num_processes>0) {
         $avg_processes_per_project = $num_processes/$num_projects;
         $avg_activities_per_process = $num_activities/$num_processes;
         $avg_grade_per_process = $total_grade/$num_processes;
         $avg_duration_per_process = $total_duration/$num_processes;
         $avg_num_people_per_process = $total_num_people/$num_processes;
+        }
 
         return response()->json([
             'total_num_projects' => $num_projects,

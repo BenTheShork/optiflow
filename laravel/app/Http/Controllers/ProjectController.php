@@ -6,38 +6,23 @@ use App\Models\Project;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-use Exception;
 
 class ProjectController extends Controller
 {
-
-    //AUTHENTICATION
-    function authAPI($jwt)
-    {
-        try {
-            $publicKeys = Http::get('https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com');
-            $publicKey = $publicKeys[array_key_first($publicKeys->json())];
-            $payload = JWT::decode($jwt, new Key($publicKey, 'RS256'));
-            return true;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
-
     public function index(Request $request) {
-        //if($this->authAPI($request->token)) {
-        if(1==1) {
-            $projects = User::find($request->user_id)->project;
-            return response()->json($projects, 200);
-        } else {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
             return response()->json(['message' => 'Invalid token!'], 403);
         }
+        $projects = User::find($request->user_id)->project;
+        return response()->json($projects, 200);
     }
 
     public function store(Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $count = User::find($request->user_id)->project->count();
         if($count==15) {
             return response()->json([
@@ -78,7 +63,11 @@ class ProjectController extends Controller
         }
     }
 
-    public function show($id) {
+    public function show($id, Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $project = Project::find($id);
         if($project) 
             return response()->json($project, 200);        
@@ -89,6 +78,10 @@ class ProjectController extends Controller
     }
 
     public function update(Request $request, $id) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $project = Project::find($id);
         if($project) {
             $duplicate = User::find($request->user_id)->project->where('name', $request->name)->where('id', '!=', $id);
@@ -123,6 +116,10 @@ class ProjectController extends Controller
     }
 
     public function destroy(Request $request, $id) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $project = Project::find($id);
         if($project) {
             DB::table('activity_log')->insert([
@@ -146,6 +143,10 @@ class ProjectController extends Controller
     }
 
     public function destroy_selected(Request $request) {
+        $token = User::where('id', $request->user_id)->value('token');
+        if($token!=$request->token) {
+            return response()->json(['message' => 'Invalid token!'], 403);
+        }
         $flag = true;
         foreach ($request->ids as $id) {
             $project = Project::find($id);
