@@ -11,6 +11,7 @@ Naša spletna aplikacija bo zasnovana tako, da podjetjem vseh velikosti pomaga i
 - Firebase: Googlova platforma za razvoj mobilnih in spletnih aplikacij.
 - SonarQube: Odprtokodna platforma za neprekinjeno upravljanje kakovosti kode.
 - bpmn.io: Spletni komplet orodij za modeliranje in izvajanje BPMN (poslovno procesno modeliranje in notacija) delovnih tokov.
+- Cloudflare: Storitev za upravljanje spletnega prometa, varnost in dostopnost, ki deluje kot posrednik med spletnim mestom in uporabniki. Nudi večplastno zaščito pred napadi DDoS, zmanjšuje obremenitev strežnikov in povečuje hitrost dostave spletnih vsebin.
 
 ### Razvojno okolje
 - Visual studio code
