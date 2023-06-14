@@ -12,6 +12,11 @@ class ProcessVersionController extends Controller
 {
     public function index(Request $request) {
         $process_versions = Process::find($request->process_id)->process_version->sortBy(['major', 'minor', 'patch'])->values();
+        if(count($process_versions) == 1) {
+            $process_version = $process_versions->first();
+            $process_version->update(['status' => 1]);
+            $process_versions->find($process_version->id);
+        }
         return response()->json($process_versions, 200);
     }
 

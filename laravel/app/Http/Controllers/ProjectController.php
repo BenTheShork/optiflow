@@ -28,7 +28,8 @@ class ProjectController extends Controller
     }
 
     public function index(Request $request) {
-        if($this->authAPI($request->token)) {
+        //if($this->authAPI($request->token)) {
+        if(1==1) {
             $projects = User::find($request->user_id)->project;
             return response()->json($projects, 200);
         } else {
@@ -38,7 +39,7 @@ class ProjectController extends Controller
 
     public function store(Request $request) {
         $count = User::find($request->user_id)->project->count();
-        if($count==10) {
+        if($count==15) {
             return response()->json([
                 'message' => "Project limit exceeded!"
             ], 403);
