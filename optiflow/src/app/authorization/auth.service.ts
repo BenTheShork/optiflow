@@ -9,7 +9,7 @@ import { User } from '../share/classes/user.class';
 })
 export class AuthService {
   private userLogin: User;
-  private isLoggedIn = false;
+  public isLoggedIn = false;
   constructor(
     public userApiService: UserApiService,
     public afAuth: AngularFireAuth, // Inject Firebase auth service
@@ -35,8 +35,7 @@ export class AuthService {
           };
           this.userApiService.postUser(this.userLogin).subscribe((data) => {
             if (data) { 
-              console.log(data.id);
-              sessionStorage.setItem('userid', this.userLogin.token);
+              sessionStorage.setItem('userid',data.id);
               sessionStorage.setItem('token', this.userLogin.token);
               sessionStorage.setItem('username', this.userLogin.username);
               this.isLoggedIn = true;
@@ -48,7 +47,7 @@ export class AuthService {
        
       })
       .catch((error) => {
-         
+         return error;
       });
       })
       .catch((error) => {
@@ -59,6 +58,9 @@ export class AuthService {
     sessionStorage.clear();
     this.isLoggedIn = false;
     this.router.navigate(['/signin']);
+  }
+  login(){
+    this.isLoggedIn = true;
   }
   signin(email: string, password: string) {
     return this.afAuth.signInWithEmailAndPassword(email, password);

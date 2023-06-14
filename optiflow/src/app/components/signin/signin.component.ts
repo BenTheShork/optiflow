@@ -51,16 +51,32 @@ export class SignIn implements OnInit {
             updated_at: null
             
           };
-          this.userApiService.postUser(this.userLogin).subscribe((data) => {
+            this.userApiService.postUser(this.userLogin).subscribe((data) => {
+              if (data) { 
+                sessionStorage.setItem('userid',data.id);
+                sessionStorage.setItem('token', this.userLogin.token);
+                sessionStorage.setItem('username', this.userLogin.username);
+                this.authService.login();
+                this.router.navigate(['/projects/']);
+              } else {
+                console.log('Invalid data received');
+              }
+            });
+        });
+        this.userApiService.postUser(this.userLogin).subscribe((data) => {
+          try {
             if (data) { 
               sessionStorage.setItem('userid',data.id);
               sessionStorage.setItem('token', this.userLogin.token);
               sessionStorage.setItem('username', this.userLogin.username);
+              this.authService.login();
               this.router.navigate(['/projects/']);
             } else {
               console.log('Invalid data received');
             }
-          });
+          } catch (error) {
+            console.error('An error occurred:', error);
+          }
         });
        
       })
