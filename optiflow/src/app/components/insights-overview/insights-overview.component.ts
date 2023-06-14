@@ -31,12 +31,12 @@ export class InsightsOverviewComponent extends UnsubscribeDirective implements O
     this.insights$.subscribe((insight) => {
       if (insight.projects !== null) {
         for (let project of insight.projects) {
-          let calulation = this.calculateArea(project.process);
-          this.chartData.push({
-            project_name: project.name,
-            data: calulation
-          });
           if (project.process.length !== 0) {
+            let calulation = this.calculateArea(project.process);
+            this.chartData.push({
+              project_name: project.name,
+              data: calulation
+            });
             let barDate = {
               name: project.name,
               process_num: project.num_processes,
