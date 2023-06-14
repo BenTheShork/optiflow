@@ -37,7 +37,7 @@ Tekom projekta če obstajajo težavo jih skupaj rešujemo.
 Naš frontend in backend so live na staging serveru in lahko dostopajo samo registrirani uporabniki: https://optiflow.gpc-hosting.com
 
 ## Zagon aplikacije - Backend (Lokalno)
-Za lokalni zagon backend aplikacije najprej moramo prenesti projekt od github (https://gitlab.com/optiflow1/optiflow.git) na nas računalnik, potem si prenesimo in instaliramo composer (https://getcomposer.org/download/), prenesemo tud bazo in najprej odpremo mapo backenda in posodobimo .env datoteko z ustreznimi podatkimi za bazo. Potem v terminalu izvajamo komando **composer install** in za zagon v terminalu izvajamo komando php artisan serve.
+Za lokalni zagon backend aplikacije najprej moramo prenesti projekt od github (https://gitlab.com/optiflow1/optiflow.git) na nas računalnik, potem si prenesimo in instaliramo composer (https://getcomposer.org/download/), prenesemo tud bazo in najprej odpremo mapo backenda in posodobimo .env datoteko z ustreznimi podatkimi za bazo. Potem v terminalu izvajamo komando **composer install** in za zagon v terminalu izvajamo komando **php artisan serve**.
 
 ## Zagon aplikacije - Frontend (Lokalno)
 Za lokalni zagon backend aplikacije najprej moramo prenesti projekt od github (https://gitlab.com/optiflow1/optiflow.git) na nas računalnik, potem si prenesimo in instaliramo NodeJS (https://nodejs.org/en/download), Potem v terminalu izvajamo komando **npm install** in za zagon frontenda v terminalu izvajamo **ng serve**.
