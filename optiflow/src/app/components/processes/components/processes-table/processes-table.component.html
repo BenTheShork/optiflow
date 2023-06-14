@@ -1,7 +1,7 @@
 <div class="card mt-4 py-3 px-3 exported-variables w-100">
     <dx-data-grid #processesGrid class="data-grid-search processes status-grid" [dataSource]="process" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
         [remoteOperations]="true" [wordWrapEnabled]="true" [columnAutoWidth]="false" columnResizingMode="widget" [noDataText]="process?.length === 0 ? 'no data' : ''" (onCellPrepared)="onCellPrepared($event)" (onRowInserting)="onRowInserting($event)" (onRowUpdating)="onRowUpdating($event)"
-        (onRowRemoving)="onRowRemoving($event)" (onCellClick)="redirectToDetails($event)" (onEditorPreparing)="onEditorPreparing($event)" [(selectedRowKeys)]="selectedRows" (onSelectionChanged)="selectionChangedHandler()">
+        (onRowRemoving)="onRowRemoving($event)" (onCellClick)="redirectToDetails($event)" (onContentReady)="onGridContentReady()" (onEditorPreparing)="onEditorPreparing($event)" [(selectedRowKeys)]="selectedRows" (onSelectionChanged)="selectionChangedHandler()" (onEditCanceled)="cancelHandler()">
 
         <dxo-selection
             [selectAllMode]="'allMode'"
@@ -40,8 +40,8 @@
                 <div *dxTemplate>
                     <button [disabled]="!hasSelectedRows()"
                         (click)="deleteSelectedRows()" 
-                        class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
-                        Delete selected
+                        class="btn btn-danger ms-auto d-flex align-items-center gap-2">
+                        {{ 'table.delete-selected' | translate }}
                     </button>
                 </div>
             </dxi-item>
@@ -49,14 +49,14 @@
             <dxi-item location="after" locateInMenu="auto">
                 <div *dxTemplate>
                     <button (click)="onAddClick()" class="btn btn-plain-text ms-auto d-flex align-items-center gap-2 p-1">
-                        Create Process <i
+                        {{ 'process.create-process' | translate }} <i
                             class="bi bi-plus-circle-fill text-success font-size-2 lh-1"></i>
                     </button>
                 </div>
             </dxi-item>
             <dxi-item location="before">
                 <dx-button
-                  text="Clear Selection"
+                  [text]="'table.clear-selection' | translate"
                   [disabled]="!selectedRows?.length"
                   (onClick)="grid$.instance.clearSelection()"
                 >
@@ -64,38 +64,38 @@
             </dxi-item>
         </dxo-toolbar>
         <!-- Columns definition -->
-        <dxi-column dataField="name" dataType="string" [caption]="'Name'">
+        <dxi-column dataField="name" dataType="string" [caption]="'process.name' | translate">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="description" dataType="string" [caption]="'Description'">
+        <dxi-column dataField="description" dataType="string" [caption]="'process.description' | translate">
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="num_versions" dataType="number" [caption]="'Number of versions'" [allowEditing]="false">
+        <dxi-column dataField="num_versions" dataType="number" [caption]="'process.num-versions' | translate" [allowEditing]="false">
         </dxi-column>
-        <dxi-column cellTemplate="bestVersionCellTemplate" dataField="best_version" dataType="number" [caption]="'Best version'">
+        <dxi-column cellTemplate="bestVersionCellTemplate" dataField="best_version" dataType="number" [caption]="'process.best-version' | translate">
             <div *dxTemplate="let cellData of 'bestVersionCellTemplate'">
-                {{ cellData.value ? cellData.value : 'no best version set' }}
+                {{ cellData.value ? cellData.value : 'process.no-best-versions' | translate }}
             </div>
         </dxi-column>
-        <dxi-column cellTemplate="processCellTemplate" dataField="status" [caption]="'status'" [editorOptions]="editorOptions">
+        <dxi-column cellTemplate="processCellTemplate" dataField="status" [caption]="'process.status' | translate" [editorOptions]="editorOptions">
             <dxo-lookup [dataSource]="PROCESS_STATUSES" displayExpr="name" valueExpr="id">
             </dxo-lookup>
             <div *dxTemplate="let cellData of 'processCellTemplate'">
-                {{PROCESS_STATUSES[cellData.value].name}}
+                {{PROCESS_STATUSES[cellData.value].name | translate }}
             </div>
             <div *dxTemplate="let data of 'processFieldTemplate'">
                 <dx-text-box [value]="data?.name"></dx-text-box>
             </div>
             <div *dxTemplate="let data of 'processItemTemplate'">
-                {{ data?.name }}
+                {{ data?.name  | translate }}
             </div>
             <dxi-validation-rule type="required"></dxi-validation-rule>
         </dxi-column>
-        <dxi-column dataField="created_at" dataType="date" [caption]="'Created'" [allowEditing]="false">
+        <dxi-column dataField="created_at" dataType="date" [caption]="'process.created' | translate" [allowEditing]="false">
         </dxi-column>
-        <dxi-column dataField="updated_at" dataType="date" [caption]="'Updated'" [allowEditing]="false">
+        <dxi-column dataField="updated_at" dataType="date" [caption]="'process.updated' | translate" [allowEditing]="false">
         </dxi-column>
     </dx-data-grid>
 </div>
-<app-confirmation-popup [title]="'delete property'" [description]="'confirm delete property'" [(popupVisible)]="confirmationVisible" (changeConfirmed)="confirmProcessRemoval()">
+<app-confirmation-popup [title]="'process.delete-process' | translate" [description]="'process.delete-process-description' | translate" [(popupVisible)]="confirmationVisible" (changeConfirmed)="confirmProcessRemoval()">
 </app-confirmation-popup>

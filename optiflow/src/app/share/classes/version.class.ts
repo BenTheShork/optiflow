@@ -1,3 +1,4 @@
+import { VersionStatus } from "./version-status.enum";
 
 export class Version {
     public id: string = null;
@@ -11,6 +12,9 @@ export class Version {
     public grade: number = null;
     public created_at: string = null;
     public updated_at: string = null;
+    public user_id: number = null;
+    public status: VersionStatus = null;
+    public file: any = null;
 
     constructor(versionShape?: Partial<Version>) {
 
@@ -47,6 +51,15 @@ export class Version {
             }
             if (versionShape.updated_at != null) {
                 this.updated_at = versionShape.updated_at;
+            }
+            if (versionShape.user_id != null) {
+                this.user_id = versionShape.user_id;
+            }
+            if (versionShape.status != null) {
+                this.status = versionShape.status;
+            }
+            if (versionShape.file != null) {
+                this.file = versionShape.file;
             }
         }
     }

@@ -1,40 +1,43 @@
 <dx-validation-group #validationGroup>
     <form (submit)="postProcess($event)">
-        <div class="dx-field-label w-50"> name*:
+        <div class="dx-field-label w-50"> {{ 'process.name' | translate }}*:
             <dx-text-box [(value)]="process.name" (onValueChanged)="onValueChanged($event, 'name')" width=100% class="dx-field-value">
                 <dx-validator>
-                    <dxi-validation-rule type="required" message="Name is empty"></dxi-validation-rule>
+                    <dxi-validation-rule type="required" [message]="'table.mandatory-field' | translate"></dxi-validation-rule>
                 </dx-validator>
             </dx-text-box>
         </div>
-        <div class="dx-field-label w-50"> description:
-            <dx-text-area [(value)]="process.description" height="100px" [maxLength]="2000" width="100%" class="dx-field-value" (onValueChanged)="onValueChanged($event, 'description')">
+        <div class="dx-field-label w-50"> {{ 'process.description' | translate }}:
+            <dx-text-area [(value)]="process.description" style="height: auto;" [maxHeight]="300" [maxLength]="2000" width="100%" class="dx-field-value"  (onValueChanged)="onValueChanged($event, 'description')">
             </dx-text-area>
         </div>
-        <div class="dx-field-label w-50">number of versions:
+        <div class="dx-field-label w-50">{{ 'process.num-versions' | translate }}:
             <dx-number-box [(value)]="process.num_versions" width="100%" class="dx-field-value" [disabled]="true">
             </dx-number-box>
         </div>
         <div class="dx-field-label w-50" *ngIf="PROCESS_STATUSES">
-            status*:
-            <dx-select-box valueExpr="id" displayExpr="name" [showClearButton]="true" [(value)]="process.status" [acceptCustomValue]="false" width="100%" [items]="PROCESS_STATUSES" class="dx-field-value" (onValueChanged)="onValueChanged($event,'status')">
+            {{ 'process.status' | translate }}*:
+            <dx-select-box valueExpr="id" displayExpr="name" itemTemplate="item" [showClearButton]="true" [(value)]="process.status" [acceptCustomValue]="false" width="100%" [items]="PROCESS_STATUSES" class="dx-field-value" (onValueChanged)="onValueChanged($event,'status')">
+                <div *dxTemplate="let data of 'item'">
+                    {{ data.name | translate }}
+                </div>
                 <dx-validator>
-                    <dxi-validation-rule type="required" message="Status is empty"></dxi-validation-rule>
+                    <dxi-validation-rule type="required" [message]="'table.mandatory-field' | translate"></dxi-validation-rule>
                 </dx-validator>
             </dx-select-box>
         </div>
 
         <div class="dx-field-label w-50" *ngIf="projects$ | async as projects">
-            Project*:
+            {{ 'process.project' | translate }}*:
             <dx-select-box displayExpr="name" valueExpr="id" searchMode="contains" searchExpr="name" [searchEnabled]="true" [acceptCustomValue]="false" [(value)]="process.project_id" [items]="projects" (onValueChanged)="onValueChanged($event,'project_id')">
                 <dx-validator>
-                    <dxi-validation-rule type="required" message="Project is empty"></dxi-validation-rule>
+                    <dxi-validation-rule type="required" [message]="'table.mandatory-field' | translate"></dxi-validation-rule>
                 </dx-validator>
             </dx-select-box>
         </div>
 
         <div class="w-100 m-10" *ngIf="!process.id && !canEdit">
-            <dx-button [text]="'save'" icon="save" stylingMode="text" [useSubmitBehavior]="true">
+            <dx-button [text]="'table.save' | translate" icon="save" stylingMode="text" [useSubmitBehavior]="true">
             </dx-button>
         </div>
     </form>

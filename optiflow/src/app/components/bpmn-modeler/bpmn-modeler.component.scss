@@ -1,0 +1,19 @@
+.diagram-parent {
+  height: 700px;
+  border: solid 3px #EEE;
+  position: relative;
+
+  .diagram-container {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.import-error {
+  color: red;
+  padding: 20px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+}

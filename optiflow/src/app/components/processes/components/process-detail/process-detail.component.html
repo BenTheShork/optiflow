@@ -1,9 +1,8 @@
 <ng-container *ngIf="process$ | async as process">
     <div class="d-flex flex-column">
-        <h2 class="fw-bold title-mobile overview">Processes</h2>
+        <h2 class="fw-bold title-mobile overview">{{ 'process.processes' | translate }}</h2>
         <span>
-            <a class="title" routerLink="/dashboard">Dashboard</a> / 
-            <a class="title" routerLink="/project"> Projects</a> / 
+            <a class="title" routerLink="/project"> {{ 'header.projects' | translate }}</a> / 
             <a class="title" routerLink="../"> {{ projectName }} </a> / 
             <a class="title" [routerLink]="'/project/' + projectId + '/' + processId"> {{ process.name }}</a>
         </span>
@@ -12,7 +11,7 @@
     </div>
 
     <div class="d-flex flex-column" *ngIf="process.id">
-        <h2 class="fw-bold title-mobile overview">Versions</h2>
+        <h2 class="fw-bold title-mobile overview">{{ 'process.versions' | translate }}</h2>
         <app-versions-table [version]="versions$ | async" (refreshVersions)="refreshVersions()" [processId]="processId">
         </app-versions-table>
     </div>

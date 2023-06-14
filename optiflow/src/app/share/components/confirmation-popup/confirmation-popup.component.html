@@ -5,18 +5,18 @@
         <div>{{ description }}</div>
         <div class="extra-content" *ngIf="previousValue && newValue">
             <div class="value-content">
-                previous value:
+                {{ 'table.previous-value' | translate }}:
                 <div class="bold">{{ previousValue }}</div>
             </div>
             <div class="value-content">
-                new value
+                {{ 'table.new-value' | translate }}
                 <div class="bold">{{ newValue }}</div>
             </div>
         </div>
         <div class="buttons">
-            <dx-button [text]="'close'" class="popup-button popup-button-gray" (onClick)="closePopup()">
+            <dx-button [text]="'table.close' | translate" class="popup-button popup-button-gray" (onClick)="closePopup()">
             </dx-button>
-            <dx-button class="popup-button popup-button-red" [text]="'confirm'" (onClick)="confirmationClick()">
+            <dx-button class="popup-button popup-button-red" [text]="'table.confirm' | translate" (onClick)="confirmationClick()">
             </dx-button>
         </div>
     </div>
