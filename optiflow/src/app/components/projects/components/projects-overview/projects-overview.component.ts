@@ -181,7 +181,7 @@ export class ProjectsOverviewComponent {
 
   private refreshData() {
     this.loadingService.startLoading();
-    this.project$ = this.projectApiService.getProjects(Number(sessionStorage.getItem('userid')))
+    this.project$ = this.projectApiService.getProjects(Number(sessionStorage.getItem('userid')), sessionStorage.getItem('token'))
       .pipe(finalize(() => this.loadingService.stopLoading()));
   }
 }

@@ -11,6 +11,7 @@ export class Process {
     public updated_at: string = null;
     public status: ProcessStatus = null;
     public user_id: number = null;
+    public token: string = null;
 
     constructor(processShape?: Partial<Process>) {
 
@@ -50,6 +51,9 @@ export class Process {
             }
             if (processShape.user_id != null) {
                 this.user_id = processShape.user_id;
+            }
+            if (processShape.token != null) {
+                this.token = processShape.token;
             }
         }
     }

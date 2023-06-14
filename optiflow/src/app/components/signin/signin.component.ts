@@ -38,30 +38,36 @@ export class SignIn implements OnInit {
   constructor(public authService: AuthService, private readonly router: Router,private userApiService: UserApiService,) { }
 
   ngOnInit() { }
-
+  
   login() {
     this.authService.signin(this.email, this.password)
       .then((userCredential) => {
-        userCredential.user.getIdToken().then((token) => {
           this.userLogin = {
             username: userCredential.user.email,
-            token: token,
+            token: this.authService.generateRandomToken(50),
             id: null,
             created_at: null,
             updated_at: null
             
           };
-          this.userApiService.postUser(this.userLogin).subscribe((data) => {
-            if (data) { 
-              sessionStorage.setItem('userid',data.id);
-              sessionStorage.setItem('token', this.userLogin.token);
-              sessionStorage.setItem('username', this.userLogin.username);
-              this.router.navigate(['/projects/']);
-            } else {
-              console.log('Invalid data received');
-            }
-          });
-        });
+          
+      this.userApiService.postUser(this.userLogin).subscribe((data) => {
+        try {
+          if (data) { 
+            sessionStorage.setItem('userid',data.id);
+            sessionStorage.setItem('token', this.userLogin.token);
+            sessionStorage.setItem('username', this.userLogin.username);
+            this.authService.login();
+            this.router.navigate(['/project/']);
+          } else {
+            console.log('Invalid data received');
+          }
+        } catch (error) {
+          console.error('An error occurred:', error);
+        }
+      });
+
+
        
       })
       .catch((error) => {

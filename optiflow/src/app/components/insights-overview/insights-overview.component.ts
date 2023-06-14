@@ -27,7 +27,7 @@ export class InsightsOverviewComponent extends UnsubscribeDirective implements O
   }
 
   ngOnInit(): void {
-    this.insights$ = this.insightsApiService.getInsights(4);
+    this.insights$ = this.insightsApiService.getInsights(Number(sessionStorage.getItem('userid')), sessionStorage.getItem('token'));
     this.insights$.subscribe((insight) => {
       if (insight.projects !== null) {
         for (let project of insight.projects) {

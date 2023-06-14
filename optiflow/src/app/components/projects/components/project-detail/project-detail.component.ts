@@ -38,7 +38,7 @@ export class ProjectDetailComponent implements OnInit{
   }
 
   refreshProcesses() {
-    this.processes$ = this.processApiService.getProcesses(this.projectId, Number(sessionStorage.getItem('userid')));
+    this.processes$ = this.processApiService.getProcesses(this.projectId, Number(sessionStorage.getItem('userid')), sessionStorage.getItem('token'));
   }
 
   refreshProject() {

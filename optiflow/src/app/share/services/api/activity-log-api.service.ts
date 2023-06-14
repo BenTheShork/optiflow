@@ -21,7 +21,8 @@ export class ActivityLogApiService extends DataApiService<ActivityLogPagination>
     getActivities(page: number): Observable<ActivityLogPagination> {
         const params = {
             page: page,
-            user_id: 4
+            user_id: sessionStorage.getItem('userid'),
+            token: sessionStorage.getItem('token')
         };
         return this.getOnePaginated(undefined,'',params);
     }

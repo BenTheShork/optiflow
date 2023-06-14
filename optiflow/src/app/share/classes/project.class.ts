@@ -9,6 +9,7 @@ export class Project {
     public created_at: string = null;
     public updated_at: string = null;
     public process: Process[] = null;
+    public token: string = null;
 
     constructor(projectShape?: Partial<Project>) {
 
@@ -42,6 +43,9 @@ export class Project {
             }
             if (projectShape.process != null) {
                 this.process = projectShape.process;
+            }
+            if (projectShape.token != null) {
+                this.token = projectShape.token;
             }
         }
     }
