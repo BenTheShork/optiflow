@@ -22,7 +22,7 @@
         "sequence-number": "Sequence number",
         "name": "Name",
         "description": "Description",
-        "duration": "Duration",
+        "duration": "Estimated duration",
         "num-people": "Number of People",
         "created": "Created at",
         "updated": "Updated at",
@@ -92,10 +92,10 @@
         "avg_processes_per_project": "Average processes per project",
         "avg_activities_per_process": "Average activities per process",
         "avg_grade_per_process": "Average grade per process",
-        "avg_duration_per_process": "Average duration per process",
+        "avg_duration_per_process": "Average estimated time per process",
         "avg_num_people_per_process": "Average number of people per process",
-        "version_max_duration": "Version with the highest duration",
-        "version_min_duration": "Version with the smallest duration",
+        "version_max_duration": "Version with the highest estimated time",
+        "version_min_duration": "Version with the smallest estimated time",
         "version_max_num_people": "Version with the most amount of poeple",
         "version_min_num_people": "Version with the least amount of poeple",
         "pie-chart-title": "Proccess status breakdown",
@@ -187,5 +187,6 @@
     "completed": "Completed",
     "Conflict": "Already exists!",
     "export-bpmn": "Export to .BPMN",
-    "go-back": "Go back"
+    "go-back": "Go back",
+    "welcome-text": "Welcome to OptiFlow! With our platform, you can easily create, manage, and optimize your processes. Stay organized and collaborate effectively with your team members. Track the progress of each process version, monitor the number of people involved, and ensure smooth workflow from start to finish. Gain valuable insights through powerful analytics and reporting tools. Experience efficiency and productivity like never before with our intuitive and user-friendly interface. Let's make your work easier and more enjoyable!"
 }
