@@ -17,9 +17,11 @@ export class VersionApiService extends DataApiService<Version> {
 
     // api/authenticates
 
-    getVersions(process_id: string): Observable<Version[]> {
+    getVersions(process_id: string, user_id: number, token: string): Observable<Version[]> {
         const params = {
-            process_id
+            process_id,
+            user_id,
+            token
         };
         return this.getAll(params);
     }
@@ -29,18 +31,21 @@ export class VersionApiService extends DataApiService<Version> {
     }
 
     patchVersion(id: string, version: Partial<Version>): Observable<Version> {
-        version.user_id = 4;
+        version.user_id=Number(sessionStorage.getItem('userid'));
+        version.token = sessionStorage.getItem('token');
         return this.updateVers(id, version, '');
     }
 
     postVersion(version: Version): Observable<Version> {
-        version.user_id = 4;
+        version.user_id=Number(sessionStorage.getItem('userid'));
+        version.token = sessionStorage.getItem('token');
         return this.create(version);
     }
 
     deleteVersion(id: string): Observable<void> {
         const params = {
-            user_id: 4
+            user_id: Number(sessionStorage.getItem('userid')),
+            token: sessionStorage.getItem('token')
         }
         return this.deleteOne(id, '', params) as Observable<void>;
     }
@@ -48,7 +53,8 @@ export class VersionApiService extends DataApiService<Version> {
     deleteVersions(ids: number[]): Observable<void> {
         const params = {
             ids: ids,
-            user_id: 4
+            user_id: Number(sessionStorage.getItem('userid')),
+            token: sessionStorage.getItem('token')
         }
         return this.deleteAll('', params) as Observable<void>;
     }

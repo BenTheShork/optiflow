@@ -72,7 +72,8 @@
         </dxi-column>
         <dxi-column dataField="num_versions" dataType="number" [caption]="'process.num-versions' | translate" [allowEditing]="false">
         </dxi-column>
-        <dxi-column cellTemplate="bestVersionCellTemplate" dataField="best_version" dataType="number" [caption]="'process.best-version' | translate">
+        <dxi-column cellTemplate="bestVersionCellTemplate" dataField="best_version" dataType="string" [caption]="'process.best-version' | translate">
+            <dxi-validation-rule type="pattern" [message]="'incorrect-format' | translate" [pattern]="patternVersion"></dxi-validation-rule>
             <div *dxTemplate="let cellData of 'bestVersionCellTemplate'">
                 {{ cellData.value ? cellData.value : 'process.no-best-versions' | translate }}
             </div>

@@ -26,7 +26,24 @@
   }
   
   
-  
+  .logo-image {
+    height: 100px;
+    max-width: 250px;
+    margin: auto;
+    background-image: url('/assets/images/logo.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+
+    img {
+        margin: auto;
+        height: 100%;
+    }
+}
+
+.info {
+  color: #333 !important;
+}
   
   /*//////////////////////////////////////////////////////////////////
   [ RESTYLE TAG ]*/

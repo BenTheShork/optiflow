@@ -57,7 +57,7 @@ export class ProcessDetailComponent implements OnInit{
   }
 
   refreshVersions() {
-    this.versions$ = this.versionApiService.getVersions(this.processId);
+    this.versions$ = this.versionApiService.getVersions(this.processId, Number(sessionStorage.getItem('userid')), sessionStorage.getItem('token'));
   }
 
   private refreshData() {

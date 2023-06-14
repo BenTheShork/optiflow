@@ -25,7 +25,7 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-left',
       maxOpened: 5,
-      toastClass: '',
+      toastClass: 'toast-info',
       iconClasses: {
           success: 'alert alert--success',
           error: 'alert alert--danger',

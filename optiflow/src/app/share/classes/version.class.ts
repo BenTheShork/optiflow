@@ -13,6 +13,7 @@ export class Version {
     public created_at: string = null;
     public updated_at: string = null;
     public user_id: number = null;
+    public token: string = null;
     public status: VersionStatus = null;
     public file: any = null;
 
@@ -60,6 +61,9 @@ export class Version {
             }
             if (versionShape.file != null) {
                 this.file = versionShape.file;
+            }
+            if (versionShape.token != null) {
+                this.token = versionShape.token;
             }
         }
     }

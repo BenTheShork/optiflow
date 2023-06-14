@@ -24,6 +24,7 @@ export class ProcessesTableComponent implements OnInit {
 
   @Output() refreshProcesses = new EventEmitter();
 
+  patternVersion = '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$';
   public confirmationVisible = false;
   public ProcessCategory = ProcessStatus;
 
