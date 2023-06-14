@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Tables - SB Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="index.html"><img width="150" height="50" src="assets\img\logoTrans.png"></a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <a class="nav-link" href="index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="projects.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
+                            Projects
+                        </a>
+                        <a class="nav-link" href="charts.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
+                            Insights
+                        </a>
+                        <a class="nav-link" href="index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+                            Activity log
+                        </a>
+                        <a class="nav-link" href="index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-cog"></i></div>
+                            Preferences
+                        </a>
+                        <!--<div class="sb-sidenav-menu-heading">Interface</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Layouts
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="layout-static.html">Static Navigation</a>
+                                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+                            aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            Pages
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#pagesCollapseAuth" aria-expanded="false"
+                                    aria-controls="pagesCollapseAuth">
+                                    Authentication
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
+                                    data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="login.html">Login</a>
+                                        <a class="nav-link" href="register.html">Register</a>
+                                        <a class="nav-link" href="password.html">Forgot Password</a>
+                                    </nav>
+                                </div>
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#pagesCollapseError" aria-expanded="false"
+                                    aria-controls="pagesCollapseError">
+                                    Error
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne"
+                                    data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="401.html">401 Page</a>
+                                        <a class="nav-link" href="404.html">404 Page</a>
+                                        <a class="nav-link" href="500.html">500 Page</a>
+                                    </nav>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="sb-sidenav-menu-heading">Addons</div>
+                        <a class="nav-link" href="charts.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Charts
+                        </a>
+                        <a class="nav-link" href="projects.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Tables
+                        </a>-->
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    User 1
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Versions</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item"><a href="projects.html">Projects</a></li>
+                        <li class="breadcrumb-item"><a href="project-single.html">Project 1</a></li>
+                        <li class="breadcrumb-item"><a href="versions.html">Process 1</a></li>
+                        <li class="breadcrumb-item active">Versions</li>
+                    </ol>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            DataTables is a third party plugin that is used to generate the demo table below. For more
+                            information about DataTables, please visit the
+                            <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+                            .
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Recent Versions
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Version</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Total duration</th>
+                                        <th>Total number of people</th>
+                                        <th>Grade</th>
+                                        <th>Created</th>
+                                        <th>Updated</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><a href="version-single.html">Version 1</a></td>
+                                        <td>Name 1</td>
+                                        <td>Description 1</td>
+                                        <td>9 hours</td>
+                                        <td>9</td>
+                                        <td>5</td>
+                                        <td>18/10/1938</td>
+                                        <td>24/04/2017</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Version 2</td>
+                                        <td>Name 2</td>
+                                        <td>Description 2</td>
+                                        <td>29 hours</td>
+                                        <td>26</td>
+                                        <td>5</td>
+                                        <td>28/04/2093</td>
+                                        <td>03/08/1963</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Version 3</td>
+                                        <td>Name 3</td>
+                                        <td>Description 3</td>
+                                        <td>0 hours</td>
+                                        <td>15</td>
+                                        <td>5</td>
+                                        <td>28/04/1957</td>
+                                        <td>01/06/1970</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Version 4</td>
+                                        <td>Name 4</td>
+                                        <td>Description 4</td>
+                                        <td>10 hours</td>
+                                        <td>22</td>
+                                        <td>2</td>
+                                        <td>30/10/1907</td>
+                                        <td>29/02/1967</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Version 5</td>
+                                        <td>Name 5</td>
+                                        <td>Description 5</td>
+                                        <td>3 hours</td>
+                                        <td>12</td>
+                                        <td>3</td>
+                                        <td>16/01/1996</td>
+                                        <td>12/11/2081</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>Version 6</td>
+                                        <td>Name 6</td>
+                                        <td>Description 6</td>
+                                        <td>23 hours</td>
+                                        <td>3</td>
+                                        <td>6</td>
+                                        <td>11/08/1998</td>
+                                        <td>29/10/1993</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>Version 7</td>
+                                        <td>Name 7</td>
+                                        <td>Description 7</td>
+                                        <td>27 hours</td>
+                                        <td>8</td>
+                                        <td>3</td>
+                                        <td>18/05/2038</td>
+                                        <td>06/03/1904</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>Version 8</td>
+                                        <td>Name 8</td>
+                                        <td>Description 8</td>
+                                        <td>18 hours</td>
+                                        <td>10</td>
+                                        <td>3</td>
+                                        <td>16/06/2020</td>
+                                        <td>14/09/1984</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>Version 9</td>
+                                        <td>Name 9</td>
+                                        <td>Description 9</td>
+                                        <td>14 hours</td>
+                                        <td>27</td>
+                                        <td>7</td>
+                                        <td>27/09/1942</td>
+                                        <td>05/08/2073</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>Version 10</td>
+                                        <td>Name 10</td>
+                                        <td>Description 10</td>
+                                        <td>12 hours</td>
+                                        <td>25</td>
+                                        <td>4</td>
+                                        <td>18/04/1979</td>
+                                        <td>11/01/1965</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11</td>
+                                        <td>Version 11</td>
+                                        <td>Name 11</td>
+                                        <td>Description 11</td>
+                                        <td>3 hours</td>
+                                        <td>26</td>
+                                        <td>3</td>
+                                        <td>28/02/2064</td>
+                                        <td>15/04/1951</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12</td>
+                                        <td>Version 12</td>
+                                        <td>Name 12</td>
+                                        <td>Description 12</td>
+                                        <td>4 hours</td>
+                                        <td>4</td>
+                                        <td>4</td>
+                                        <td>04/09/1970</td>
+                                        <td>17/10/2020</td>
+                                    </tr>
+                                    <tr>
+                                        <td>13</td>
+                                        <td>Version 13</td>
+                                        <td>Name 13</td>
+                                        <td>Description 13</td>
+                                        <td>25 hours</td>
+                                        <td>6</td>
+                                        <td>8</td>
+                                        <td>14/08/2042</td>
+                                        <td>13/06/2088</td>
+                                    </tr>
+                                    <tr>
+                                        <td>14</td>
+                                        <td>Version 14</td>
+                                        <td>Name 14</td>
+                                        <td>Description 14</td>
+                                        <td>11 hours</td>
+                                        <td>20</td>
+                                        <td>6</td>
+                                        <td>28/12/1988</td>
+                                        <td>04/08/1946</td>
+                                    </tr>
+                                    <tr>
+                                        <td>15</td>
+                                        <td>Version 15</td>
+                                        <td>Name 15</td>
+                                        <td>Description 15</td>
+                                        <td>21 hours</td>
+                                        <td>3</td>
+                                        <td>10</td>
+                                        <td>29/09/1994</td>
+                                        <td>25/01/1907</td>
+                                    </tr>
+                                    <tr>
+                                        <td>16</td>
+                                        <td>Version 16</td>
+                                        <td>Name 16</td>
+                                        <td>Description 16</td>
+                                        <td>2 hours</td>
+                                        <td>30</td>
+                                        <td>6</td>
+                                        <td>27/09/1916</td>
+                                        <td>04/07/2089</td>
+                                    </tr>
+                                    <tr>
+                                        <td>17</td>
+                                        <td>Version 17</td>
+                                        <td>Name 17</td>
+                                        <td>Description 17</td>
+                                        <td>6 hours</td>
+                                        <td>2</td>
+                                        <td>4</td>
+                                        <td>22/11/2094</td>
+                                        <td>20/12/2030</td>
+                                    </tr>
+                                    <tr>
+                                        <td>18</td>
+                                        <td>Version 18</td>
+                                        <td>Name 18</td>
+                                        <td>Description 18</td>
+                                        <td>0 hours</td>
+                                        <td>0</td>
+                                        <td>7</td>
+                                        <td>28/10/1946</td>
+                                        <td>16/11/1951</td>
+                                    </tr>
+                                    <tr>
+                                        <td>19</td>
+                                        <td>Version 19</td>
+                                        <td>Name 19</td>
+                                        <td>Description 19</td>
+                                        <td>19 hours</td>
+                                        <td>29</td>
+                                        <td>6</td>
+                                        <td>18/03/1960</td>
+                                        <td>15/04/2059</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20</td>
+                                        <td>Version 20</td>
+                                        <td>Name 20</td>
+                                        <td>Description 20</td>
+                                        <td>29 hours</td>
+                                        <td>17</td>
+                                        <td>6</td>
+                                        <td>12/07/1920</td>
+                                        <td>02/12/1936</td>
+                                    </tr>
+                                    <tr>
+                                        <td>21</td>
+                                        <td>Version 21</td>
+                                        <td>Name 21</td>
+                                        <td>Description 21</td>
+                                        <td>6 hours</td>
+                                        <td>8</td>
+                                        <td>5</td>
+                                        <td>03/12/2087</td>
+                                        <td>29/05/2087</td>
+                                    </tr>
+                                    <tr>
+                                        <td>22</td>
+                                        <td>Version 22</td>
+                                        <td>Name 22</td>
+                                        <td>Description 22</td>
+                                        <td>0 hours</td>
+                                        <td>30</td>
+                                        <td>1</td>
+                                        <td>05/02/2082</td>
+                                        <td>18/01/1960</td>
+                                    </tr>
+                                    <tr>
+                                        <td>23</td>
+                                        <td>Version 23</td>
+                                        <td>Name 23</td>
+                                        <td>Description 23</td>
+                                        <td>3 hours</td>
+                                        <td>29</td>
+                                        <td>9</td>
+                                        <td>17/03/1944</td>
+                                        <td>13/11/2071</td>
+                                    </tr>
+                                    <tr>
+                                        <td>24</td>
+                                        <td>Version 24</td>
+                                        <td>Name 24</td>
+                                        <td>Description 24</td>
+                                        <td>5 hours</td>
+                                        <td>21</td>
+                                        <td>4</td>
+                                        <td>15/05/2098</td>
+                                        <td>27/07/1960</td>
+                                    </tr>
+                                    <tr>
+                                        <td>25</td>
+                                        <td>Version 25</td>
+                                        <td>Name 25</td>
+                                        <td>Description 25</td>
+                                        <td>10 hours</td>
+                                        <td>22</td>
+                                        <td>2</td>
+                                        <td>05/07/2018</td>
+                                        <td>08/01/1982</td>
+                                    </tr>
+                                    <tr>
+                                        <td>26</td>
+                                        <td>Version 26</td>
+                                        <td>Name 26</td>
+                                        <td>Description 26</td>
+                                        <td>18 hours</td>
+                                        <td>20</td>
+                                        <td>10</td>
+                                        <td>09/03/1975</td>
+                                        <td>05/01/1986</td>
+                                    </tr>
+                                    <tr>
+                                        <td>27</td>
+                                        <td>Version 27</td>
+                                        <td>Name 27</td>
+                                        <td>Description 27</td>
+                                        <td>0 hours</td>
+                                        <td>21</td>
+                                        <td>5</td>
+                                        <td>03/08/1939</td>
+                                        <td>04/05/2072</td>
+                                    </tr>
+                                    <tr>
+                                        <td>28</td>
+                                        <td>Version 28</td>
+                                        <td>Name 28</td>
+                                        <td>Description 28</td>
+                                        <td>25 hours</td>
+                                        <td>5</td>
+                                        <td>6</td>
+                                        <td>28/08/1917</td>
+                                        <td>05/12/1927</td>
+                                    </tr>
+                                    <tr>
+                                        <td>29</td>
+                                        <td>Version 29</td>
+                                        <td>Name 29</td>
+                                        <td>Description 29</td>
+                                        <td>4 hours</td>
+                                        <td>29</td>
+                                        <td>10</td>
+                                        <td>30/10/2035</td>
+                                        <td>13/12/1912</td>
+                                    </tr>
+                                    <tr>
+                                        <td>30</td>
+                                        <td>Version 30</td>
+                                        <td>Name 30</td>
+                                        <td>Description 30</td>
+                                        <td>5 hours</td>
+                                        <td>2</td>
+                                        <td>9</td>
+                                        <td>10/01/1998</td>
+                                        <td>24/04/1954</td>
+                                    </tr>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>Version 31</td>
+                                        <td>Name 31</td>
+                                        <td>Description 31</td>
+                                        <td>25 hours</td>
+                                        <td>24</td>
+                                        <td>2</td>
+                                        <td>11/10/1935</td>
+                                        <td>14/05/2078</td>
+                                    </tr>
+                                    <tr>
+                                        <td>32</td>
+                                        <td>Version 32</td>
+                                        <td>Name 32</td>
+                                        <td>Description 32</td>
+                                        <td>6 hours</td>
+                                        <td>3</td>
+                                        <td>6</td>
+                                        <td>04/06/1918</td>
+                                        <td>14/11/1966</td>
+                                    </tr>
+                                    <tr>
+                                        <td>33</td>
+                                        <td>Version 33</td>
+                                        <td>Name 33</td>
+                                        <td>Description 33</td>
+                                        <td>14 hours</td>
+                                        <td>27</td>
+                                        <td>10</td>
+                                        <td>25/10/2082</td>
+                                        <td>16/03/2010</td>
+                                    </tr>
+                                    <tr>
+                                        <td>34</td>
+                                        <td>Version 34</td>
+                                        <td>Name 34</td>
+                                        <td>Description 34</td>
+                                        <td>11 hours</td>
+                                        <td>20</td>
+                                        <td>3</td>
+                                        <td>23/11/1956</td>
+                                        <td>26/07/2037</td>
+                                    </tr>
+                                    <tr>
+                                        <td>35</td>
+                                        <td>Version 35</td>
+                                        <td>Name 35</td>
+                                        <td>Description 35</td>
+                                        <td>8 hours</td>
+                                        <td>2</td>
+                                        <td>2</td>
+                                        <td>30/10/1961</td>
+                                        <td>25/10/2015</td>
+                                    </tr>
+                                    <tr>
+                                        <td>36</td>
+                                        <td>Version 36</td>
+                                        <td>Name 36</td>
+                                        <td>Description 36</td>
+                                        <td>8 hours</td>
+                                        <td>20</td>
+                                        <td>1</td>
+                                        <td>17/02/2011</td>
+                                        <td>06/03/2069</td>
+                                    </tr>
+                                    <tr>
+                                        <td>37</td>
+                                        <td>Version 37</td>
+                                        <td>Name 37</td>
+                                        <td>Description 37</td>
+                                        <td>30 hours</td>
+                                        <td>9</td>
+                                        <td>4</td>
+                                        <td>03/10/2075</td>
+                                        <td>19/10/2024</td>
+                                    </tr>
+                                    <tr>
+                                        <td>38</td>
+                                        <td>Version 38</td>
+                                        <td>Name 38</td>
+                                        <td>Description 38</td>
+                                        <td>13 hours</td>
+                                        <td>19</td>
+                                        <td>3</td>
+                                        <td>11/04/2002</td>
+                                        <td>17/04/2030</td>
+                                    </tr>
+                                    <tr>
+                                        <td>39</td>
+                                        <td>Version 39</td>
+                                        <td>Name 39</td>
+                                        <td>Description 39</td>
+                                        <td>30 hours</td>
+                                        <td>3</td>
+                                        <td>2</td>
+                                        <td>02/02/2078</td>
+                                        <td>06/10/2020</td>
+                                    </tr>
+                                    <tr>
+                                        <td>40</td>
+                                        <td>Version 40</td>
+                                        <td>Name 40</td>
+                                        <td>Description 40</td>
+                                        <td>3 hours</td>
+                                        <td>23</td>
+                                        <td>10</td>
+                                        <td>03/10/1969</td>
+                                        <td>23/04/1901</td>
+                                    </tr>
+                                    <tr>
+                                        <td>41</td>
+                                        <td>Version 41</td>
+                                        <td>Name 41</td>
+                                        <td>Description 41</td>
+                                        <td>27 hours</td>
+                                        <td>30</td>
+                                        <td>9</td>
+                                        <td>02/09/2098</td>
+                                        <td>05/02/2060</td>
+                                    </tr>
+                                    <tr>
+                                        <td>42</td>
+                                        <td>Version 42</td>
+                                        <td>Name 42</td>
+                                        <td>Description 42</td>
+                                        <td>4 hours</td>
+                                        <td>0</td>
+                                        <td>7</td>
+                                        <td>17/05/1965</td>
+                                        <td>11/07/2006</td>
+                                    </tr>
+                                    <tr>
+                                        <td>43</td>
+                                        <td>Version 43</td>
+                                        <td>Name 43</td>
+                                        <td>Description 43</td>
+                                        <td>3 hours</td>
+                                        <td>4</td>
+                                        <td>9</td>
+                                        <td>21/05/2072</td>
+                                        <td>26/06/1995</td>
+                                    </tr>
+                                    <tr>
+                                        <td>44</td>
+                                        <td>Version 44</td>
+                                        <td>Name 44</td>
+                                        <td>Description 44</td>
+                                        <td>23 hours</td>
+                                        <td>11</td>
+                                        <td>3</td>
+                                        <td>30/09/1934</td>
+                                        <td>09/01/1963</td>
+                                    </tr>
+                                    <tr>
+                                        <td>45</td>
+                                        <td>Version 45</td>
+                                        <td>Name 45</td>
+                                        <td>Description 45</td>
+                                        <td>26 hours</td>
+                                        <td>16</td>
+                                        <td>10</td>
+                                        <td>19/01/2093</td>
+                                        <td>19/09/1996</td>
+                                    </tr>
+                                    <tr>
+                                        <td>46</td>
+                                        <td>Version 46</td>
+                                        <td>Name 46</td>
+                                        <td>Description 46</td>
+                                        <td>28 hours</td>
+                                        <td>25</td>
+                                        <td>3</td>
+                                        <td>18/08/2020</td>
+                                        <td>25/07/2040</td>
+                                    </tr>
+                                    <tr>
+                                        <td>47</td>
+                                        <td>Version 47</td>
+                                        <td>Name 47</td>
+                                        <td>Description 47</td>
+                                        <td>11 hours</td>
+                                        <td>22</td>
+                                        <td>3</td>
+                                        <td>09/04/2045</td>
+                                        <td>04/01/2010</td>
+                                    </tr>
+                                    <tr>
+                                        <td>48</td>
+                                        <td>Version 48</td>
+                                        <td>Name 48</td>
+                                        <td>Description 48</td>
+                                        <td>28 hours</td>
+                                        <td>28</td>
+                                        <td>7</td>
+                                        <td>19/04/1962</td>
+                                        <td>03/08/1974</td>
+                                    </tr>
+                                    <tr>
+                                        <td>49</td>
+                                        <td>Version 49</td>
+                                        <td>Name 49</td>
+                                        <td>Description 49</td>
+                                        <td>5 hours</td>
+                                        <td>17</td>
+                                        <td>10</td>
+                                        <td>28/03/2066</td>
+                                        <td>02/10/2001</td>
+                                    </tr>
+                                    <tr>
+                                        <td>50</td>
+                                        <td>Version 50</td>
+                                        <td>Name 50</td>
+                                        <td>Description 50</td>
+                                        <td>0 hours</td>
+                                        <td>9</td>
+                                        <td>9</td>
+                                        <td>25/09/2086</td>
+                                        <td>17/05/1976</td>
+                                    </tr>
+                                    <tr>
+                                        <td>51</td>
+                                        <td>Version 51</td>
+                                        <td>Name 51</td>
+                                        <td>Description 51</td>
+                                        <td>11 hours</td>
+                                        <td>18</td>
+                                        <td>8</td>
+                                        <td>14/01/1926</td>
+                                        <td>20/09/2077</td>
+                                    </tr>
+                                    <tr>
+                                        <td>52</td>
+                                        <td>Version 52</td>
+                                        <td>Name 52</td>
+                                        <td>Description 52</td>
+                                        <td>0 hours</td>
+                                        <td>19</td>
+                                        <td>4</td>
+                                        <td>29/12/2031</td>
+                                        <td>21/04/1914</td>
+                                    </tr>
+                                    <tr>
+                                        <td>53</td>
+                                        <td>Version 53</td>
+                                        <td>Name 53</td>
+                                        <td>Description 53</td>
+                                        <td>18 hours</td>
+                                        <td>27</td>
+                                        <td>2</td>
+                                        <td>08/02/2052</td>
+                                        <td>06/07/1911</td>
+                                    </tr>
+                                    <tr>
+                                        <td>54</td>
+                                        <td>Version 54</td>
+                                        <td>Name 54</td>
+                                        <td>Description 54</td>
+                                        <td>10 hours</td>
+                                        <td>22</td>
+                                        <td>9</td>
+                                        <td>20/11/2033</td>
+                                        <td>04/12/1902</td>
+                                    </tr>
+                                    <tr>
+                                        <td>55</td>
+                                        <td>Version 55</td>
+                                        <td>Name 55</td>
+                                        <td>Description 55</td>
+                                        <td>26 hours</td>
+                                        <td>6</td>
+                                        <td>7</td>
+                                        <td>10/11/2014</td>
+                                        <td>11/11/1913</td>
+                                    </tr>
+                                    <tr>
+                                        <td>56</td>
+                                        <td>Version 56</td>
+                                        <td>Name 56</td>
+                                        <td>Description 56</td>
+                                        <td>9 hours</td>
+                                        <td>6</td>
+                                        <td>8</td>
+                                        <td>01/10/1975</td>
+                                        <td>16/09/1962</td>
+                                    </tr>
+                                    <tr>
+                                        <td>57</td>
+                                        <td>Version 57</td>
+                                        <td>Name 57</td>
+                                        <td>Description 57</td>
+                                        <td>29 hours</td>
+                                        <td>19</td>
+                                        <td>10</td>
+                                        <td>02/06/2035</td>
+                                        <td>06/02/1909</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; OptiFlow 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <script src="js/datatables-simple-demo.js"></script>
+</body>
+
+</html>
