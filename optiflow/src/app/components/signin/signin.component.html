@@ -3,8 +3,11 @@
         <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
             <form class="login100-form validate-form" #loginForm="ngForm">
                 <span class="login100-form-title p-b-49">
-			{{'auth.sign-in' | translate }}
-		  </span>
+			        {{'auth.sign-in' | translate }}
+		        </span>
+                <div>
+                    <span>{{ 'welcome-text' | translate }}</span>
+                </div>
 
                 <div class="wrap-input100 validate-input m-b-23" data-validate="Email is required">
                     <span class="label-input100">{{'auth.email' | translate }}</span>

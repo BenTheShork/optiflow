@@ -6,12 +6,18 @@
             <a class="title" routerLink="../"> {{ projectName }} </a> / 
             <a class="title" [routerLink]="'/project/' + projectId + '/' + processId"> {{ process.name }}</a>
         </span>
+        <div>
+            {{ 'process.info' | translate }}
+        </div>
         <app-process-data [process]="process" [canEdit]="true">
         </app-process-data>
     </div>
 
     <div class="d-flex flex-column" *ngIf="process.id">
         <h2 class="fw-bold title-mobile overview">{{ 'process.versions' | translate }}</h2>
+        <span>
+            {{ 'activity.info' | translate }}
+        </span>
         <app-versions-table [version]="versions$ | async" (refreshVersions)="refreshVersions()" [processId]="processId">
         </app-versions-table>
     </div>

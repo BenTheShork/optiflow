@@ -1,6 +1,6 @@
 <h2 class="fw-bold title-mobile overview">{{ 'header.projects' | translate }}</h2>
 <span>
-    <span>{{ 'welcome-text' | translate }}</span>
+    <span>{{ 'project.info' | translate }}</span>
 </span>
 <div class="card mt-4 py-3 px-3 exported-variables w-100">
     <dx-data-grid #projectsGrid class="data-grid-search projects" [dataSource]="project$ | async" keyExpr="id" [allowColumnResizing]="true" [allowColumnReordering]="true" [showBorders]="false" [showRowLines]="false" [columnMinWidth]="150" [hoverStateEnabled]="true"
