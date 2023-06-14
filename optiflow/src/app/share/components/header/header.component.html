@@ -27,35 +27,19 @@
                         <i class="bi bi-list-ul"> </i> {{ 'header.activity-log' | translate }}
                     </a>
                 </li>
-                <li [routerLinkActive]="['active']" class="nav-item">
-                    <a class="nav-link" (click)="toggleMenu()" routerLink="/preferences">
-                        <i class="bi bi-person-gear"> </i> {{ 'header.preferences' | translate }}
-                    </a>
-                </li>
+
             </div>
             <div class="bottom-area">
                 <!-- LANGUAGE SWITCHING -->
 
-				<li class="nav-item" *ngIf="selectedLanguage$ | async as selectedLanguage">
-					<a
-						role="button"
-						*ngIf="selectedLanguage === Language.SL"
-						class="nav-link pe-auto"
-						(click)="setLanguage(Language.EN)"
-					>
-						<img class="language-icon" src="/assets/icons/slovenia_flag.svg" alt="Slovenia flag" />
-						{{ 'header.switch-language-sl' | translate }}
-					</a>
-					<a
-						role="button"
-						*ngIf="selectedLanguage === Language.EN"
-						class="nav-link"
-						(click)="setLanguage(Language.SL)"
-					>
-						<img class="language-icon" src="/assets/icons/british_flag.svg" alt="British flag" />
-						{{ 'header.switch-language-en' | translate }}
-					</a>
-				</li>
+                <li class="nav-item" *ngIf="selectedLanguage$ | async as selectedLanguage">
+                    <a role="button" *ngIf="selectedLanguage === Language.SL" class="nav-link pe-auto" (click)="setLanguage(Language.EN)">
+                        <img class="language-icon" src="/assets/icons/slovenia_flag.svg" alt="Slovenia flag" /> {{ 'header.switch-language-sl' | translate }}
+                    </a>
+                    <a role="button" *ngIf="selectedLanguage === Language.EN" class="nav-link" (click)="setLanguage(Language.SL)">
+                        <img class="language-icon" src="/assets/icons/british_flag.svg" alt="British flag" /> {{ 'header.switch-language-en' | translate }}
+                    </a>
+                </li>
                 <!-- LOG OUT -->
                 <li class="nav-item">
                     <a class="nav-link" [routerLink]="['auth']" (click)="logout()">
