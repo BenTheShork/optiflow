@@ -21,7 +21,7 @@ Naša spletna aplikacija bo zasnovana tako, da podjetjem vseh velikosti pomaga i
 ## Način dela
 Skupaj kot tim se pogovarjamo kaj je potrebno narediti.
 Delo si razdelimo tako da ima vsaka oseba približno enako dela.
-Napredek je pribelezen na Gitlabu in tamo spremljamo napredek projekta.
+Napredek je pribeležen na Gitlabu in tamo spremljamo napredek projekta.
 Tekom projekta če obstajajo težavo jih skupaj rešujemo.
 
 ## Funkcionalnosti
@@ -34,10 +34,13 @@ Tekom projekta če obstajajo težavo jih skupaj rešujemo.
 7. **Zgodovino dnevnika dejavnosti**: Dnevnik dejavnosti uporabnika, znan tudi kot dnevnik uporabniške zgodovine, je zapis dejanj ali dogodkov, ki jih izvede uporabnik znotraj sistema ali aplikacije. Zajame in shranjuje informacije o dejavnostih in interakcijah posameznih uporabnikov
 
 ## Zagon aplikacije (Online)
-Nas frontend in backend so live na staging serveru in lahko dostopajo samo registrirani uporabniki: https://optiflow.gpc-hosting.com
+Naš frontend in backend so live na staging serveru in lahko dostopajo samo registrirani uporabniki: https://optiflow.gpc-hosting.com
 
-## Zagon aplikacije (Lokalno)
-Za lokalni zagon aplikacije najprej moramo prenesti projekt od github (https://gitlab.com/optiflow1/optiflow.git) na nas racunalnik, potem si prenesimo in instaliramo composer (https://getcomposer.org/download/), prenesemo tud bazo in posodobimo .env datoteko z ustreznimi podatkimi za bazo. Potem v terminalu damo composer install in za zagon backenda v terminalu napisemo php artisan serve.
+## Zagon aplikacije - Backend (Lokalno)
+Za lokalni zagon backend aplikacije najprej moramo prenesti projekt od github (https://gitlab.com/optiflow1/optiflow.git) na nas računalnik, potem si prenesimo in instaliramo composer (https://getcomposer.org/download/), prenesemo tud bazo in najprej odpremo mapo backenda in posodobimo .env datoteko z ustreznimi podatkimi za bazo. Potem v terminalu izvajamo komando **composer install** in za zagon v terminalu izvajamo komando php artisan serve.
+
+## Zagon aplikacije - Frontend (Lokalno)
+Za lokalni zagon backend aplikacije najprej moramo prenesti projekt od github (https://gitlab.com/optiflow1/optiflow.git) na nas računalnik, potem si prenesimo in instaliramo NodeJS (https://nodejs.org/en/download), Potem v terminalu izvajamo komando **npm install** in za zagon frontenda v terminalu izvajamo **ng serve**.
 
 ## Avtorji 
 - Vlado Solakov (vlado.solakov@student.um.si)
