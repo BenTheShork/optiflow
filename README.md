@@ -12,6 +12,7 @@ Naloga je izdelat popolnoma funkcionalno stran za izpis delovnih nalog, dnevno s
 ## Specifikacije
 ### Tehnologije
 - Laravel
+- Angular JS
 - MySQL
 - GitLab
 
