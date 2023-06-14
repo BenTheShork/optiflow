@@ -263,6 +263,12 @@ class ProcessController extends Controller
             }
         }
 
+        $avg_processes_per_project = 0;
+        $avg_activities_per_process = 0;
+        $avg_grade_per_process = 0;
+        $avg_duration_per_process = 0;
+        $avg_num_people_per_process = 0;
+
         if($num_projects>0 && $num_processes>0) {
         $avg_processes_per_project = $num_processes/$num_projects;
         $avg_activities_per_process = $num_activities/$num_processes;
