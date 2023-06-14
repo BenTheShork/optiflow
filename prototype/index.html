@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Dashboard - SB Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="index.html"><img width="150" height="50" src="assets\img\logoTrans.png"></a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+
+        </form>
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <a class="nav-link" href="index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="projects.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tasks"></i></div>
+                            Projects
+                        </a>
+                        <a class="nav-link" href="charts.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-bar"></i></div>
+                            Insights
+                        </a>
+                        <a class="nav-link" href="index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+                            Activity log
+                        </a>
+                        <a class="nav-link" href="index.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-cog"></i></div>
+                            Preferences
+                        </a>
+                        <!--<div class="sb-sidenav-menu-heading">Interface</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                            data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Layouts
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="layout-static.html">Static Navigation</a>
+                                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
+                            aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                            Pages
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapsePages" aria-labelledby="headingTwo"
+                            data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#pagesCollapseAuth" aria-expanded="false"
+                                    aria-controls="pagesCollapseAuth">
+                                    Authentication
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne"
+                                    data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="login.html">Login</a>
+                                        <a class="nav-link" href="register.html">Register</a>
+                                        <a class="nav-link" href="password.html">Forgot Password</a>
+                                    </nav>
+                                </div>
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+                                    data-bs-target="#pagesCollapseError" aria-expanded="false"
+                                    aria-controls="pagesCollapseError">
+                                    Error
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne"
+                                    data-bs-parent="#sidenavAccordionPages">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="401.html">401 Page</a>
+                                        <a class="nav-link" href="404.html">404 Page</a>
+                                        <a class="nav-link" href="500.html">500 Page</a>
+                                    </nav>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="sb-sidenav-menu-heading">Addons</div>
+                        <a class="nav-link" href="charts.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Charts
+                        </a>
+                        <a class="nav-link" href="projects.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Tables
+                        </a>-->
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    User 1
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Dashboard</h1>
+                    <ol class="breadcrumb mb-4">
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                    <div class="row">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-primary text-white mb-4">
+                                <div class="card-body">Primary Card</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-warning text-white mb-4">
+                                <div class="card-body">Warning Card</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-success text-white mb-4">
+                                <div class="card-body">Success Card</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-danger text-white mb-4">
+                                <div class="card-body">Danger Card</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <a class="small text-white stretched-link" href="#">View Details</a>
+                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-area me-1"></i>
+                                    Area Chart [Insights]
+                                </div>
+                                <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-bar me-1"></i>
+                                    Bar Chart [Insights]
+                                </div>
+                                <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Projects
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Number of processes</th>
+                                        <th>Created</th>
+                                        <th>Updated</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><a href="project-single.html">Project 1</a></td>
+                                        <td>Description 1</td>
+                                        <td>4</td>
+                                        <td>23/01/1962</td>
+                                        <td>27/11/2067</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Project 2</td>
+                                        <td>Description 2</td>
+                                        <td>24</td>
+                                        <td>03/10/1972</td>
+                                        <td>25/07/1984</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Project 3</td>
+                                        <td>Description 3</td>
+                                        <td>23</td>
+                                        <td>28/10/2001</td>
+                                        <td>13/06/1900</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>Project 4</td>
+                                        <td>Description 4</td>
+                                        <td>16</td>
+                                        <td>18/07/1946</td>
+                                        <td>12/10/2028</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>Project 5</td>
+                                        <td>Description 5</td>
+                                        <td>4</td>
+                                        <td>26/05/2062</td>
+                                        <td>10/03/1949</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>Project 6</td>
+                                        <td>Description 6</td>
+                                        <td>8</td>
+                                        <td>24/02/2022</td>
+                                        <td>21/12/1955</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>Project 7</td>
+                                        <td>Description 7</td>
+                                        <td>12</td>
+                                        <td>22/09/1952</td>
+                                        <td>21/06/2009</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>Project 8</td>
+                                        <td>Description 8</td>
+                                        <td>14</td>
+                                        <td>04/08/1913</td>
+                                        <td>31/01/1956</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>Project 9</td>
+                                        <td>Description 9</td>
+                                        <td>23</td>
+                                        <td>22/09/1947</td>
+                                        <td>29/05/2024</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>Project 10</td>
+                                        <td>Description 10</td>
+                                        <td>7</td>
+                                        <td>05/12/2029</td>
+                                        <td>15/11/2094</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11</td>
+                                        <td>Project 11</td>
+                                        <td>Description 11</td>
+                                        <td>23</td>
+                                        <td>17/07/1970</td>
+                                        <td>10/02/2010</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12</td>
+                                        <td>Project 12</td>
+                                        <td>Description 12</td>
+                                        <td>26</td>
+                                        <td>12/10/1928</td>
+                                        <td>18/10/1995</td>
+                                    </tr>
+                                    <tr>
+                                        <td>13</td>
+                                        <td>Project 13</td>
+                                        <td>Description 13</td>
+                                        <td>25</td>
+                                        <td>20/07/2073</td>
+                                        <td>31/08/2099</td>
+                                    </tr>
+                                    <tr>
+                                        <td>14</td>
+                                        <td>Project 14</td>
+                                        <td>Description 14</td>
+                                        <td>3</td>
+                                        <td>25/06/1968</td>
+                                        <td>04/11/1960</td>
+                                    </tr>
+                                    <tr>
+                                        <td>15</td>
+                                        <td>Project 15</td>
+                                        <td>Description 15</td>
+                                        <td>10</td>
+                                        <td>07/05/1922</td>
+                                        <td>30/07/1986</td>
+                                    </tr>
+                                    <tr>
+                                        <td>16</td>
+                                        <td>Project 16</td>
+                                        <td>Description 16</td>
+                                        <td>16</td>
+                                        <td>31/06/1970</td>
+                                        <td>09/04/2053</td>
+                                    </tr>
+                                    <tr>
+                                        <td>17</td>
+                                        <td>Project 17</td>
+                                        <td>Description 17</td>
+                                        <td>10</td>
+                                        <td>14/09/1938</td>
+                                        <td>26/01/1940</td>
+                                    </tr>
+                                    <tr>
+                                        <td>18</td>
+                                        <td>Project 18</td>
+                                        <td>Description 18</td>
+                                        <td>3</td>
+                                        <td>15/06/2009</td>
+                                        <td>14/05/1957</td>
+                                    </tr>
+                                    <tr>
+                                        <td>19</td>
+                                        <td>Project 19</td>
+                                        <td>Description 19</td>
+                                        <td>14</td>
+                                        <td>26/02/1925</td>
+                                        <td>26/03/2047</td>
+                                    </tr>
+                                    <tr>
+                                        <td>20</td>
+                                        <td>Project 20</td>
+                                        <td>Description 20</td>
+                                        <td>11</td>
+                                        <td>22/02/1946</td>
+                                        <td>04/03/2048</td>
+                                    </tr>
+                                    <tr>
+                                        <td>21</td>
+                                        <td>Project 21</td>
+                                        <td>Description 21</td>
+                                        <td>19</td>
+                                        <td>22/06/1943</td>
+                                        <td>05/05/2065</td>
+                                    </tr>
+                                    <tr>
+                                        <td>22</td>
+                                        <td>Project 22</td>
+                                        <td>Description 22</td>
+                                        <td>15</td>
+                                        <td>08/05/2041</td>
+                                        <td>30/01/1905</td>
+                                    </tr>
+                                    <tr>
+                                        <td>23</td>
+                                        <td>Project 23</td>
+                                        <td>Description 23</td>
+                                        <td>24</td>
+                                        <td>03/10/2009</td>
+                                        <td>01/09/1986</td>
+                                    </tr>
+                                    <tr>
+                                        <td>24</td>
+                                        <td>Project 24</td>
+                                        <td>Description 24</td>
+                                        <td>2</td>
+                                        <td>07/01/1907</td>
+                                        <td>07/05/1996</td>
+                                    </tr>
+                                    <tr>
+                                        <td>25</td>
+                                        <td>Project 25</td>
+                                        <td>Description 25</td>
+                                        <td>1</td>
+                                        <td>27/09/1982</td>
+                                        <td>27/07/1938</td>
+                                    </tr>
+                                    <tr>
+                                        <td>26</td>
+                                        <td>Project 26</td>
+                                        <td>Description 26</td>
+                                        <td>6</td>
+                                        <td>17/03/2044</td>
+                                        <td>12/04/2004</td>
+                                    </tr>
+                                    <tr>
+                                        <td>27</td>
+                                        <td>Project 27</td>
+                                        <td>Description 27</td>
+                                        <td>16</td>
+                                        <td>01/08/2023</td>
+                                        <td>16/01/2090</td>
+                                    </tr>
+                                    <tr>
+                                        <td>28</td>
+                                        <td>Project 28</td>
+                                        <td>Description 28</td>
+                                        <td>17</td>
+                                        <td>19/10/2000</td>
+                                        <td>13/05/2082</td>
+                                    </tr>
+                                    <tr>
+                                        <td>29</td>
+                                        <td>Project 29</td>
+                                        <td>Description 29</td>
+                                        <td>26</td>
+                                        <td>12/03/1942</td>
+                                        <td>11/07/1987</td>
+                                    </tr>
+                                    <tr>
+                                        <td>30</td>
+                                        <td>Project 30</td>
+                                        <td>Description 30</td>
+                                        <td>9</td>
+                                        <td>15/02/2088</td>
+                                        <td>14/09/2021</td>
+                                    </tr>
+                                    <tr>
+                                        <td>31</td>
+                                        <td>Project 31</td>
+                                        <td>Description 31</td>
+                                        <td>16</td>
+                                        <td>16/09/1983</td>
+                                        <td>14/05/1974</td>
+                                    </tr>
+                                    <tr>
+                                        <td>32</td>
+                                        <td>Project 32</td>
+                                        <td>Description 32</td>
+                                        <td>17</td>
+                                        <td>21/06/1903</td>
+                                        <td>06/06/2035</td>
+                                    </tr>
+                                    <tr>
+                                        <td>33</td>
+                                        <td>Project 33</td>
+                                        <td>Description 33</td>
+                                        <td>4</td>
+                                        <td>10/04/2015</td>
+                                        <td>18/10/1931</td>
+                                    </tr>
+                                    <tr>
+                                        <td>34</td>
+                                        <td>Project 34</td>
+                                        <td>Description 34</td>
+                                        <td>26</td>
+                                        <td>06/11/1917</td>
+                                        <td>31/10/2082</td>
+                                    </tr>
+                                    <tr>
+                                        <td>35</td>
+                                        <td>Project 35</td>
+                                        <td>Description 35</td>
+                                        <td>3</td>
+                                        <td>08/03/1981</td>
+                                        <td>05/01/1984</td>
+                                    </tr>
+                                    <tr>
+                                        <td>36</td>
+                                        <td>Project 36</td>
+                                        <td>Description 36</td>
+                                        <td>26</td>
+                                        <td>02/10/1921</td>
+                                        <td>06/04/1925</td>
+                                    </tr>
+                                    <tr>
+                                        <td>37</td>
+                                        <td>Project 37</td>
+                                        <td>Description 37</td>
+                                        <td>25</td>
+                                        <td>30/07/1909</td>
+                                        <td>20/01/2053</td>
+                                    </tr>
+                                    <tr>
+                                        <td>38</td>
+                                        <td>Project 38</td>
+                                        <td>Description 38</td>
+                                        <td>6</td>
+                                        <td>16/05/1962</td>
+                                        <td>15/02/1937</td>
+                                    </tr>
+                                    <tr>
+                                        <td>39</td>
+                                        <td>Project 39</td>
+                                        <td>Description 39</td>
+                                        <td>1</td>
+                                        <td>30/05/2013</td>
+                                        <td>28/10/2094</td>
+                                    </tr>
+                                    <tr>
+                                        <td>40</td>
+                                        <td>Project 40</td>
+                                        <td>Description 40</td>
+                                        <td>26</td>
+                                        <td>12/03/1921</td>
+                                        <td>21/05/1985</td>
+                                    </tr>
+                                    <tr>
+                                        <td>41</td>
+                                        <td>Project 41</td>
+                                        <td>Description 41</td>
+                                        <td>2</td>
+                                        <td>18/05/2074</td>
+                                        <td>18/07/2095</td>
+                                    </tr>
+                                    <tr>
+                                        <td>42</td>
+                                        <td>Project 42</td>
+                                        <td>Description 42</td>
+                                        <td>29</td>
+                                        <td>11/02/2057</td>
+                                        <td>20/03/1917</td>
+                                    </tr>
+                                    <tr>
+                                        <td>43</td>
+                                        <td>Project 43</td>
+                                        <td>Description 43</td>
+                                        <td>25</td>
+                                        <td>03/01/2099</td>
+                                        <td>30/08/1976</td>
+                                    </tr>
+                                    <tr>
+                                        <td>44</td>
+                                        <td>Project 44</td>
+                                        <td>Description 44</td>
+                                        <td>13</td>
+                                        <td>25/05/1911</td>
+                                        <td>31/09/2005</td>
+                                    </tr>
+                                    <tr>
+                                        <td>45</td>
+                                        <td>Project 45</td>
+                                        <td>Description 45</td>
+                                        <td>17</td>
+                                        <td>05/12/1971</td>
+                                        <td>28/11/1981</td>
+                                    </tr>
+                                    <tr>
+                                        <td>46</td>
+                                        <td>Project 46</td>
+                                        <td>Description 46</td>
+                                        <td>16</td>
+                                        <td>29/01/1970</td>
+                                        <td>04/01/2006</td>
+                                    </tr>
+                                    <tr>
+                                        <td>47</td>
+                                        <td>Project 47</td>
+                                        <td>Description 47</td>
+                                        <td>6</td>
+                                        <td>09/10/2024</td>
+                                        <td>18/09/2007</td>
+                                    </tr>
+                                    <tr>
+                                        <td>48</td>
+                                        <td>Project 48</td>
+                                        <td>Description 48</td>
+                                        <td>20</td>
+                                        <td>24/09/2087</td>
+                                        <td>19/08/1913</td>
+                                    </tr>
+                                    <tr>
+                                        <td>49</td>
+                                        <td>Project 49</td>
+                                        <td>Description 49</td>
+                                        <td>13</td>
+                                        <td>20/01/1910</td>
+                                        <td>06/09/1978</td>
+                                    </tr>
+                                    <tr>
+                                        <td>50</td>
+                                        <td>Project 50</td>
+                                        <td>Description 50</td>
+                                        <td>10</td>
+                                        <td>31/11/1945</td>
+                                        <td>14/01/2041</td>
+                                    </tr>
+                                    <tr>
+                                        <td>51</td>
+                                        <td>Project 51</td>
+                                        <td>Description 51</td>
+                                        <td>21</td>
+                                        <td>07/07/1977</td>
+                                        <td>27/08/2074</td>
+                                    </tr>
+                                    <tr>
+                                        <td>52</td>
+                                        <td>Project 52</td>
+                                        <td>Description 52</td>
+                                        <td>23</td>
+                                        <td>30/02/1941</td>
+                                        <td>09/09/1989</td>
+                                    </tr>
+                                    <tr>
+                                        <td>53</td>
+                                        <td>Project 53</td>
+                                        <td>Description 53</td>
+                                        <td>0</td>
+                                        <td>25/12/2000</td>
+                                        <td>12/01/2044</td>
+                                    </tr>
+                                    <tr>
+                                        <td>54</td>
+                                        <td>Project 54</td>
+                                        <td>Description 54</td>
+                                        <td>16</td>
+                                        <td>24/03/1949</td>
+                                        <td>08/11/2085</td>
+                                    </tr>
+                                    <tr>
+                                        <td>55</td>
+                                        <td>Project 55</td>
+                                        <td>Description 55</td>
+                                        <td>10</td>
+                                        <td>13/12/1945</td>
+                                        <td>08/05/1990</td>
+                                    </tr>
+                                    <tr>
+                                        <td>56</td>
+                                        <td>Project 56</td>
+                                        <td>Description 56</td>
+                                        <td>20</td>
+                                        <td>23/03/2063</td>
+                                        <td>09/11/1936</td>
+                                    </tr>
+                                    <tr>
+                                        <td>57</td>
+                                        <td>Project 57</td>
+                                        <td>Description 57</td>
+                                        <td>3</td>
+                                        <td>04/11/1955</td>
+                                        <td>25/12/2084</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; OptiFlow 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
+    </script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="assets/demo/chart-area-demo.js"></script>
+    <script src="assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+    <script src="js/datatables-simple-demo.js"></script>
+</body>
+
+</html>
