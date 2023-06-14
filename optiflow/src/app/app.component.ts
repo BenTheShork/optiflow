@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { environment } from '@src/environments/environment';
+import { AuthService } from './authorization/auth.service';
+import { log } from 'console';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +11,11 @@ import { environment } from '@src/environments/environment';
 })
 export class AppComponent {
   title = 'optiflow';
-
+  currentRoute: string;
   environment = environment;
     constructor(
+        private route: ActivatedRoute,
+        public authService: AuthService,
         public router: Router,
     ) { }
 
@@ -21,8 +25,31 @@ export class AppComponent {
         else return true;
     }
     ngOnInit(): void {
-        
+        this.router.events.subscribe(event => {
+            if (event instanceof NavigationEnd) {
+              const currentRoute = this.router.routerState.snapshot.root;
+              this.currentRoute = this.getRoutePath(currentRoute);
+              if(this.authService.isLoggedIn == false){
+                if(this.currentRoute != 'signup/' && this.currentRoute != 'signin/'){
+                    sessionStorage.clear();
+                    this.router.navigateByUrl('/signin')
+                        .catch(err => console.error(err));
+                }
+              }
+            }
+          });
+         
     }
+    private getRoutePath(route: any): string {
+        let path = '';
+        while (route) {
+          if (route.routeConfig && route.routeConfig.path) {
+            path = `${route.routeConfig.path}/${path}`;
+          }
+          route = route.firstChild;
+        }
+        return path;
+      }
     /*ngOnInit(): void {
         if (this.router.url === '/') {
             this.router.navigateByUrl('/signin')
