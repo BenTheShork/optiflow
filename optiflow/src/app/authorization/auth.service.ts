@@ -17,6 +17,8 @@ export class AuthService {
   ) {
     if(sessionStorage.getItem('log') == 'true'){
       this.isLoggedIn = true;
+    }else{
+      this.isLoggedIn = false;
     }
     
   }

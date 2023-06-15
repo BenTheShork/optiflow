@@ -2,7 +2,7 @@
     <!-- Sidebar -->
     <app-header *ngIf="isHeaderVisible()"> </app-header>
     <div class="bg-light w-100 wrap-main" style="overflow-x: hidden;">
-        <div [ngClass]="{'p-sm-5': this.authService.isLoggedIn}">
+        <div [ngClass]="{'p-sm-5': isUserLoggedIn()}">
             <router-outlet></router-outlet>
         </div>
         <app-footer></app-footer>

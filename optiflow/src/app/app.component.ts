@@ -22,7 +22,12 @@ export class AppComponent implements OnInit {
         public router: Router,
         private translate: TranslateService
     ) { }
-
+    isUserLoggedIn(): boolean {
+      if(sessionStorage.getItem('log') != 'true'){
+        return false;
+      }
+      return true;
+  }
     ngOnInit(): void {
         loadMessages(slMessages);
 
