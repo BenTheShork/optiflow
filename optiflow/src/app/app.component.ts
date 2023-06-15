@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
             if (event instanceof NavigationEnd) {
               const currentRoute = this.router.routerState.snapshot.root;
               this.currentRoute = this.getRoutePath(currentRoute);
-              console.log(this.currentRoute);
               if(sessionStorage.getItem("log") == "false" || sessionStorage.getItem("log") == null || sessionStorage.getItem("log") == undefined){
                 
                 if(this.currentRoute != 'signup/' && this.currentRoute != 'signin/' && this.currentRoute != '/'){

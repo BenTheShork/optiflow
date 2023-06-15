@@ -45,7 +45,6 @@ export class InsightsOverviewComponent extends UnsubscribeDirective implements O
             this.barData.push(barDate);
           }
         }
-        console.log(this.chartData);
       }
     });
   }
