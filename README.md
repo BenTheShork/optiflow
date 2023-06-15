@@ -51,6 +51,6 @@ Za lokalni zagon backend aplikacije najprej moramo prenesti projekt od github (h
 **Univerza:** [Univerza v Mariboru](https://www.um.si/en/home-page/) </br>
 **Fakulteta:** [Fakulteta za elektrotehniko, računalništvo in informatiko](https://feri.um.si/) </br>
 **Smer:** Informatika in tehnologije komuniciranja </br>
-**Skrbnik:** prof. dr. Maja Pušnik
+**Skrbnik:** Doc. Dr. Maja Pušnik
 
 &copy; 2023 Vse pravice pridržane.
