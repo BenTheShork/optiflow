@@ -1,4 +1,79 @@
 # Optiflow
+
+## Project Description
+
+Our web application is designed to help businesses of all sizes improve their processes and increase efficiency. Users can create one or more projects and define the workflow for each project, including activities and details for each activity. They can then improve the same process by editing it as a new version. Our vision is to empower companies to work smarter, not harder, by providing them with the tools and insights they need to optimize their processes and achieve their goals.
+
+## Specifications
+
+### Technologies
+
+- Laravel: PHP framework for web development.
+- AngularJS: JavaScript framework for dynamic web applications.
+- MySQL: Open-source relational database management system.
+- GitLab: DevOps platform for version and project management.
+- Firebase: Google's platform for mobile and web app development.
+- SonarQube: Open-source platform for continuous code quality management.
+- bpmn.io: Web-based toolkit for modeling and executing BPMN (Business Process Model and Notation) workflows.
+- Cloudflare: Service for managing web traffic, security, and accessibility, acting as a proxy between the website and users. Provides multi-layer DDoS attack protection, reduces server load, and increases the speed of delivering web content.
+
+### Development Environment
+
+- Visual Studio Code
+
+### Workflow Tracking
+
+- GitLab
+
+### Work Method
+
+As a team, we discuss what needs to be done and divide the work so that each person has approximately the same workload. Progress is recorded on GitLab, where we track the project's advancements. Throughout the project, if there are any issues, we work together to solve them.
+
+## Features
+
+- User Authentication: Secure account creation and login functionality for users.
+- User Interface: Centralized place for users to monitor, interact, and manage various aspects of the application.
+- Project Management: Users can create one or more projects, providing a centralized environment to manage all project-related activities (such as processes, versions, and activities).
+- Workflow Design: Users can create workflows (BPMN) for their projects, including various activities and details for each activity. They can also customize and edit workflows to suit their needs.
+- Process Improvement: Users can review and improve their existing workflows, create new optimized versions, and save them as separate versions for future use.
+- Analytics: The application can offer users insights and analytics about their projects.
+- Activity Log History: User activity log, also known as user history log, records actions or events performed by the user within the system or application. It captures and stores information about activities and interactions of individual users.
+
+## Application Deployment (Online)
+
+Our frontend and backend are live on the staging server and can only be accessed by registered users: [Optiflow Staging Server](https://optiflow.gpc-hosting.com)
+
+## Application Deployment - Backend (Local)
+
+To locally deploy the backend application, first, we need to clone the project from GitHub (https://gitlab.com/optiflow1/optiflow.git) to our computer. Then, install Composer (https://getcomposer.org/download/) and download the database. After that, open the backend folder and update the .env file with the appropriate database credentials. In the terminal, execute the command `composer install` and to run the backend, execute `php artisan serve` in the terminal.
+
+## Application Deployment - Frontend (Local)
+
+To locally deploy the frontend application, first, we need to clone the project from GitHub (https://gitlab.com/optiflow1/optiflow.git) to our computer. Then, install NodeJS (https://nodejs.org/en/download). In the terminal, execute the command `npm install` and to run the frontend, execute `ng serve` in the terminal.
+
+## Authors
+
+- Vlado Solakov (vlado.solakov@student.um.si)
+- Olga Ivković (olga.ivkovic@student.um.si)
+- Ivan Sergejev (ivan.sergejev@student.um.si)
+
+## University
+
+University of Maribor
+Faculty of Electrical Engineering, Computer Science, and Informatics
+Study Program: Computer Science and Communication Technologies
+
+## Supervisor
+
+Doc. Dr. Maja Pušnik
+
+© 2023 All rights reserved.
+
+Translated to English by Vanya
+
+
+
+# Optiflow
 ## Opis projekta
 Naša spletna aplikacija bo zasnovana tako, da podjetjem vseh velikosti pomaga izboljšati svoje procese in povečati učinkovitost. Uporabnik lahko najprej ustvari en ali vec projektov. Za izbrani projekt pa ustvari potek dela procesa, aktivnosti za vsak proces in podrobnosti za vsaka aktivnost, nato pa isti proces izboljša z urejanjem istega procesa kot novo izboljšano različico. Na splošno je naša vizija opolnomočiti podjetja, da delajo pametneje, ne težje, tako da jim zagotovimo orodja in vpoglede, ki jih potrebujejo za optimizacijo svojih procesov in doseganje ciljev.
 
@@ -45,7 +120,7 @@ Za lokalni zagon backend aplikacije najprej moramo prenesti projekt od github (h
 
 ## Avtorji 
 - Vlado Solakov (vlado.solakov@student.um.si)
-- Olga Ivkovič (olga.ivkovic@student.um.si)
+- Olga Ivković (olga.ivkovic@student.um.si)
 - Ivan Sergejev  (ivan.sergejev@student.um.si)
 
 **Univerza:** [Univerza v Mariboru](https://www.um.si/en/home-page/) </br>
